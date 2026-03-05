@@ -1,0 +1,37 @@
+#+title: Lesson 01 — SELECT Basics
+#+property: header-args:python :session *bq* :results output
+
+** Setup
+#+begin_src python
+import sys
+sys.path.insert(0, "../utils")
+from query import run, load_sql
+#+end_src
+
+#+RESULTS:
+
+** Inspect the raw SQL
+#+begin_src python
+print(load_sql("01-select-basics.sql",
+               indicator_code="SE.PRM.ENRR", year=2015, limit=10))
+#+end_src
+
+#+RESULTS:
+
+** Run it
+#+begin_src python :results value table :file lesson-01.py
+df = run("01-select-basics.sql",
+         indicator_code="SE.PRM.ENRR", year=2015, limit=10)
+print(df.to_string())
+#+end_src
+
+#+RESULTS:
+|   |
+
+** Notes
+- =WHERE= filters rows before aggregation
+- Backtick syntax is BigQuery-specific for project.dataset.table
+#+end_src
+
+
+
