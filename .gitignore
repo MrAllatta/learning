@@ -8,3 +8,5 @@ learning.code-workspace
 .python-version
 data/
 figures/
+/.quarto/
+**/*.quarto_ipynb
