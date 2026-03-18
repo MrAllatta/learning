@@ -13,6 +13,7 @@ flake8==7.1.2
 google-api-core==2.30.0
 google-auth==2.48.0
 google-cloud-bigquery==3.40.1
+google-cloud-bigquery-storage==2.36.2
 google-cloud-core==2.5.0
 google-crc32c==1.8.0
 google-resumable-media==2.8.0
