@@ -1,37 +1,189 @@
 #+title: Lesson 01 — SELECT Basics
-#+property: header-args:python :session *bq* :results output :python .venv/bin/python
+#+property: header-args:python :session *bq* :results output :python ../.venv/bin/python
 
 ** Setup
-#+begin_src python :file lesson-01.py
-import sys
-sys.path.insert(0, "../utils")
-from query import run, load_sql
+#+begin_src python
+  import sys
+  sys.path.insert(0, "../utils")
+  from query import run, load_sql
 #+end_src
 
 #+RESULTS:
 
 ** Inspect the raw SQL
-#+begin_src python :file lesson-01.py
+#+begin_src python
 print(load_sql("01-select-basics.sql",
                indicator_code="SE.PRM.ENRR", year=2015, limit=10))
 #+end_src
 
 #+RESULTS:
+#+begin_example
+-- Kaggle: bigquery-public-data.world_bank_intl_education
+SELECT
+    country_name,
+    indicator_name,
+    value
+FROM
+    `bigquery-public-data.world_bank_intl_education.international_education`
+WHERE
+    indicator_code = 'SE.PRM.ENRR'
+    AND year = 2015
+ORDER BY value DESC
+LIMIT 10
+#+end_example
 
 ** Run it
-#+begin_src python :results value table :file lesson-01.py
-df = run("01-select-basics.sql",
-         indicator_code="SE.PRM.ENRR", year=2015, limit=10)
-print(df.to_string())
+#+begin_src python :results output vector
+
+  df = run("01-select-basics.sql",
+           indicator_code="SE.PRM.ENRR", year=2015, limit=10)
+  print(df.to_string())
+  df.to_csv("data/enrollment-2015.csv", index=False)
 #+end_src
 
 #+RESULTS:
-|   |
+#+begin_example
+   country_name                                  indicator_name       value
+0    Madagascar  Gross enrolment ratio, primary, both sexes (%)  148.894455
+1        Malawi  Gross enrolment ratio, primary, both sexes (%)  145.465775
+2   Timor-Leste  Gross enrolment ratio, primary, both sexes (%)  136.843201
+3         Nepal  Gross enrolment ratio, primary, both sexes (%)  135.433502
+4        Rwanda  Gross enrolment ratio, primary, both sexes (%)  132.550064
+5         Benin  Gross enrolment ratio, primary, both sexes (%)  128.983353
+6  Sierra Leone  Gross enrolment ratio, primary, both sexes (%)  127.598938
+7       Burundi  Gross enrolment ratio, primary, both sexes (%)  123.781792
+8        Sweden  Gross enrolment ratio, primary, both sexes (%)  123.019188
+9      Suriname  Gross enrolment ratio, primary, both sexes (%)  122.811722
+#+end_example
+
+** The BigQuery Storage Warning
+
+The warning says the *BigQuery Storage API* client library isn't installed, so the library falls back to the *REST API* to download results.
+
+*** Two ways to fetch query results
+
+| Method                     | Library needed                              | Speed                                          |
+|----------------------------+---------------------------------------------+------------------------------------------------|
+| *Storage Read API*         | =google-cloud-bigquery-storage= + =pyarrow= | Fast — streams data in columnar (Arrow) format |
+| *REST endpoint* (fallback) | nothing extra                               | Slower — JSON over HTTPS, row by row           |
+
+*** Why it doesn't matter here
+
+For small results (10 rows) the REST fallback is perfectly fine. You'd only care about the Storage API when pulling *large result sets* (millions of rows) where the columnar streaming is significantly faster.
+
+*** To silence the warning
+
+Install the optional extras:
+
+#+begin_src bash
+pip install google-cloud-bigquery[bigquery_storage]
+# or explicitly:
+pip install google-cloud-bigquery-storage pyarrow
+#+end_src
+
+After that, =bigquery= will detect the library and use the faster path automatically — and the warning disappears.
 
 ** Notes
 - =WHERE= filters rows before aggregation
 - Backtick syntax is BigQuery-specific for project.dataset.table
 #+end_src
 
+* Python source blocks versus Jupyter
+What benefits would I see from using a jupyter kernel rather than a python virtual environment? Are they mutually exclusive?
+
+** They are not mutually exclusive
+
+A Jupyter kernel /is/ a Python process — typically the Python from a virtualenv (or conda env). You register a venv as a kernel:
+
+#+begin_src bash
+  source .venv/bin/activate
+  pip install ipykernel
+  python -m ipykernel install --user --name my-project
+#+end_src
+
+Then Jupyter uses that venv's Python.
+
+* What you gain with a Jupyter kernel in Emacs (via =ein= or =jupyter= package)
+
+| Feature                    | Python session (current) | Jupyter kernel         |
+|----------------------------+--------------------------+------------------------|
+| Rich output (plots, HTML)  | No — text only           | Yes — inline images    |
+| DataFrame display          | =print(df)=              | Pretty HTML table      |
+| Persistent state indicator | Opaque                   | Cell execution counter |
+| Interrupt/restart          | Clunky                   | Clean kernel controls  |
+| Variable inspector         | No                       | Available via plugins  |
+| Sharing notebooks          | Export manually          | Native =.ipynb= format |
+
+* Save plot to file in source block
+#+begin_src bash
+  ../.venv/bin/pip install matplotlib
+#+end_src
+
+#+begin_src python
+  import matplotlib.pyplot as plt
+
+  df.plot.bar(x="country_name", y="value")
+  plt.tight_layout()
+  plt.savefig("figures/enrollment-2015.svg", dpi=150)
+  plt.close()
+#+end_src
+
+#+RESULTS:
+
+* Link it in the Org file
+#+caption: Primary Gross Enrolment, Top 10 (2015)
+#+attr_html: :width 600px
+[[file:figures/enrollment-2015.svg]]
+
+Org-mode will display it inline (=C-c C-x C-v=) and export it correctly to HTML or Quarto.
+
+* For R blocks specifically.
+
+#+begin_src R :results file :file figures/enrollment-2015.png :session *R*
+    library(ggplot2)
+    library(dplyr)
+
+    setwd("/home/teacher/projects/edu-analytics/learning-sql/notebooks/")
+
+  # Read the CSV the Python block already wrote, or pass data directly
+    df <- read.csv("data/enrollment-2015.csv")
+
+    enrollment_ratio_pct <- ggplot(df, aes(x = reorder(country_name, -value), y = value)) +
+      geom_col(fill = "#4C72B0") +
+      geom_text(aes(label = round(value, 1)),
+                vjust = -0.5, size = 3) +
+      labs(
+        title = "Gross Primary Enrolment Ratio (2015)",
+        subtitle = "Top 10 countries — both sexes",
+        x = NULL,
+        y = "Enrolment ratio (%)",
+        caption = "Source: World Bank International Education"
+      ) +
+      theme_minimal(base_size = 12) +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  ggsave(filename = "enrollment-2015.png" , plot = enrollment_ratio_pct, path = "figures/")
+#+end_src
+
+#+RESULTS:
+[[file:figures/enrollment-2015.png]]
+
+
+
+You would pair it with a Python block that exports the dataframe first:
+
+#+begin_src python
+df.to_csv("figures/enrolment-2015.csv", index=False)
+#+end_src
+
+Then run the Python block, then the R block, and the PNG lands in =figures/= ready to link.
+* Verdict
+
+You get:
+- Clean separation of code and output
+- Version-controllable figures (or gitignored, your choice)
+- No Jupyter dependency
+- Works with =ox-hugo=, Quarto, HTML export unchanged
+
+The only thing you /don't/ get is figures appearing /inline as output/ of the block itself — you place them manually below. A minor inconvenience.
 
 
