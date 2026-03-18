@@ -7,8 +7,12 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
-
+      - href: about.qmd
+      	text: About
+      - href: learning-plan.qmd
+        text: Learning Plan
+      - notebooks/python_audit.ipynb
+      
 format:
   html:
     theme:
