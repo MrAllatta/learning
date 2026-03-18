@@ -1,0 +1,13 @@
+---
+title: "first post"
+description: "my first post"
+author: "Eric Allatta"
+date: "3/18/2026"
+categories:
+  - learning
+  - setup
+  - analysis
+---
+
+# Embarking
+This learning blog marks a beginning. Something of a formal step toward transitioning to a new career. My experience as a NYC computer science teacher and school spreadsheet builder has given me a foundation in institutional education and computing. I seek to build on the combined foundation toward education data systems and analysis. My hope is to find sustainability in a career that calls upon me as a problem solver, communicator, and mathematician.
