@@ -128,7 +128,6 @@ def run(name: str, **params):
 #+end_src
 
 ** Example SQL File
-
 *=sql/01-select-basics.sql=* — full syntax highlighting, linting, completion:
 #+begin_src sql :tangle sql/01-select-basics.sql
 -- Kaggle: bigquery-public-data.world_bank_intl_education
@@ -145,10 +144,7 @@ ORDER BY value DESC
 LIMIT {limit}
 #+end_src
 
----
-
 ** Example Org-mode Notebook
-
 *=notebooks/lesson-01.org=*
 #+begin_src org :tangle notebooks/lesson-01.org
 #+title: Lesson 01 — SELECT Basics
@@ -181,10 +177,7 @@ print(df.to_string())
 
 You get *Python highlighting* in the =#+begin_src python= blocks and *SQL highlighting* when you open the =.sql= files directly. The separation is the key insight — don't embed SQL in Python strings.
 
----
-
 ** Emacs Configuration
-
 #+begin_src elisp
 ;; --- Virtual environment ---
 (use-package pyvenv
@@ -290,4 +283,8 @@ sql/
 #+end_src
 
 *** 8. *Org-mode Tangling as an Alternative*
-If you ever /do/ want SQL inline in Org with highlighting, you can use =#+begin_src sql :tangle ../sql/01-select-basics.sql= — edit with full SQL highlighting via =C-c '=, and =org-babel-tangle= writes the files. This keeps a single-source-of-truth notebook while still producing standalone =.sql= files.
+If you ever /do/ want SQL inline in Org with highlighting, you can use
+=#+begin_src sql :tangle ../sql/01-select-basics.sql= — edit with full
+SQL highlighting via =C-c '=, and =org-babel-tangle= writes the
+files. This keeps a single-source-of-truth notebook while still
+producing standalone =.sql= files.
