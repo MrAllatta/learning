@@ -1,5 +1,28 @@
 ---
 title: "About"
+image: logo.png
+about:
+  template: solana
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/MrAllatta/learning
 ---
 
-About this site
+This site is a learning project. It is early work along a pathway targeting institutional education data analysis. This project will focus on showcasing the learning  The technology stack is Python + Jupyter, R + knitr, Postgresql with psycopg2, and Quarto for publishing. The learning plan is in collaboration with various Claude models. On going learning questions are answered by ChatGPT 5 Nano. The work itself is hand written toward the goal of strong interview performance on technical, statistical, and institutional/political topics. Future work will focus on NYC school quality models and distributions of the new College and Career Readiness Metric.
+
+## Education
+
+Hunter College, City University of New York | New York, NY
+Masters in Urban Adolescent Mathematics Education | June 2011 - Sept 2012
+
+St. John's College | Santa Fe, NM
+Bachelors in Liberal Arts, History of Math and Science, Philosophy, Comparative Literature | Sept 2003 - May 2007
+
+## Experience
+
+Freelance | Consultant | Sept 2021 - Present
+
+Academy for Software Engineering | Lead Computer Science Teacher | Sept 2012 - Aug 2021
+
+Urban Teacher Resident | NYCDOE + New Visions for Public Schools | Sept 2011 - Aug 2012
