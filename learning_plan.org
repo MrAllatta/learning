@@ -1,0 +1,369 @@
+#+title: Data Analyst Learning Plan
+
+* Education Data Analyst --- Mid-Career Track
+Technical & Statistical Depth + Domain Fluency Benchmarks
+Non-AI-Assisted Verification Standard | 24-Month Framework | NYCPS Focus
+
+** Core Principle
+ Every benchmark in this document must be met without AI assistance. That is the test. You can use AI to learn, to check your work, and to accelerate exploration. You cannot use it to pass a gate. The difference between knowing something and being able to retrieve it via Claude is the difference between a senior analyst and a liability.
+
+** How to Use This Plan
+This plan is organized into four phases spanning 24 months. Each phase has a gate: a set of non-AI-assisted tasks you must complete before proceeding. The gates are not theoretical---they are the things a hiring manager will ask you to demonstrate in an interview or on a skills assessment. The plan is built around three parallel tracks that develop
+simultaneously:
+- Technical depth: Python, R, SQL, and reproducible research workflow
+- Statistical literacy: The ability to select, apply, and explain
+  methods correctly
+- Domain fluency: NYCPS-specific knowledge that makes your analysis
+  credible and legible to education stakeholders
+
+* Phase 0 --- Audit | Weeks 1--3
+** Before You Begin
+Establish an honest baseline. No learning yet. Just measurement.
+** The Audit Tasks
+Do each of these without AI assistance. Record where you get stuck ---
+that's your Phase 1 curriculum.
+** Python Audit (2 hours, no AI, no Stack Overflow)
+- Load a CSV of NYCPS data into a pandas DataFrame
+- Filter rows by a condition, group by a column, compute a mean
+- Join two DataFrames on a common key
+- Handle a column with mixed types or missing values
+- Plot a bar chart with proper axis labels and a title
+- Write a function that takes a DataFrame and returns a summary
+- Connect to a local PostgreSQL database and run a query
+
+** R Audit (2 hours, no AI)
+- Load a CSV and inspect its structure using tidyverse
+- Write a dplyr pipeline: filter, select, mutate, group_by, summarize
+- Produce a ggplot2 bar chart with correct labels
+- Run a linear regression, call summary(), and explain each component of
+  the output in writing
+- Render a Quarto document with inline R output to HTML
+
+** SQL Audit (1 hour, no AI)
+- Write a query with a JOIN, a WHERE clause, and a GROUP BY
+- Write a subquery
+- Explain what an index does and when you'd add one
+
+** Statistics Audit (written, 45 minutes)
+Answer these in writing, as if explaining to a smart non-statistician:
+- What does a p-value actually mean? What does it NOT mean?
+- A school's test scores went up 5 points. Is that meaningful? What would you need to know?
+- What is the difference between correlation and causation? Give an example from education data.
+- What is chronic absenteeism? How is it calculated? Why does the 20% threshold matter?
+
+** Domain Audit (written, 30 minutes)
+- Name and describe five data systems used in NYCPS
+- Explain how a school's Quality Review score is determined
+- What is a NYSSIS ID and why does it exist?
+- List the demographic subgroups required for ESSA reporting
+- What is a D75 school?
+
+** Audit Output
+After completing the audit, score yourself: Strong / Shaky / Gap for each area. The gaps are your Phase 1 priorities. Be ruthless. Shaky means you needed to think too hard or hedged your answer. Gap means you couldn't do it.
+
+* Phase 1 --- Foundation | Months 1--5
+** Close the Gaps, Narrow the Stack
+Achieve reliable, unassisted competence in a focused core. No new tools. No side projects.
+** What you are deferring
+Emacs configuration, Positron exploration, Django feature development, new Kaggle competitions, gh-pages customization. These are real, useful things. They are Phase 2 and 3. Every hour spent on them in Phase 1 is a debt against your foundation.
+** Stack Decision: What You Are Committing To
+For Phase 1, your working stack is exactly this, nothing else:
+
+| *Benchmark*          | *What you must do without AI assistance*            | *Verification*                             |
+| *Primary language*   | Python with pandas, matplotlib, seaborn, SQLAlchemy | Can produce output from scratch            |
+| *Secondary language* | R with tidyverse, ggplot2, broom                    | Can produce output from scratch            |
+| *Reporting*          | Quarto (parametrized reports, HTML output)          | Can render from scratch                    |
+| *Database*           | PostgreSQL via psycopg2 or SQLAlchemy               | Can connect, query, load                   |
+| *Version control*    | Git + GitHub (command line, not GUI)                | Can commit, branch, push, resolve conflict |
+
+* Phase 1 Technical Benchmarks
+** R: Statistical Workflow Fluency
+| *Benchmark*       | *What you must do without AI assistance*                                      | *Verification*      |
+| *Data wrangling*  | tidyverse pipeline: filter, mutate, group_by, summarize, pivot_longer/wider   | Timed exercise      |
+| *Visualization*   | ggplot2 chart with correct geom, scales, labels, theme; faceted by a variable | Portfolio artifact  |
+| *Modeling*        | lm() with multiple predictors; interpret coefficients, R-squared, residuals   | Written explanation |
+| *Reporting*       | Parametrized Quarto doc with inline R, tables via kableExtra or gt            | Published output    |
+| *Reproducibility* | renv lockfile, seed-set, no absolute paths in code                            | Code review         |
+
+** SQL: Operational Fluency
+| *Benchmark*        | *What you must do without AI assistance*                                   | *Verification*   |
+| *Joins*            | Write LEFT, INNER, FULL OUTER, SELF join; explain when each is appropriate | Whiteboard       |
+| *Aggregation*      | GROUP BY with HAVING; distinguish WHERE vs HAVING                          | Written exercise |
+| *Window functions* | ROW_NUMBER, RANK, LAG, LEAD, running totals with OVER/PARTITION BY         | Timed exercise   |
+| *CTEs*             | Write a multi-step CTE; explain why CTEs improve readability               | Code review      |
+| *Subqueries*       | Correlated subquery; explain when a subquery beats a join                  | Timed exercise   |
+| *Performance*      | Explain what EXPLAIN ANALYZE output shows; when to add an index            | Verbal/written   |
+
+** Python: Data Pipeline Fluency
+You must be able to build the following pipeline from scratch, in under 90 minutes, without assistance:
+
+| *Benchmark* | *What you must do without AI assistance*                                               | *Verification*    |
+| *Ingest*    | Load a multi-sheet Excel file or messy CSV, detect encoding, parse dates, coerce types | Timed exercise    |
+| *Clean*     | Identify and handle nulls, duplicates, outliers, inconsistent categoricals             | Code review       |
+| *Transform* | Multi-condition filtering, window calculations, reshaping (wide/long)                  | Timed exercise    |
+| *Aggregate* | GroupBy with multiple aggregation functions, custom apply()                            | Timed exercise    |
+| *Join*      | Left, inner, and anti-join; diagnose a fan-out; explain when to use each               | Whiteboard/verbal |
+| *Export*    | Write to CSV, to PostgreSQL table, and to a Quarto-compatible format                   | Timed exercise    |
+| *Document*  | Inline comments, docstrings, README describing what the pipeline does                  | Code review       |
+
+** Python: Debugging Without Assistance
+You must be able to diagnose and fix the following error types by reading the traceback alone:
+- KeyError on a DataFrame column (likely a whitespace or case issue)
+- MergeError or unexpected row count after a join (likely a duplicate key)
+- TypeError from mixed types in a column operation
+- SettingWithCopyWarning --- explain what it means and fix it correctly
+- A PostgreSQL connection timeout or authentication error
+
+* Phase 1 Statistics Benchmarks
+Statistics is the area where novice analysts most commonly fake competence. These benchmarks are designed to expose that. Each must be demonstrated in writing or verbally without notes.
+
+** Core Concepts --- Must Explain Correctly to a Non-Statistician
+| *Benchmark*              | *What you must do without AI assistance*                                                                             | *Verification* |
+| *Mean vs. median*        | When does mean mislead? Give an education data example where median is more honest.                                  | Verbal         |
+| *Standard deviation*     | Explain what 1 SD means in a distribution of school attendance rates.                                                | Written        |
+| *Confidence interval*    | What does a 95% CI actually mean? What does it NOT mean?                                                             | Written        |
+| *p-value*                | Explain correctly --- most analysts explain this wrong. What is the null hypothesis? What does p < .05 actually say? | Written        |
+| *Effect size*            | Why is a statistically significant result not necessarily meaningful? Explain Cohen's d with a test score example.   | Written        |
+| *Correlation*            | What is r = .3 between attendance and test scores telling you? What can't you conclude?                              | Verbal         |
+| *Regression coefficient* | In a model predicting graduation rate from attendance and SES, interpret a coefficient of 0.4 on attendance.         | Written        |
+| *Confounding*            | Give two examples from education data where a confound changes the interpretation of a finding.                      | Written        |
+
+** Applied Statistics: You Must Be Able to Do These
+- Run a simple and multiple OLS regression in both Python (statsmodels)
+  and R (lm()); interpret output identically from both
+- Check regression assumptions: linearity, homoscedasticity, normality
+  of residuals, no multicollinearity --- and know what to do when each
+  is violated
+- Run a chi-square test of independence on categorical education data;
+  interpret the result
+- Calculate and interpret Pearson and Spearman correlation; know when to
+  use each
+- Distinguish between descriptive, inferential, and predictive analysis
+  --- and know which is appropriate for a given stakeholder question
+- Recognize when a dataset is too small for the claims being made
+
+** Phase 1 Domain Fluency Benchmarks
+These are the non-negotiable NYCPS knowledge requirements. If you cannot
+speak to these without hesitation, you will not be taken seriously in an
+interview with a district research director.
+
+*Data Systems --- Know These Cold*
+
+| *Benchmark*          | *What you must do without AI assistance*                                                                   | *Verification*     |
+| *ATS*                | Attendance Tracking System --- what it tracks, who enters data, its known reliability issues               | Verbal explanation |
+| *STARS*              | Student Transcript and Academic Reporting System --- Regents records, graduation data, credit accumulation | Verbal explanation |
+| *NYSSIS ID*          | Statewide Student Identifier --- why it exists, how it differs from OSIS/student ID                        | Verbal explanation |
+| *BEDS*               | Basic Educational Data System --- school-level enrollment and staff data for state reporting               | Verbal explanation |
+| *SESIS*              | Special Education Student Information System --- what it contains, why access is restricted                | Verbal explanation |
+| *DOE Data Site*      | What data is publicly available, what the download formats are, known gotchas                              | Demonstrated use   |
+| *NYC Open Data*      | Schools-relevant datasets, how to query via API or direct download                                         | Demonstrated use   |
+| *nycschools package* | What it provides, its data currency limits, how to extend it                                               | Demonstrated use   |
+
+** Accountability & Metrics --- Know These Cold
+| *Benchmark*                      | *What you must do without AI assistance*                                                                      | *Verification*      |
+| *Chronic absenteeism*            | Federal definition (20% threshold), NYC calculation, why it replaced raw attendance rate, equity implications | Written explanation |
+| *ESSA subgroups*                 | All required subgroups, minimum n-count for reporting, suppression rules                                      | From memory         |
+| *School Quality Report*          | What it measures, how scores are calculated, what principals actually do with it                              | Verbal              |
+| *Regents exams*                  | Which are required for graduation, score thresholds, local diploma vs. Regents diploma distinction            | Verbal              |
+| *ELL/MLL classification*         | NYSITELL, NYSESLAT, reclassification criteria, why this population is analytically tricky                     | Written             |
+| *SWD subgroup*                   | IEP vs. 504, LRE, why graduation outcomes differ, what the data does/doesn't capture                          | Written             |
+| *Cohort graduation rate*         | 4-year vs. 6-year, August graduates, GED vs. diploma, how transfers affect cohort                             | Verbal              |
+| *Community District vs. Network* | How schools are organized administratively; why this matters for aggregation                                  | Verbal              |
+
+** *Political & Organizational Context --- This Is What Separates Analysts
+A technically correct analysis that ignores organizational reality is useless. You must be able to speak to:
+- Why school-level data comparisons are almost always misleading without context (demographics, school type, selection effects)
+- The difference in how principals vs. superintendents vs. central office staff use data --- and what they distrust
+- Why teachers are often skeptical of attendance data and what legitimate complaints they have
+- Which metrics are known to be gamed and why --- and how to account for that in analysis
+- The history of mayoral control and how it shapes DOE data governance
+- Charter vs. district data comparisons: what's valid, what's not, why it's politically charged
+
+* Phase 1 Gate --- You Must Pass All Three Before Phase 2
+** GATE 1A --- TECHNICAL
+Complete a data analysis of NYCPS public attendance data from raw download to published Quarto report. No AI assistance. Includes: data cleaning pipeline in Python, summary statistics, one regression, one visualization in both Python and R, written interpretation of findings. Time limit: one full working day.
+** GATE 1B --- STATISTICAL
+Write a two-page methodology memo explaining the statistical approach used in your Gate 1A analysis. Justify every choice. Acknowledge every limitation. A statistician should be able to read it and not find errors of interpretation.
+
+** GATE 1C --- DOMAIN
+Produce a one-page data dictionary for the dataset used in Gate 1A. Every field defined. Every known data quality issue noted. Every metric explained in terms a principal could understand. Do this from knowledge, not by copying documentation.
+
+* Phase 2 --- Statistical Depth | Months 6--14
+Phase 2 moves from applying methods to understanding when methods break.
+** Specialization and Portfolio Construction
+Develop genuine analytical depth in education data. Publish substantial, reproducible analyses. These are the published analyses that constitute your portfolio. Each must be reproducible, documented, and publicly accessible on GitHub Pages or a Quarto Pub site.
+** You Must Be Able to Explain and Detect:
+- Simpson's Paradox --- give an education data example and demonstrate it in data
+- Ecological fallacy --- why school-level correlations can't be applied to students
+- Selection bias --- why schools that opted into a program are not comparable to those that didn't
+- Regression to the mean --- why the lowest-performing schools 'improve' without intervention
+- Ceiling and floor effects --- why standardized tests compress variance at the extremes
+- Multiple comparisons problem --- what happens when you test 30 hypotheses at p < .05
+
+** *The CCR Project + Supporting Technical Depth
+One deep project with four outputs. Supporting technical additions on a disciplined schedule.         
+
+** Phase 2 Technical Additions
+Phase 2 reintroduces deferred tools on a disciplined schedule, only
+after Phase 1 gates are passed.
+
+| *Benchmark*    | *What you must do without AI assistance*                                                               | *Verification*      |
+| *Month 6--7*   | Git workflow: branches, pull requests, meaningful commit messages, .gitignore hygiene                  | GitHub portfolio    |
+| *Month 7--8*   | gh-pages publishing: Quarto site or R Markdown site with multiple reports                              | Live published site |
+| *Month 9--10*  | Advanced pandas: method chaining, custom aggregations, memory-efficient operations on larger datasets  | Timed exercise      |
+| *Month 10--11* | Great Tables (Python) or gt (R): publication-quality tables for principal and superintendent audiences | Portfolio artifact  |
+| *Month 12--14* | Positron + Emacs: configured, productive environment --- not a distraction, a tool                     | Daily use           |
+
+** WHAT REMAINS DEFERRED IN PHASE 2
+Django integration: nobody hiring for education data roles cares about this. Cut it entirely. Geospatial analysis (geopandas, sf): valuable but not core to the CCR project. Reintroduce in Phase 3 if a specific stakeholder question requires it.
+
+** *Methods to Add in Phase 2*
+- Logistic regression: predict a binary outcome (e.g., graduated yes/no); interpret log-odds correctly
+- Difference-in-differences: conceptual understanding of quasi-experimental design in education policy
+- Interrupted time series: before/after analysis of a policy change using longitudinal school data
+- Clustering: k-means on school characteristics; interpret and critique the output honestly
+- Dashboards: build one interactive dashboard in R Shiny or observable/Quarto; know its limitations
+
+* Phase 2 Portfolio: The CCR Project
+One project, four published outputs. Each must be reproducible, documented, and publicly accessible on GitHub Pages or Quarto Pub.
+** OUTPUT 1 --- CCR Metric Reconstruction Pipeline
+Reproduce the CCR score from publicly available citywide results data using the Appendix A reference tables from the Educator Guide. Document every decision point: how the six scoring categories interact, how the associate degree category overrides others, how the six-category cap works, how suppression rules (n=15 general, n=10 ELL/SWD grad rates, n=5 lowest third citywide) are applied. Deliverable: a Python pipeline that takes school-level input and outputs CCR scores, validated against published values.
+** OUTPUT 2 --- Comparison Group Approximation
+You will not have student-level data to run the full value-added model. Be explicit about that. Use publicly available school-level characteristics (ENI, % ELL, % SWD, % by race, prior graduation rates) to build a regression approximating the comparison group methodology. Compare estimates to published comparison group values. The point is not to match perfectly --- it is to demonstrate you understand what the model is doing and where your approximation breaks down. Deliverable: a documented regression with honest residual analysis and a clear limitations section.
+
+** OUTPUT 3 --- Stakeholder Dashboard
+A Quarto dashboard or Shiny app for a principal or network data manager. User selects a school and sees: CCR score vs. comparison group estimate; decomposition by the six CCR categories; comparison to borough and citywide averages; racial subgroup breakdowns for CCPCI and PSER where available; year-over-year trend if the data supports it. Deliverable: a live, published, interactive dashboard. Tables via Great Tables (Python) or gt (R) --- the people reading this are principals and superintendents; beautiful tables matter. |
+
+** OUTPUT 4 --- Policy Memo
+One page, written for a superintendent or Student Pathways director. What does the CCR metric reward? What does it miss? Where do the incentives diverge from the stated goals of NY State's new graduation standards? What should a school leader attending to the broader rollout understand that the metric does not surface? This output demonstrates judgment, not just technical skill --- it is often the one that gets you the interview. |
+
+** *Metric Variable Name Filtering --- Working Reference
+When filtering the citywide school quality data for CCR-related metrics, use explicit named patterns rather than a single complex regex. The data's ~1.49M rows span Report Years 2016--2025; CCR metrics appear from 2024 onward.
+
+#+begin_src python
+ccr_patterns = [
+    r'^ccr_',       # CCR score metrics (e.g., ccr_4y_all, ccr_4yr_l3c_hs)
+    r'^ccpci_',     # College and Career Preparatory Course Index
+    r'^pser_',      # Postsecondary Enrollment Rate
+    r'^coll_pers',  # College persistence
+]
+
+combined = '|'.join(ccr_patterns)
+ccr_data = data[data["Metric Variable Name"].str.contains(combined, regex=True, na=False)]
+#+end_src
+
+Prefer this over a single clever pattern: it is readable, maintainable, and self-documenting to a reviewer.
+
+* Phase 2 Additional Portfolio Ideas
+These are the three published analyses that constitute your portfolio. Each must be reproducible, documented, and publicly accessible on GitHub Pages or a Quarto Pub site.
+
+** Portfolio Ideas --- Chronic Absenteeism Analysis
+A longitudinal analysis of chronic absenteeism rates across NYC schools, 2018--present (including COVID disruption). Borough/district breakdowns. Demographic subgroup comparisons with appropriate caveats. Regression identifying school-level predictors. Written for a superintendent audience. Methodology appendix written for a research audience. These are two different documents. |
+** Portfolio Ideas --- Regents & Graduation
+An analysis of cohort graduation rates and Regents passage by school type (district, charter, transfer, D75). Honest about what the data can and cannot show. Includes a clearly stated limitations section. Visualizations appropriate for a policy brief. At least one finding that is counterintuitive or that challenges a common narrative.
+** Portfolio Ideas --- Your Choice, Stakeholder-Driven
+Pick a question a specific real stakeholder (principal, parent coordinator, network data manager) has actually asked you or that you know they care about. Design the analysis to answer their question, not to demonstrate your techniques. Publish both the analysis and a one-page plain-language summary. This piece demonstrates judgment, not just skill. |
+
+* Phase 2 Gate --- CCR Project Review
+All four CCR project outputs published. Each includes: a reproducible code repository, a rendered Quarto document or live dashboard, a plain-language summary, and a methodology note. Submit to one peer --- ideally someone with education research background --- for a written critique. Incorporate at least three substantive changes based on that feedback before proceeding to Phase 3. Target: a working version of all four outputs within 8--10 weeks of starting Phase 2. 
+- Explain how a school's Quality Review score is determined
+- What is a NYSSIS ID and why does it exist?
+- List the demographic subgroups required for ESSA reporting
+- What is a D75 school?
+
+* Phase 3 --- APPLICATION | Months 15--24
+** Credentialing, Network, and Income
+Convert competence into verifiable credentials and market-facing presence.
+** Credentialing Strategy
+Credentials matter in institutional education hiring. Your published portfolio is your primary credential, but it needs to be legible to HR gatekeepers. The following are the minimum threshold:
+- GitHub profile with consistent activity, clean repositories, and READMEs that explain what each project does
+- A personal site or Quarto Pub profile that presents the portfolio as a coherent body of work, not just a list of files
+- At least one piece of work cited or referenced outside your own channels --- a blog post by someone else, a conference poster, a mention in a district newsletter
+- A one-page technical resume that lists specific tools and specific outputs, not generic skill claims
+
+** On Formal Degrees
+Many senior analyst postings require an MA or EdD in education research, policy, or a related field. Your NYCPS experience and published portfolio can substitute for this in some organizations --- charter networks, ed-tech companies, and nonprofits are more flexible than large districts. If your target is a DOE central office or research role, a graduate credential will likely be required eventually. Don't let this paralyze Phase 3, but plan for it honestly. |
+** Target Role Profiles
+These are the roles you are positioning for. Understanding their differences shapes what you emphasize in your portfolio and how you describe yourself.
+
+| *Benchmark*                           | *What you must do without AI assistance*                                                                                                                     | *Verification*                                      |
+|---------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------|
+| *Data Analyst, Charter Network*       | Smaller team, broader scope, faster-moving. High value on Python/SQL fluency, dashboard building, quick turnaround. Domain knowledge valued but not assumed. | Most accessible entry point                         |
+| *Research Analyst, NYC DOE*           | Slower hiring, more formal, often requires prior DOE experience or graduate credentials. Values methodological rigor and knowledge of DOE sy                 | 18--36 month target; credential likely needed       |
+| *Senior Analyst, Education Nonprofit* | stems. Policy-facing. Values communication as much as technical skill. Published work is a strong differentiator. Smaller orgs more flexible on credentials. | Strong fit for your profile                         |
+| *Data Strategist / Manager*           | Hybrid technical-leadership role. Requires both technical depth and ability to advise others. Usually requires several years of analyst experience first.    | Phase 4 target, not Phase 3                         |
+| *Ed-Tech Company (data/analytics)*    | Most similar to tech industry norms. Strong Python/SQL emphasis. Domain knowledge a differentiator over generalist candidates. Often remote.                 | Good fit; portfolio more important than credentials |
+** Network Strategy
+In education data, the field is small enough that network is decisive. The following are not optional:
+- Attend at least one NYAS, SREE, or AERA conference in Phase 3 --- not to present, to meet people
+New York Academy of Sciences
+Society for Research on Educational Effectiveness
+American Education Research Association
+- Identify 5--8 people doing the work you want to do. Read their published work. Engage with it in writing. Ask a specific, non-generic question.
+- Connect with NYCPS data managers and research directors you've interacted with as a teacher. A warm introduction from a former colleague is worth more than 20 cold applications.
+- Post about your published work --- briefly, specifically, with a link. LinkedIn is not beneath you. One specific post about a finding is better than a profile update.
+- The Office of Student Pathways is an explicit target audience for the CCR project. If the dashboard or memo is good, it is a direct conversation starter with the people iterating on the metric.
+* Phase 3 Gate --- Readiness Criteria
+** *GATE 3 --- MARKET  READINESS
+You are ready to apply when: (1) The CCR project is published and has been read and critiqued by at least one person outside your network. (2) You can walk through any output in a 20-minute technical screen without notes. (3) You can answer 'what are the limitations of this analysis?' before the interviewer asks. (4) You have applied for at least 3 positions and completed at least 1 technical screen --- even if you are not ready. The screen will tell you more than this document can. |
+* Appendix: Reference Benchmarks
+** *AI Use Policy for This Plan*
+This is the working rule: AI is a tutor, not a ghostwriter.
+- AI-permitted use: Ask it to explain a concept, check your understanding of a definition, suggest resources, review your written explanation of a method
+- AI-permitted use: After you've written code that works, ask it to critique or optimize it
+- AI-permitted use: Rubber duck debugging --- describe a problem to AI after you've genuinely tried to solve it
+- AI-prohibited use: Writing any code that goes into a portfolio piece before you understand it line by line
+- AI-prohibited use: Producing any written analysis, methodology note, or data dictionary that you cannot regenerate independently
+- AI-prohibited use: Passing any gate described in this document
+
+** The Self Deception Risk
+The specific failure mode to watch for: you use AI to build something, it works, you feel competent, but you haven't actually learned anything. Six months later you're in an interview and can't explain your own portfolio. This is the most common and most damaging misuse of AI as a learning tool. The antidote is to rebuild things from scratch after AI helps you understand them --- not once, but repeatedly.
+** Recommended Resources (Curated, Not Exhaustive)
+** *Statistics*
+- OpenIntro Statistics (free) --- start here; covers everything in Phase
+  1 without calculus
+https://openintro-ims.netlify.app/
+Introudction to Modern Statistscs
+cloned
+- Statistical Rethinking by Richard McElreath --- for Phase 2 depth;
+  Bayesian, but the conceptual framework is the value
+https://xcelab.net/rm/
+- Common statistical mistakes in education research --- search for work by Andrew Gelman
+  and Kristin Rowan on replication and misuse of p-values in education studies
+
+** Python / Data
+- Python for Data Analysis by Wes McKinney (pandas author) --- the authoritative reference
+  https://wesmckinney.com/book/
+  cloned
+- Kaggle's free pandas course --- mechanical but fast for filling gaps
+- Mode Analytics SQL tutorial --- covers window functions with real examples
+
+** R / Visualization
+- R for Data Science by Hadley Wickham (free online) --- the standard curriculum
+- Fundamentals of Data Visualization by Claus Wilke (free online) --- the conceptual layer that ggplot2 skills need
+- Quarto documentation --- read the official docs, not tutorials; the docs are good
+
+** *Education Data / Domain*
+- NYSED data portal and technical documentation --- read the actual methodology notes, not summaries
+- NYCPS Educator Guide for School Quality Reports, Appendix A --- your primary reference for CCR scoring rubric and metric variable name
+  definitions
+- Urban Institute education data resources --- high quality, often city-specific
+- CREDO studies on charter school performance --- read to understand methodological debates in the field, not just findings
+
+- NYU Steinhardt and Teachers College working papers --- how education
+  researchers in your city frame questions
+
+** Monthly Review Checklist
+
+At the end of each month, answer these without AI:
+- What can I do now that I could not do 30 days ago? Be specific.
+- What did I try to do this month that I could not do? What specifically blocked me?
+- Did I use AI as a crutch at any point? Where? What should I do instead?
+- Is there something in my stack I am still just pattern-matching without understanding? Name it.
+- What is the one technical thing I will master completely in the next 30 days?
+
+/The wave favors those who know things deeply, not those who can access things quickly./
+
+Build depth. The tools will keep changing.
+
+
