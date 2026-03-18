@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>python_audit – Data Analysis Learning Portfolio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-960fc19d9da332a83abe416fce972e1d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Data Analysis Learning Portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../learning-plan.html"> 
+<span class="menu-text">Learning Plan</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../notebooks/python_audit.html" aria-current="page"> 
+<span class="menu-text">python_audit.html</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<p>NYCPS created the College and Career Readiness metric to replace the Career Readiness Index. The effort tracks the NYSED CCCR College, Career, and (?Community) Readiness value, which will be used for grauation certification. Students are awarded points out of 100 for milestones that align with college and career readiness, such as AP exam scores and apprenticeships.</p>
+<p>Load and inspect the school quality dataset. Dataset is not available through the nycschools package, and is large for the SODA Api. Exported manually from https://data.cityofnewyork.us/Education/School-Quality-Reports-Data/dnpx-dfnc/</p>
+<div id="df077954" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nycschools <span class="im">import</span> schools</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="03ae71cb" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>school_demographics_df <span class="op">=</span> schools.load_school_demographics()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>school_demographics_df.columns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>Index(['dbn', 'beds', 'district', 'geo_district', 'boro', 'school_name',
+       'short_name', 'ay', 'year', 'school_type', 'school_level',
+       'total_enrollment', 'grade_3k', 'grade_pk', 'grade_k', 'grade_1',
+       'grade_2', 'grade_3', 'grade_4', 'grade_5', 'grade_6', 'grade_7',
+       'grade_8', 'grade_9', 'grade_10', 'grade_11', 'grade_12',
+       'non_binary_n', 'non_binary_pct', 'female_n', 'female_pct', 'male_n',
+       'male_pct', 'asian_n', 'asian_pct', 'black_n', 'black_pct',
+       'hispanic_n', 'hispanic_pct', 'multi_racial_n', 'multi_racial_pct',
+       'native_american_n', 'native_american_pct', 'white_n', 'white_pct',
+       'missing_race_ethnicity_data_n', 'missing_race_ethnicity_data_pct',
+       'swd_n', 'swd_pct', 'ell_n', 'ell_pct', 'poverty_n', 'poverty_pct',
+       'eni', 'clean_name', 'zip'],
+      dtype='str')</code></pre>
+</div>
+</div>
+<div id="b7aee820" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>school_quality_df <span class="op">=</span> pandas.read_csv(<span class="st">"../data/school_quality.csv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>school_quality_df.columns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>Index(['School Year', 'Report Year',
+       'District, Borough and School Number (DBN)', 'School Name',
+       'Report Type', 'School Type', 'Metric Variable Name',
+       'Metric Display Name', 'Number of Students', 'Metric Value',
+       'Comparison Group Average', 'Metric Score'],
+      dtype='str')</code></pre>
+</div>
+</div>
+<div id="da556359" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data for which unique is sensical shall be described as categorical data.</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>school_quality_df[<span class="st">"School Type"</span>].unique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;ArrowStringArray&gt;
+[          'Elementary',                  'K-8',          'High School',
+               'Middle', 'High School Transfer',                  'K-2',
+                 'YABC',                  'K-3',                  'K-1',
+                  'D75']
+Length: 10, dtype: str</code></pre>
+</div>
+</div>
+<div id="0aa088b2" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>school_demographics_df[<span class="st">"ay"</span>].unique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([2020, 2021, 2022, 2023, 2024, 2017, 2018, 2019, 2016, 2013, 2014,
+       2015, 2005, 2006, 2007, 2008, 2009, 2010, 2011])</code></pre>
+</div>
+</div>
+<p>School quality is a dataset of [1493770 rows x 12 columns] of school quality metrics, by school and year. Metrics are unique by school type. Data collection and validation challenges stemming from the real world experiences of students and educators. The CCR replaces the CRI.</p>
+<div id="5642f064" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all of the variable display name pairs to lookup in the Educator's Guide. https://infohub.nyced.org/docs/default-source/default-document-library/finalized-2024-25-educator-guide-hs-1.pdf</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> school_quality_df[[<span class="st">"Metric Variable Name"</span>,<span class="st">"Metric Display Name"</span>]].drop_duplicates()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>ccr_cri_metrics <span class="op">=</span> pandas.concat([metrics[metrics[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"cri"</span>)],metrics[metrics[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"ccr"</span>)]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="17e2189e" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ccr_cri_df <span class="op">=</span> school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>].isin(ccr_cri_metrics[<span class="st">"Metric Variable Name"</span>])]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="acabab86" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># merge school quality metrics with demographics</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>combined_df <span class="op">=</span> pandas.merge(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    left<span class="op">=</span>ccr_cri_df,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    right<span class="op">=</span>school_demographics_df,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span>[<span class="st">"District, Borough and School Number (DBN)"</span>, <span class="st">"School Year"</span>],</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span>[<span class="st">"dbn"</span>, <span class="st">"ay"</span>]</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>combined_df.head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;bound method NDFrame.head of        School Year  Report Year District, Borough and School Number (DBN)  \
+0             2019         2020                                    17K524   
+1             2019         2020                                    17K524   
+2             2019         2020                                    17K524   
+3             2019         2020                                    17K524   
+4             2017         2018                                    02M416   
+...            ...          ...                                       ...   
+35357         2024         2025                                    32K556   
+35358         2024         2025                                    32K564   
+35359         2024         2025                                    32K564   
+35360         2024         2025                                    32K564   
+35361         2024         2025                                    32K564   
+
+                                             School Name Report Type  \
+0          International High School at Prospect Heights          HS   
+1          International High School at Prospect Heights          HS   
+2          International High School at Prospect Heights          HS   
+3          International High School at Prospect Heights          HS   
+4                          Eleanor Roosevelt High School          HS   
+...                                                  ...         ...   
+35357  Bushwick Leaders High School for Academic Exce...          HS   
+35358                     Bushwick Community High School         HST   
+35359                     Bushwick Community High School         HST   
+35360                     Bushwick Community High School         HST   
+35361                     Bushwick Community High School         HST   
+
+                School Type    Metric Variable Name  \
+0               High School  nocat_cri_engl_4yr_all   
+1               High School  nocat_cri_engl_6yr_all   
+2               High School  nocat_cri_math_4yr_all   
+3               High School  nocat_cri_math_6yr_all   
+4               High School    pct_cri_math_6yr_all   
+...                     ...                     ...   
+35357           High School             ccr_6yr_all   
+35358  High School Transfer             ccr_6yr_all   
+35359  High School Transfer      ccr_6yr_growth_all   
+35360  High School Transfer    ccr_6yr_growth_oa_uc   
+35361  High School Transfer           ccr_6yr_oa_uc   
+
+                                     Metric Display Name Number of Students  \
+0      % Attaining English College Readiness Standard...                100   
+1      % Attaining English College Readiness Standard...                104   
+2      % Attaining Math College Readiness Standard (w...                100   
+3      % Attaining Math College Readiness Standard (6...                104   
+4      % Attaining Math College Readiness Standard (6...                137   
+...                                                  ...                ...   
+35357  6-Year College and Career Readiness - All Stud...                111   
+35358  Transfer School College and Career Readiness -...                 64   
+35359  Growth in Transfer School College and Career R...                 64   
+35360  Growth in Transfer School College and Career R...                 43   
+35361  Transfer School College and Career Readiness -...                 43   
+
+       Metric Value  ...  missing_race_ethnicity_data_pct  swd_n   swd_pct  \
+0             0.170  ...                         0.000000   19.0  0.051351   
+1             0.288  ...                         0.000000   19.0  0.051351   
+2             0.830  ...                         0.000000   19.0  0.051351   
+3             0.875  ...                         0.000000   19.0  0.051351   
+4             1.000  ...                         0.001848   77.0  0.142329   
+...             ...  ...                              ...    ...       ...   
+35357        37.900  ...                         0.013928   84.0  0.233983   
+35358        15.100  ...                         0.000000   15.0  0.147059   
+35359         0.135  ...                         0.000000   15.0  0.147059   
+35360         0.117  ...                         0.000000   15.0  0.147059   
+35361        12.700  ...                         0.000000   15.0  0.147059   
+
+       ell_n   ell_pct  poverty_n poverty_pct       eni  \
+0      311.0  0.840541        304    0.821622  0.960000   
+1      311.0  0.840541        304    0.821622  0.960000   
+2      311.0  0.840541        304    0.821622  0.960000   
+3      311.0  0.840541        304    0.821622  0.960000   
+4        0.0  0.000000        120    0.221811  0.231847   
+...      ...       ...        ...         ...       ...   
+35357  132.0  0.367688        328    0.913649  0.933181   
+35358   34.0  0.333333         87    0.852941  0.908735   
+35359   34.0  0.333333         87    0.852941  0.908735   
+35360   34.0  0.333333         87    0.852941  0.908735   
+35361   34.0  0.333333         87    0.852941  0.908735   
+
+                                              clean_name    zip  
+0          international high school at prospect heights  11225  
+1          international high school at prospect heights  11225  
+2          international high school at prospect heights  11225  
+3          international high school at prospect heights  11225  
+4                          eleanor roosevelt high school  10021  
+...                                                  ...    ...  
+35357  bushwick leaders high school for academic exce...  11385  
+35358                     bushwick community high school  11221  
+35359                     bushwick community high school  11221  
+35360                     bushwick community high school  11221  
+35361                     bushwick community high school  11221  
+
+[35362 rows x 68 columns]&gt;</code></pre>
+</div>
+</div>
+<div id="69eb30c4" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_filter(df, mask):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Apply mask to df"""</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df[mask]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> my_filter(combined_df, combined_df[<span class="st">"female_pct"</span>] <span class="op">&gt;=</span> <span class="fl">0.05</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> schools_with_girls[[<span class="st">"ay"</span>, <span class="st">"female_pct"</span>]]</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> combined_df.loc[combined_df[<span class="st">"female_pct"</span>] <span class="op">&gt;=</span> <span class="fl">0.05</span>, [<span class="st">"ay"</span>, <span class="st">"female_pct"</span>]]</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>schools_with_girls.groupby(<span class="st">"ay"</span>).median()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">female_pct</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">ay</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2015</th>
+<td>0.489000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2016</th>
+<td>0.489000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2017</th>
+<td>0.491632</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2018</th>
+<td>0.492754</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2019</th>
+<td>0.491857</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2023</th>
+<td>0.482935</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2024</th>
+<td>0.478921</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="c29af8ae" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.index</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>Index([    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,
+       ...
+       35352, 35353, 35354, 35355, 35356, 35357, 35358, 35359, 35360, 35361],
+      dtype='int64', length=35115)</code></pre>
+</div>
+</div>
+<div id="98e0edfe" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls[schools_with_girls[<span class="st">"female_pct"</span>] <span class="op">&lt;</span> <span class="fl">0.33</span>].groupby(<span class="st">"ay"</span>).median()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">female_pct</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">ay</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2015</th>
+<td>0.223000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2016</th>
+<td>0.219000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2017</th>
+<td>0.218471</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2018</th>
+<td>0.228487</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2019</th>
+<td>0.245353</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2023</th>
+<td>0.248521</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2024</th>
+<td>0.221635</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="d9b130d3" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.sort_values(<span class="st">"female_pct"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ay</th>
+<th data-quarto-table-cell-role="th">school_name</th>
+<th data-quarto-table-cell-role="th">female_pct</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">25027</th>
+<td>2016</td>
+<td>A-Tech High School</td>
+<td>0.050</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">25028</th>
+<td>2016</td>
+<td>A-Tech High School</td>
+<td>0.050</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">25029</th>
+<td>2016</td>
+<td>A-Tech High School</td>
+<td>0.050</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">26712</th>
+<td>2015</td>
+<td>Automotive High School</td>
+<td>0.056</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">26710</th>
+<td>2015</td>
+<td>Automotive High School</td>
+<td>0.056</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">30988</th>
+<td>2023</td>
+<td>Young Women's Leadership School, Queens</td>
+<td>1.000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">30983</th>
+<td>2023</td>
+<td>Young Women's Leadership School, Queens</td>
+<td>1.000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">30982</th>
+<td>2023</td>
+<td>Young Women's Leadership School, Queens</td>
+<td>1.000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">23596</th>
+<td>2017</td>
+<td>Young Women's Leadership School, Astoria</td>
+<td>1.000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">20845</th>
+<td>2017</td>
+<td>Women's Academy of Excellence</td>
+<td>1.000</td>
+</tr>
+</tbody>
+</table>
+
+<p>35115 rows × 3 columns</p>
+</div>
+</div>
+</div>
+<div id="4f4f162b" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.describe</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;bound method NDFrame.describe of          ay                                        school_name  female_pct
+0      2019      International High School at Prospect Heights    0.375676
+1      2019      International High School at Prospect Heights    0.375676
+2      2019      International High School at Prospect Heights    0.375676
+3      2019      International High School at Prospect Heights    0.375676
+4      2017                      Eleanor Roosevelt High School    0.604436
+...     ...                                                ...         ...
+35357  2024  Bushwick Leaders High School for Academic Exce...    0.487465
+35358  2024                     Bushwick Community High School    0.441176
+35359  2024                     Bushwick Community High School    0.441176
+35360  2024                     Bushwick Community High School    0.441176
+35361  2024                     Bushwick Community High School    0.441176
+
+[35115 rows x 3 columns]&gt;</code></pre>
+</div>
+</div>
+<p>Young women do not enroll in tech. This is not a news flash. Can we see an improvement in the data?</p>
+<div id="091bcc79" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> school_by_type(school_type):</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    criterion <span class="op">=</span> school_quality_df[<span class="st">"School Type"</span>]<span class="op">==</span>school_type</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> school_quality_df[criterion]</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>middle_df <span class="op">=</span> school_by_type(<span class="st">"Middle"</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>hs_df <span class="op">=</span> school_by_type(<span class="st">"High School"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Filter rows by a column, group by a column, compute a mean</p>
+<div id="96970357" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ccr_df <span class="op">=</span> school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"ccr"</span>)]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>ccr_by_year <span class="op">=</span> ccr_df.groupby(by<span class="op">=</span><span class="st">"Report Year"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For what years have ccr metrics been reported?</p>
+<div id="1bbd4454" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ccr_by_year.count()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">School Year</th>
+<th data-quarto-table-cell-role="th">District, Borough and School Number (DBN)</th>
+<th data-quarto-table-cell-role="th">School Name</th>
+<th data-quarto-table-cell-role="th">Report Type</th>
+<th data-quarto-table-cell-role="th">School Type</th>
+<th data-quarto-table-cell-role="th">Metric Variable Name</th>
+<th data-quarto-table-cell-role="th">Metric Display Name</th>
+<th data-quarto-table-cell-role="th">Number of Students</th>
+<th data-quarto-table-cell-role="th">Metric Value</th>
+<th data-quarto-table-cell-role="th">Comparison Group Average</th>
+<th data-quarto-table-cell-role="th">Metric Score</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Report Year</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2024</th>
+<td>3803</td>
+<td>3803</td>
+<td>3803</td>
+<td>3803</td>
+<td>3803</td>
+<td>3803</td>
+<td>3803</td>
+<td>3803</td>
+<td>2515</td>
+<td>1722</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2025</th>
+<td>4006</td>
+<td>4006</td>
+<td>4006</td>
+<td>4006</td>
+<td>4006</td>
+<td>4006</td>
+<td>4006</td>
+<td>4006</td>
+<td>2712</td>
+<td>1918</td>
+<td>922</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>CCR metrics have been reported for the 2024 and 2025 school year. Metric Score, the normed value relative to Comparison Group, was reported for the first time in 2025.</p>
+<p>College and Career Preparatory Course Index pct_cpci_oa_uc This metric shows the percentage of students in the school’s four-year cohort who successfully completed approved rigorous courses and assessments after four years of high school.</p>
+<p>For what years was the pct_cpci_oa_uv reported.</p>
+<div id="680817ad" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>preparatory_course_index_df <span class="op">=</span> school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>]<span class="op">==</span><span class="st">"pct_cpci_oa_uv"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="3a811d9c" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>preparatory_course_index_df.head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;bound method NDFrame.head of Empty DataFrame
+Columns: [School Year, Report Year, District, Borough and School Number (DBN), School Name, Report Type, School Type, Metric Variable Name, Metric Display Name, Number of Students, Metric Value, Comparison Group Average, Metric Score]
+Index: []&gt;</code></pre>
+</div>
+</div>
+<div id="f159ca0e" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"pct_cpci_oa_uc"</span>)].groupby(by<span class="op">=</span><span class="st">"Report Year"</span>)[<span class="st">"Metric Value"</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<pre><code>Report Year
+2016    0.070554
+2017    0.070786
+2018    0.065679
+2019    0.070269
+2020    0.068727
+2021    0.072018
+2022    0.080246
+2023    0.099860
+2024    0.134140
+2025    0.138789
+Name: Metric Value, dtype: float64</code></pre>
+</div>
+</div>
+<p>Join on DBN</p>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/MrAllatta\.github\.io\/learning\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
