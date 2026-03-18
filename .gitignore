@@ -1,1 +1,10 @@
 .venv/
+__pycache__
+*.pyc
+.quarto
+_site
+learning.code-workspace
+.dir-locals.el
+.python-version
+data/
+figures/
