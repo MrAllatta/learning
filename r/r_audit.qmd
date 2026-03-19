@@ -1,0 +1,27 @@
+---
+title: "r audit"
+date: "03/18/2026"
+format:
+  html:
+    code-fold: true
+---
+
+# Import School Quality
+```{r}
+#| label: load readr
+library(readr)
+```
+
+```{r}
+#| label: load data.table
+library(data.table)
+```
+
+```{r}
+#| label: load school_quality.csv
+file <- "../data/school_quality.csv"
+# school_quality <- read.table(file=file, header=TRUE, sep=",")
+# school_quality <- read_delim(file=file, delim=",") 
+school_quality <- fread(input=file, sep=',', header=TRUE)
+head(school_quality)
+```
