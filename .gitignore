@@ -10,3 +10,5 @@ data/
 figures/
 /.quarto/
 **/*.quarto_ipynb
+activate.R
+.Rprofile
