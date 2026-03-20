@@ -334,7 +334,7 @@
     "href": "index.html",
     "title": "My Learning Blog",
     "section": "",
-    "text": "This is my education analytics learning portfolio and blog.\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nMar 18, 2026\n\n\nfirst post\n\n\nEric Allatta\n\n\n\n\n\n\nNo matching items",
+    "text": "This is my education analytics learning portfolio and blog.\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nMar 20, 2026\n\n\nsecond post\n\n\nEric Allatta\n\n\n\n\n\n\nMar 18, 2026\n\n\nfirst post\n\n\nEric Allatta\n\n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Home"
     ]
@@ -347,6 +347,13 @@
     "text": "Embarking\nThis learning blog marks a beginning. Something of a formal step toward transitioning to a new career. My experience as a NYC computer science teacher and school spreadsheet builder has given me a foundation in institutional education and computing. I seek to build on the combined foundation toward education data systems and analysis. My hope is to find sustainability in a career that calls upon me as a problem solver, communicator, and mathematician."
   },
   {
+    "objectID": "r/flight.html",
+    "href": "r/flight.html",
+    "title": "Lessons from flight package",
+    "section": "",
+    "text": "Lessons from flight package\nVectors, Factors and Flight\nFactor Vectors are an important concept. Factor levels. Order of a factor. Factors seem like objects with properties. A factor has an internal vector c(…) and other meta data such as levels=… and ordered=… factor(name=c(…), …=…, ) Only store unique values.\n\nfactor(c('a', 'b', 'c'),\n#levels=, \n#labels=, \nexclude=NA, \nordered=is.ordered(x=c('c', 'b', 'a')),nmax=NA)\n\n[1] a b c\nLevels: a b c\n\n\nCreate a set of indicator or ‘dummy’ variables using model.matrix. One colomn for each level of the factor.\n\nnf &lt;- factor(c('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'))\nmodel.matrix(~ nf - 1) # with 1 if a row contains that level or 0 otherwise\n\n   nfa nfb nfc nfd nfe nff nfg nfh nfi nfj\n1    1   0   0   0   0   0   0   0   0   0\n2    0   1   0   0   0   0   0   0   0   0\n3    0   0   1   0   0   0   0   0   0   0\n4    0   0   0   1   0   0   0   0   0   0\n5    0   0   0   0   1   0   0   0   0   0\n6    0   0   0   0   0   1   0   0   0   0\n7    0   0   0   0   0   0   1   0   0   0\n8    0   0   0   0   0   0   0   1   0   0\n9    0   0   0   0   0   0   0   0   1   0\n10   0   0   0   0   0   0   0   0   0   1\nattr(,\"assign\")\n [1] 1 1 1 1 1 1 1 1 1 1\nattr(,\"contrasts\")\nattr(,\"contrasts\")$nf\n[1] \"contr.treatment\""
+  },
+  {
     "objectID": "r/r_audit.html",
     "href": "r/r_audit.html",
     "title": "r audit",
@@ -357,11 +364,11 @@
     ]
   },
   {
-    "objectID": "r/flight.html",
-    "href": "r/flight.html",
-    "title": "Lessons from flight package",
+    "objectID": "posts/2026_03_19__second_post/index.html",
+    "href": "posts/2026_03_19__second_post/index.html",
+    "title": "second post",
     "section": "",
-    "text": "Lessons from flight package\nVectors, Factors and Flight\nFactor Vectors are an important concept. Factor levels. Order of a factor. Factors seem like objects with properties. A factor has an internal vector c(…) and other meta data such as levels=… and ordered=… factor(name=c(…), …=…, ) Only store unique values.\n\nfactor(c('a', 'b', 'c'),\n#levels=, \n#labels=, \nexclude=NA, \nordered=is.ordered(x=c('c', 'b', 'a')),nmax=NA)\n\n[1] a b c\nLevels: a b c\n\n\nCreate a set of indicator or ‘dummy’ variables using model.matrix. One colomn for each level of the factor.\n\nnf &lt;- factor(c('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'))\nmodel.matrix(~ nf - 1) # with 1 if a row contains that level or 0 otherwise\n\n   nfa nfb nfc nfd nfe nff nfg nfh nfi nfj\n1    1   0   0   0   0   0   0   0   0   0\n2    0   1   0   0   0   0   0   0   0   0\n3    0   0   1   0   0   0   0   0   0   0\n4    0   0   0   1   0   0   0   0   0   0\n5    0   0   0   0   1   0   0   0   0   0\n6    0   0   0   0   0   1   0   0   0   0\n7    0   0   0   0   0   0   1   0   0   0\n8    0   0   0   0   0   0   0   1   0   0\n9    0   0   0   0   0   0   0   0   1   0\n10   0   0   0   0   0   0   0   0   0   1\nattr(,\"assign\")\n [1] 1 1 1 1 1 1 1 1 1 1\nattr(,\"contrasts\")\nattr(,\"contrasts\")$nf\n[1] \"contr.treatment\""
+    "text": "The path problem\nR working directory default in renv project is project root. Quarto render uses knitr, which uses the current location of the file to be rendered as root.\n\n\nThe here package\nThe easiest solution is the ‘here’ package\n\nlibrary('here')\n\nread_delim(here('data/hs_directory_2025.csv'), skip=1, trim_ws=TRUE, delim=',')"
   },
   {
     "objectID": "about.html",
