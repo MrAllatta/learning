@@ -7,49 +7,80 @@ format:
 ---
 
 # Import School Data
+
 ```{r}
-library(tidyverse)
-library(readxl)
+#| label: include_code
+#| echo: true
+#| eval: false
+{{< include r_audit.R >}}
+```
+
+```{r}
+#| label: source_code
+#| echo: false
+#| eval: true
 library(here)
+source(here('r/r_audit.R'))
 ```
 
-```{r}   
-#| label: load school_quality.csv
-file <- here("data/school_quality.csv")
-# school_quality <- read.table(file=file, header=TRUE, sep=",")
-school_quality <- read_delim(file=file,
-delim=",",
-col_names=c('ay', 'ry', 'dbn', 'school_name', 'report_type', 'school_type', 'metric_variable', 'metric_display', 'students_n', 'metric_value', 'comparison_group_average', 'metric_score'),
-col_types=cols(
-  ay=col_integer(),
-  ry=col_integer(),
-  dbn=col_character(),
-  school_name=col_character(),
-  report_type=col_character(),
-  school_type=col_character(),
-  metric_variable=col_character(),
-  metric_display=col_character(),
-  students_n=col_number(),
-  metric_value=col_double(),
-  comparison_group_average=col_double(),
-  metric_score=col_double()
-),
-skip=1)
-# school_quality <- fread(input=file, sep=',', header=TRUE)
-tail(school_quality)
+# HS Directory
+## Program parsing
+Each row of the hs_directory dataset is a school. Schools house one or more programs, which independently enroll students. Programs offer a number of seats available to general education and special education students and may also audition students. Programs can screen for grades and have priorities for enrolling from geographic areas and underrepresented minorities.
+
+We want both one row per school and one row per program data. To get one row per program we 
+
+```{r}
+column_schema_helper <- function() {
+  cols <- names(hs_directory)
+  cols_len <- cols %>%
+    tibble() %>%
+    mutate(
+      n_chars = nchar(cols)
+    ) %>%
+    arrange(desc(n_chars))
+  cols_len %>% head(20)
+}
 ```
 
 ```{r}
-hs_directory <- local(
-  {
-    url <- c('https://infohub.nyced.org/docs/default-source/default-document-library/ose/fall-2025---hs-directory-datab85f64a0-05b9-439a-8e29-052ce60a5d86.xlsx')
-    download.file(url=url,
-      destfile=here('data/hs_directory_2025.xlsx'),
-      method='wget')
-    destfile=file <- here('data/hs_directory_2025.xlsx')
-    hs_directory <- read_xlsx(path=destfile, sheet='Data') %>% write_csv(here('data/hs_directory_2025.csv'))
-  }
-)
-tail(hs_directory)
+column_schema <- column_schema_helper()
+print(column_schema)
 ```
 
+```{r}
+ 
+list_matches <- function(regx) {
+  regx_list <- list(
+    '^grade9swdapplicatsperseat\\d+$',
+    'grade9geapplicantsperseat\\d+'
+  )
+  cols = names(hs_directory)
+  cols %>% grep(regx)
+
+}
+```
+
+
+```{r}
+local({
+  # cols %>% grep("^grade9geapplicantsperseat\\d+$", ., value=TRUE)
+  # cols %>% grep("^seats9ge\\d$", ., value=TRUE)
+  # cols %>% grep("^requirement_\\d_\\d+$", ., value=TRUE)
+  cols %>% grep("^program\\d+$", ., value=TRUE)
+})
+```
+
+
+```{r}
+classify_families <- function() {
+  cols_tbl = tibble(col = names(hs_directory)) %>%
+    mutate(
+      family= case_when(
+        str_detect(col, "grade9geapplicantsperseat\\d+$") ~ "grade9geapplicantsperseat",
+        str_detect(col, "^seats9ge\\d$") ~ "seats9ge",
+        TRUE ~ "other"
+      )
+    )
+    cols_tbl %>% count(family, sort=TRUE)
+}
+```
