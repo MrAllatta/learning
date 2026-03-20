@@ -1,0 +1,40 @@
+library(tidyverse)
+library(readxl)
+library(here)
+
+file <- here("data/school_quality.csv")
+# school_quality <- read.table(file=file, header=TRUE, sep=",")
+school_quality <- read_delim(file=file,
+delim=",",
+col_names=c('ay', 'ry', 'dbn', 'school_name', 'report_type', 'school_type', 'metric_variable', 'metric_display', 'students_n', 'metric_value', 'comparison_group_average', 'metric_score'),
+col_types=cols(
+  ay=col_integer(),
+  ry=col_integer(),
+  dbn=col_character(),
+  school_name=col_character(),
+  report_type=col_character(),
+  school_type=col_character(),
+  metric_variable=col_character(),
+  metric_display=col_character(),
+  students_n=col_number(),
+  metric_value=col_double(),
+  comparison_group_average=col_double(),
+  metric_score=col_double()
+),
+skip=1)
+# school_quality <- fread(input=file, sep=',', header=TRUE)
+tail(school_quality)
+
+
+# download the infohub excel file, read it in, and cache a csv while silently passing back the tibble.
+hs_directory <- local(
+  {
+    url <- c('https://infohub.nyced.org/docs/default-source/default-document-library/ose/fall-2025---hs-directory-datab85f64a0-05b9-439a-8e29-052ce60a5d86.xlsx')
+    download.file(url=url,
+      destfile=here('data/hs_directory_2025.xlsx'),
+      method='wget')
+    destfile=file <- here('data/hs_directory_2025.xlsx')
+    hs_directory <- read_xlsx(path=destfile, sheet='Data') %>% write_csv(here('data/hs_directory_2025.csv'))
+  }
+)
+tail(hs_directory)
