@@ -11,8 +11,10 @@ website:
         text: About
       - href: learning-plan.qmd
         text: Learning Plan
-      - r/r_audit.qmd
-      - notebooks/python_audit.ipynb
+      - href: r/r_audit.qmd
+        text: R Audit
+      - href: notebooks/python_audit.ipynb
+        text: Python Audit
       
 format:
   html:
