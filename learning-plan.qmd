@@ -42,7 +42,7 @@ Establish an honest baseline. No learning yet. Just measurement.
 Do each of these without AI assistance. Record where you get stuck ---
 that\'s your Phase 1 curriculum.
 
-## Python Audit (2 hours, no AI, no Stack Overflow)
+### Python Audit (2 hours, no AI, no Stack Overflow)
 
 -   Load a CSV of NYCPS data into a pandas DataFrame
 -   Filter rows by a condition, group by a column, compute a mean
@@ -52,7 +52,7 @@ that\'s your Phase 1 curriculum.
 -   Write a function that takes a DataFrame and returns a summary
 -   Connect to a local PostgreSQL database and run a query
 
-## R Audit (2 hours, no AI)
+### R Audit (2 hours, no AI)
 
 -   Load a CSV and inspect its structure using tidyverse
 -   Write a dplyr pipeline: filter, select, mutate, group~by~, summarize
@@ -61,13 +61,13 @@ that\'s your Phase 1 curriculum.
     of the output in writing
 -   Render a Quarto document with inline R output to HTML
 
-## SQL Audit (1 hour, no AI)
+### SQL Audit (1 hour, no AI)
 
 -   Write a query with a JOIN, a WHERE clause, and a GROUP BY
 -   Write a subquery
 -   Explain what an index does and when you\'d add one
 
-## Statistics Audit (written, 45 minutes)
+### Statistics Audit (written, 45 minutes)
 
 Answer these in writing, as if explaining to a smart non-statistician:
 
@@ -79,7 +79,7 @@ Answer these in writing, as if explaining to a smart non-statistician:
 -   What is chronic absenteeism? How is it calculated? Why does the 20%
     threshold matter?
 
-## Domain Audit (written, 30 minutes)
+### Domain Audit (written, 30 minutes)
 
 -   Name and describe five data systems used in NYCPS
 -   Explain how a school\'s Quality Review score is determined
@@ -101,14 +101,14 @@ couldn\'t do it.
 Achieve reliable, unassisted competence in a focused core. No new tools.
 No side projects.
 
-## What you are deferring
+### What you are deferring
 
 Emacs configuration, Positron exploration, Django feature development,
 new Kaggle competitions, gh-pages customization. These are real, useful
 things. They are Phase 2 and 3. Every hour spent on them in Phase 1 is a
 debt against your foundation.
 
-## Stack Decision: What You Are Committing To
+### Stack Decision: What You Are Committing To
 
 For Phase 1, your working stack is exactly this, nothing else:
 
@@ -121,9 +121,9 @@ For Phase 1, your working stack is exactly this, nothing else:
   **Version control**      Git + GitHub (command line, not GUI)                  Can commit, branch, push, resolve conflict
   ------------------------ ----------------------------------------------------- --------------------------------------------
 
-# Phase 1 Technical Benchmarks
+## Phase 1 Technical Benchmarks
 
-## R: Statistical Workflow Fluency
+### R: Statistical Workflow Fluency
 
   --------------------- ------------------------------------------------------------------------------- ---------------------
   **Benchmark**         **What you must do without AI assistance**                                      **Verification**
@@ -134,7 +134,7 @@ For Phase 1, your working stack is exactly this, nothing else:
   **Reproducibility**   renv lockfile, seed-set, no absolute paths in code                              Code review
   --------------------- ------------------------------------------------------------------------------- ---------------------
 
-## SQL: Operational Fluency
+### SQL: Operational Fluency
 
   ---------------------- ---------------------------------------------------------------------------- ------------------
   **Benchmark**          **What you must do without AI assistance**                                   **Verification**
@@ -146,7 +146,7 @@ For Phase 1, your working stack is exactly this, nothing else:
   **Performance**        Explain what EXPLAIN ANALYZE output shows; when to add an index              Verbal/written
   ---------------------- ---------------------------------------------------------------------------- ------------------
 
-## Python: Data Pipeline Fluency
+### Python: Data Pipeline Fluency
 
 You must be able to build the following pipeline from scratch, in under
 90 minutes, without assistance:
@@ -162,7 +162,7 @@ You must be able to build the following pipeline from scratch, in under
   **Document**    Inline comments, docstrings, README describing what the pipeline does                    Code review
   --------------- ---------------------------------------------------------------------------------------- -------------------
 
-## Python: Debugging Without Assistance
+### Python: Debugging Without Assistance
 
 You must be able to diagnose and fix the following error types by
 reading the traceback alone:
@@ -175,13 +175,13 @@ reading the traceback alone:
     correctly
 -   A PostgreSQL connection timeout or authentication error
 
-# Phase 1 Statistics Benchmarks
+## Phase 1 Statistics Benchmarks
 
 Statistics is the area where novice analysts most commonly fake
 competence. These benchmarks are designed to expose that. Each must be
 demonstrated in writing or verbally without notes.
 
-## Core Concepts --- Must Explain Correctly to a Non-Statistician
+### Core Concepts --- Must Explain Correctly to a Non-Statistician
 
   ---------------------------- ----------------------------------------------------------------------------------------------------------------------- ------------------
   **Benchmark**                **What you must do without AI assistance**                                                                              **Verification**
@@ -195,7 +195,7 @@ demonstrated in writing or verbally without notes.
   **Confounding**              Give two examples from education data where a confound changes the interpretation of a finding.                         Written
   ---------------------------- ----------------------------------------------------------------------------------------------------------------------- ------------------
 
-## Applied Statistics: You Must Be Able to Do These
+### Applied Statistics: You Must Be Able to Do These
 
 -   Run a simple and multiple OLS regression in both Python
     (statsmodels) and R (lm()); interpret output identically from both
@@ -231,7 +231,7 @@ interview with a district research director.
   **nycschools package**   What it provides, its data currency limits, how to extend it                                                 Demonstrated use
   ------------------------ ------------------------------------------------------------------------------------------------------------ --------------------
 
-## Accountability & Metrics --- Know These Cold
+### Accountability & Metrics --- Know These Cold
 
   ------------------------------------ --------------------------------------------------------------------------------------------------------------- ---------------------
   **Benchmark**                        **What you must do without AI assistance**                                                                      **Verification**
@@ -262,9 +262,9 @@ useless. You must be able to speak to:
 -   Charter vs. district data comparisons: what\'s valid, what\'s not,
     why it\'s politically charged
 
-# Phase 1 Gate --- You Must Pass All Three Before Phase 2
+## Phase 1 Gate --- You Must Pass All Three Before Phase 2
 
-## GATE 1A --- TECHNICAL
+### GATE 1A --- TECHNICAL
 
 Complete a data analysis of NYCPS public attendance data from raw
 download to published Quarto report. No AI assistance. Includes: data
@@ -272,14 +272,14 @@ cleaning pipeline in Python, summary statistics, one regression, one
 visualization in both Python and R, written interpretation of findings.
 Time limit: one full working day.
 
-## GATE 1B --- STATISTICAL
+### GATE 1B --- STATISTICAL
 
 Write a two-page methodology memo explaining the statistical approach
 used in your Gate 1A analysis. Justify every choice. Acknowledge every
 limitation. A statistician should be able to read it and not find errors
 of interpretation.
 
-## GATE 1C --- DOMAIN
+### GATE 1C --- DOMAIN
 
 Produce a one-page data dictionary for the dataset used in Gate 1A.
 Every field defined. Every known data quality issue noted. Every metric
@@ -297,7 +297,7 @@ reproducible analyses. These are the published analyses that constitute
 your portfolio. Each must be reproducible, documented, and publicly
 accessible on GitHub Pages or a Quarto Pub site.
 
-## You Must Be Able to Explain and Detect:
+### You Must Be Able to Explain and Detect:
 
 -   Simpson\'s Paradox --- give an education data example and
     demonstrate it in data
@@ -351,12 +351,12 @@ stakeholder question requires it.
 -   Dashboards: build one interactive dashboard in R Shiny or
     observable/Quarto; know its limitations
 
-# Phase 2 Portfolio: The CCR Project
+## Phase 2 Portfolio: The CCR Project
 
 One project, four published outputs. Each must be reproducible,
 documented, and publicly accessible on GitHub Pages or Quarto Pub.
 
-## OUTPUT 1 --- CCR Metric Reconstruction Pipeline
+### OUTPUT 1 --- CCR Metric Reconstruction Pipeline
 
 Reproduce the CCR score from publicly available citywide results data
 using the Appendix A reference tables from the Educator Guide. Document
@@ -367,7 +367,7 @@ lowest third citywide) are applied. Deliverable: a Python pipeline that
 takes school-level input and outputs CCR scores, validated against
 published values.
 
-## OUTPUT 2 --- Comparison Group Approximation
+### OUTPUT 2 --- Comparison Group Approximation
 
 You will not have student-level data to run the full value-added model.
 Be explicit about that. Use publicly available school-level
@@ -379,7 +379,7 @@ model is doing and where your approximation breaks down. Deliverable: a
 documented regression with honest residual analysis and a clear
 limitations section.
 
-## OUTPUT 3 --- Stakeholder Dashboard
+### OUTPUT 3 --- Stakeholder Dashboard
 
 A Quarto dashboard or Shiny app for a principal or network data manager.
 User selects a school and sees: CCR score vs. comparison group estimate;
@@ -390,7 +390,7 @@ live, published, interactive dashboard. Tables via Great Tables (Python)
 or gt (R) --- the people reading this are principals and
 superintendents; beautiful tables matter. \|
 
-## OUTPUT 4 --- Policy Memo
+### OUTPUT 4 --- Policy Memo
 
 One page, written for a superintendent or Student Pathways director.
 What does the CCR metric reward? What does it miss? Where do the
@@ -422,13 +422,13 @@ ccr_data = data[data["Metric Variable Name"].str.contains(combined, regex=True, 
 Prefer this over a single clever pattern: it is readable, maintainable,
 and self-documenting to a reviewer.
 
-# Phase 2 Additional Portfolio Ideas
+## Phase 2 Additional Portfolio Ideas
 
 These are the three published analyses that constitute your portfolio.
 Each must be reproducible, documented, and publicly accessible on GitHub
 Pages or a Quarto Pub site.
 
-## Portfolio Ideas --- Chronic Absenteeism Analysis
+### Portfolio Idea --- Chronic Absenteeism Analysis
 
 A longitudinal analysis of chronic absenteeism rates across NYC schools,
 2018--present (including COVID disruption). Borough/district breakdowns.
@@ -437,7 +437,7 @@ identifying school-level predictors. Written for a superintendent
 audience. Methodology appendix written for a research audience. These
 are two different documents. \|
 
-## Portfolio Ideas --- Regents & Graduation
+### Portfolio Idea --- Regents & Graduation
 
 An analysis of cohort graduation rates and Regents passage by school
 type (district, charter, transfer, D75). Honest about what the data can
@@ -445,7 +445,7 @@ and cannot show. Includes a clearly stated limitations section.
 Visualizations appropriate for a policy brief. At least one finding that
 is counterintuitive or that challenges a common narrative.
 
-## Portfolio Ideas --- Your Choice, Stakeholder-Driven
+## Portfolio Idea --- Your Choice, Stakeholder-Driven
 
 Pick a question a specific real stakeholder (principal, parent
 coordinator, network data manager) has actually asked you or that you
@@ -454,7 +454,7 @@ to demonstrate your techniques. Publish both the analysis and a one-page
 plain-language summary. This piece demonstrates judgment, not just
 skill. \|
 
-# Phase 2 Gate --- CCR Project Review
+## Phase 2 Gate --- CCR Project Review
 
 All four CCR project outputs published. Each includes: a reproducible
 code repository, a rendered Quarto document or live dashboard, a
@@ -476,7 +476,7 @@ four outputs within 8--10 weeks of starting Phase 2.
 Convert competence into verifiable credentials and market-facing
 presence.
 
-## Credentialing Strategy
+### Credentialing Strategy
 
 Credentials matter in institutional education hiring. Your published
 portfolio is your primary credential, but it needs to be legible to HR
@@ -492,7 +492,7 @@ gatekeepers. The following are the minimum threshold:
 -   A one-page technical resume that lists specific tools and specific
     outputs, not generic skill claims
 
-## On Formal Degrees
+### On Formal Degrees
 
 Many senior analyst postings require an MA or EdD in education research,
 policy, or a related field. Your NYCPS experience and published
@@ -502,7 +502,7 @@ districts. If your target is a DOE central office or research role, a
 graduate credential will likely be required eventually. Don\'t let this
 paralyze Phase 3, but plan for it honestly. \|
 
-## Target Role Profiles
+### Target Role Profiles
 
 These are the roles you are positioning for. Understanding their
 differences shapes what you emphasize in your portfolio and how you
@@ -516,7 +516,7 @@ describe yourself.
   **Data Strategist / Manager**             Hybrid technical-leadership role. Requires both technical depth and ability to advise others. Usually requires several years of analyst experience first.      Phase 4 target, not Phase 3
   **Ed-Tech Company (data/analytics)**      Most similar to tech industry norms. Strong Python/SQL emphasis. Domain knowledge a differentiator over generalist candidates. Often remote.                   Good fit; portfolio more important than credentials
 
-## Network Strategy
+### Network Strategy
 
 In education data, the field is small enough that network is decisive.
 The following are not optional:
@@ -540,9 +540,9 @@ Effectiveness American Education Research Association
     the CCR project. If the dashboard or memo is good, it is a direct
     conversation starter with the people iterating on the metric.
 
-# Phase 3 Gate --- Readiness Criteria
+## Phase 3 Gate --- Readiness Criteria
 
-## GATE 3 --- MARKET READINESS
+### GATE 3 --- MARKET READINESS
 
 You are ready to apply when: (1) The CCR project is published and has
 been read and critiqued by at least one person outside your network. (2)
