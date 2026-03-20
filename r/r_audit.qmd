@@ -10,38 +10,33 @@ format:
 ```{r}
 library(tidyverse)
 library(readxl)
+library(here)
 ```
 
 ```{r}   
 #| label: load school_quality.csv
-file <- "../data/school_quality.csv"
+file <- here("data/school_quality.csv")
 # school_quality <- read.table(file=file, header=TRUE, sep=",")
 school_quality <- read_delim(file=file,
 delim=",",
-col_names=c('ay', 'ry', 'district', 'dbn', 'school_name', 'report_type', 'school_type', 'metric_variable', 'metric_display', 'n', 'metric_value', 'comparison_group_average', 'metric_score'),
+col_names=c('ay', 'ry', 'dbn', 'school_name', 'report_type', 'school_type', 'metric_variable', 'metric_display', 'students_n', 'metric_value', 'comparison_group_average', 'metric_score'),
 col_types=cols(
   ay=col_integer(),
   ry=col_integer(),
-  district=col_character(),
   dbn=col_character(),
   school_name=col_character(),
   report_type=col_character(),
   school_type=col_character(),
   metric_variable=col_character(),
   metric_display=col_character(),
-  n=col_integer(),
+  students_n=col_number(),
   metric_value=col_double(),
   comparison_group_average=col_double(),
   metric_score=col_double()
-))
+),
+skip=1)
 # school_quality <- fread(input=file, sep=',', header=TRUE)
 tail(school_quality)
-```
-
-```{r}
-download.file(url='https://infohub.nyced.org/docs/default-source/default-document-library/ose/fall-2025---hs-directory-datab85f64a0-05b9-439a-8e29-052ce60a5d86.xlsx',
-destfile='data/hs_directory_2025.xlsx',
-method='wget')
 ```
 
 ```{r}
@@ -49,11 +44,12 @@ hs_directory <- local(
   {
     url <- c('https://infohub.nyced.org/docs/default-source/default-document-library/ose/fall-2025---hs-directory-datab85f64a0-05b9-439a-8e29-052ce60a5d86.xlsx')
     download.file(url=url,
-      destfile='data/hs_directory_2025.xlsx',
+      destfile=here('data/hs_directory_2025.xlsx'),
       method='wget')
-    destfile=file <- "data/hs_directory_2025.xlsx"
-    hs_directory <- read_xlsx(path=destfile, sheet="Data") %>% write_csv("data/hs_directory_2025.csv")
+    destfile=file <- here('data/hs_directory_2025.xlsx')
+    hs_directory <- read_xlsx(path=destfile, sheet='Data') %>% write_csv(here('data/hs_directory_2025.csv'))
   }
 )
+tail(hs_directory)
 ```
 
