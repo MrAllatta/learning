@@ -12,3 +12,5 @@ figures/
 **/*.quarto_ipynb
 activate.R
 .Rprofile
+flight.qmd
+html.json
