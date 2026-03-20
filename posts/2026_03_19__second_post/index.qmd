@@ -1,0 +1,24 @@
+---
+title: "second post"
+description: "my second post"
+author: "Eric Allatta"
+date: "03/20/2026"
+categories:
+  - learning
+  - paths
+  - R
+---
+
+# The path problem
+R working directory default in renv project is project root. Quarto render uses knitr, which uses the current location of the file to be rendered as root. 
+
+# The here package
+The easiest solution is the 'here' package
+
+```{r}
+#| eval: false
+#| echo: true
+library('here')
+
+read_delim(here('data/hs_directory_2025.csv'), skip=1, trim_ws=TRUE, delim=',')
+```
