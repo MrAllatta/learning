@@ -38,7 +38,7 @@ column_schema_helper <- function() {
       n_chars = nchar(cols)
     ) %>%
     arrange(desc(n_chars))
-  cols_len %>% head(20)
+  cols_len
 }
 ```
 
@@ -77,7 +77,14 @@ classify_families <- function() {
     mutate(
       family= case_when(
         str_detect(col, "grade9geapplicantsperseat\\d+$") ~ "grade9geapplicantsperseat",
-        str_detect(col, "^seats9ge\\d$") ~ "seats9ge",
+        str_detect(col, "^seats9ge\\d$")                  ~ "seats9ge",
+        str_detect(col, "^requirement_\\d_\\d+$")        ~ "requirement",
+        str_detect(col, "^program\\d+$")                 ~ "program",
+        str_detect(col, "^grade9swdapplicatsperseat\\d+$") ~ "grade9swdapplicatsperseat",
+        str(col, "^grade9swdseatsperseat\\d+$") ~ "grade9swdseatsperseat",
+        str_detect(col, "^grade9swdpriority\\d+$") ~ "grade9swdpriority",
+        str_detect(col, "^grade9gepriority\\d+$") ~ "grade9gepriority",
+        
         TRUE ~ "other"
       )
     )
