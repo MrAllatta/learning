@@ -1,0 +1,21 @@
+# Lessons from flight package
+Vectors, Factors and Flight
+
+Factor Vectors are an important concept.
+Factor levels.
+Order of a factor.
+Factors seem like objects with properties. A factor has an internal vector c(...) and other meta data such as levels=... and ordered=...
+factor(name=c(...), ...=..., )
+Only store unique values.
+
+```{r}
+factor(x=c('a', 'b', 'c'),
+levels=, labels=, exclude=NA, ordered=is.ordered(x),nmax=NA)
+
+```
+
+Create a set of indicator or 'dummy' variables using model.matrix. One colomn for each level of the factor.
+```{r}
+nf <- factor(c('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'))
+model.matrix(~ nf - 1) # with 1 if a row contains that level or 0 otherwise
+```
