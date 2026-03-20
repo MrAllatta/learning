@@ -77,11 +77,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-960fc19d9da332a83abe416fce972e1d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -108,49 +108,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Data Analysis Learning Portfolio</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./learning-plan.html" aria-current="page"> 
-<span class="menu-text">Learning Plan</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./notebooks/python_audit.html"> 
-<span class="menu-text">python_audit.html</span></a>
-  </li>  
-</ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./learning-plan.html">Learning Plan</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Analysis Learning Portfolio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./learning-plan.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Learning Plan</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./r/r_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">r audit</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notebooks/python_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">python_audit.html</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -165,17 +190,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#phase-0-audit-weeks-13" id="toc-phase-0-audit-weeks-13" class="nav-link" data-scroll-target="#phase-0-audit-weeks-13">Phase 0 — Audit Weeks 1–3</a>
   <ul class="collapse">
   <li><a href="#before-you-begin" id="toc-before-you-begin" class="nav-link" data-scroll-target="#before-you-begin">Before You Begin</a></li>
-  <li><a href="#the-audit-tasks" id="toc-the-audit-tasks" class="nav-link" data-scroll-target="#the-audit-tasks">The Audit Tasks</a></li>
+  <li><a href="#the-audit-tasks" id="toc-the-audit-tasks" class="nav-link" data-scroll-target="#the-audit-tasks">The Audit Tasks</a>
+  <ul class="collapse">
   <li><a href="#python-audit-2-hours-no-ai-no-stack-overflow" id="toc-python-audit-2-hours-no-ai-no-stack-overflow" class="nav-link" data-scroll-target="#python-audit-2-hours-no-ai-no-stack-overflow">Python Audit (2 hours, no AI, no Stack Overflow)</a></li>
   <li><a href="#r-audit-2-hours-no-ai" id="toc-r-audit-2-hours-no-ai" class="nav-link" data-scroll-target="#r-audit-2-hours-no-ai">R Audit (2 hours, no AI)</a></li>
   <li><a href="#sql-audit-1-hour-no-ai" id="toc-sql-audit-1-hour-no-ai" class="nav-link" data-scroll-target="#sql-audit-1-hour-no-ai">SQL Audit (1 hour, no AI)</a></li>
   <li><a href="#statistics-audit-written-45-minutes" id="toc-statistics-audit-written-45-minutes" class="nav-link" data-scroll-target="#statistics-audit-written-45-minutes">Statistics Audit (written, 45 minutes)</a></li>
   <li><a href="#domain-audit-written-30-minutes" id="toc-domain-audit-written-30-minutes" class="nav-link" data-scroll-target="#domain-audit-written-30-minutes">Domain Audit (written, 30 minutes)</a></li>
+  </ul></li>
   <li><a href="#audit-output" id="toc-audit-output" class="nav-link" data-scroll-target="#audit-output">Audit Output</a></li>
   </ul></li>
   <li><a href="#phase-1-foundation-months-15" id="toc-phase-1-foundation-months-15" class="nav-link" data-scroll-target="#phase-1-foundation-months-15">Phase 1 — Foundation Months 1–5</a>
   <ul class="collapse">
-  <li><a href="#close-the-gaps-narrow-the-stack" id="toc-close-the-gaps-narrow-the-stack" class="nav-link" data-scroll-target="#close-the-gaps-narrow-the-stack">Close the Gaps, Narrow the Stack</a></li>
+  <li><a href="#close-the-gaps-narrow-the-stack" id="toc-close-the-gaps-narrow-the-stack" class="nav-link" data-scroll-target="#close-the-gaps-narrow-the-stack">Close the Gaps, Narrow the Stack</a>
+  <ul class="collapse">
   <li><a href="#what-you-are-deferring" id="toc-what-you-are-deferring" class="nav-link" data-scroll-target="#what-you-are-deferring">What you are deferring</a></li>
   <li><a href="#stack-decision-what-you-are-committing-to" id="toc-stack-decision-what-you-are-committing-to" class="nav-link" data-scroll-target="#stack-decision-what-you-are-committing-to">Stack Decision: What You Are Committing To</a></li>
   </ul></li>
@@ -190,43 +218,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#core-concepts-must-explain-correctly-to-a-non-statistician" id="toc-core-concepts-must-explain-correctly-to-a-non-statistician" class="nav-link" data-scroll-target="#core-concepts-must-explain-correctly-to-a-non-statistician">Core Concepts — Must Explain Correctly to a Non-Statistician</a></li>
   <li><a href="#applied-statistics-you-must-be-able-to-do-these" id="toc-applied-statistics-you-must-be-able-to-do-these" class="nav-link" data-scroll-target="#applied-statistics-you-must-be-able-to-do-these">Applied Statistics: You Must Be Able to Do These</a></li>
-  <li><a href="#phase-1-domain-fluency-benchmarks" id="toc-phase-1-domain-fluency-benchmarks" class="nav-link" data-scroll-target="#phase-1-domain-fluency-benchmarks">Phase 1 Domain Fluency Benchmarks</a></li>
-  <li><a href="#accountability-metrics-know-these-cold" id="toc-accountability-metrics-know-these-cold" class="nav-link" data-scroll-target="#accountability-metrics-know-these-cold">Accountability &amp; Metrics — Know These Cold</a></li>
-  <li><a href="#political-organizational-context-this-is-what-separates-analysts" id="toc-political-organizational-context-this-is-what-separates-analysts" class="nav-link" data-scroll-target="#political-organizational-context-this-is-what-separates-analysts">Political &amp; Organizational Context — This Is What Separates Analysts</a></li>
   </ul></li>
+  <li><a href="#phase-1-domain-fluency-benchmarks" id="toc-phase-1-domain-fluency-benchmarks" class="nav-link" data-scroll-target="#phase-1-domain-fluency-benchmarks">Phase 1 Domain Fluency Benchmarks</a>
+  <ul class="collapse">
+  <li><a href="#accountability-metrics-know-these-cold" id="toc-accountability-metrics-know-these-cold" class="nav-link" data-scroll-target="#accountability-metrics-know-these-cold">Accountability &amp; Metrics — Know These Cold</a></li>
+  </ul></li>
+  <li><a href="#political-organizational-context-this-is-what-separates-analysts" id="toc-political-organizational-context-this-is-what-separates-analysts" class="nav-link" data-scroll-target="#political-organizational-context-this-is-what-separates-analysts">Political &amp; Organizational Context — This Is What Separates Analysts</a></li>
   <li><a href="#phase-1-gate-you-must-pass-all-three-before-phase-2" id="toc-phase-1-gate-you-must-pass-all-three-before-phase-2" class="nav-link" data-scroll-target="#phase-1-gate-you-must-pass-all-three-before-phase-2">Phase 1 Gate — You Must Pass All Three Before Phase 2</a>
   <ul class="collapse">
   <li><a href="#gate-1a-technical" id="toc-gate-1a-technical" class="nav-link" data-scroll-target="#gate-1a-technical">GATE 1A — TECHNICAL</a></li>
   <li><a href="#gate-1b-statistical" id="toc-gate-1b-statistical" class="nav-link" data-scroll-target="#gate-1b-statistical">GATE 1B — STATISTICAL</a></li>
   <li><a href="#gate-1c-domain" id="toc-gate-1c-domain" class="nav-link" data-scroll-target="#gate-1c-domain">GATE 1C — DOMAIN</a></li>
   </ul></li>
+  </ul></li>
   <li><a href="#phase-2-statistical-depth-months-614" id="toc-phase-2-statistical-depth-months-614" class="nav-link" data-scroll-target="#phase-2-statistical-depth-months-614">Phase 2 — Statistical Depth Months 6–14</a>
   <ul class="collapse">
-  <li><a href="#specialization-and-portfolio-construction" id="toc-specialization-and-portfolio-construction" class="nav-link" data-scroll-target="#specialization-and-portfolio-construction">Specialization and Portfolio Construction</a></li>
+  <li><a href="#specialization-and-portfolio-construction" id="toc-specialization-and-portfolio-construction" class="nav-link" data-scroll-target="#specialization-and-portfolio-construction">Specialization and Portfolio Construction</a>
+  <ul class="collapse">
   <li><a href="#you-must-be-able-to-explain-and-detect" id="toc-you-must-be-able-to-explain-and-detect" class="nav-link" data-scroll-target="#you-must-be-able-to-explain-and-detect">You Must Be Able to Explain and Detect:</a></li>
+  </ul></li>
   <li><a href="#the-ccr-project-supporting-technical-depth" id="toc-the-ccr-project-supporting-technical-depth" class="nav-link" data-scroll-target="#the-ccr-project-supporting-technical-depth">The CCR Project + Supporting Technical Depth</a></li>
   <li><a href="#phase-2-technical-additions" id="toc-phase-2-technical-additions" class="nav-link" data-scroll-target="#phase-2-technical-additions">Phase 2 Technical Additions</a></li>
   <li><a href="#what-remains-deferred-in-phase-2" id="toc-what-remains-deferred-in-phase-2" class="nav-link" data-scroll-target="#what-remains-deferred-in-phase-2">WHAT REMAINS DEFERRED IN PHASE 2</a></li>
   <li><a href="#methods-to-add-in-phase-2" id="toc-methods-to-add-in-phase-2" class="nav-link" data-scroll-target="#methods-to-add-in-phase-2">Methods to Add in Phase 2</a></li>
-  </ul></li>
   <li><a href="#phase-2-portfolio-the-ccr-project" id="toc-phase-2-portfolio-the-ccr-project" class="nav-link" data-scroll-target="#phase-2-portfolio-the-ccr-project">Phase 2 Portfolio: The CCR Project</a>
   <ul class="collapse">
   <li><a href="#output-1-ccr-metric-reconstruction-pipeline" id="toc-output-1-ccr-metric-reconstruction-pipeline" class="nav-link" data-scroll-target="#output-1-ccr-metric-reconstruction-pipeline">OUTPUT 1 — CCR Metric Reconstruction Pipeline</a></li>
   <li><a href="#output-2-comparison-group-approximation" id="toc-output-2-comparison-group-approximation" class="nav-link" data-scroll-target="#output-2-comparison-group-approximation">OUTPUT 2 — Comparison Group Approximation</a></li>
   <li><a href="#output-3-stakeholder-dashboard" id="toc-output-3-stakeholder-dashboard" class="nav-link" data-scroll-target="#output-3-stakeholder-dashboard">OUTPUT 3 — Stakeholder Dashboard</a></li>
   <li><a href="#output-4-policy-memo" id="toc-output-4-policy-memo" class="nav-link" data-scroll-target="#output-4-policy-memo">OUTPUT 4 — Policy Memo</a></li>
-  <li><a href="#metric-variable-name-filtering-working-reference" id="toc-metric-variable-name-filtering-working-reference" class="nav-link" data-scroll-target="#metric-variable-name-filtering-working-reference">Metric Variable Name Filtering — Working Reference</a></li>
   </ul></li>
+  <li><a href="#metric-variable-name-filtering-working-reference" id="toc-metric-variable-name-filtering-working-reference" class="nav-link" data-scroll-target="#metric-variable-name-filtering-working-reference">Metric Variable Name Filtering — Working Reference</a></li>
   <li><a href="#phase-2-additional-portfolio-ideas" id="toc-phase-2-additional-portfolio-ideas" class="nav-link" data-scroll-target="#phase-2-additional-portfolio-ideas">Phase 2 Additional Portfolio Ideas</a>
   <ul class="collapse">
-  <li><a href="#portfolio-ideas-chronic-absenteeism-analysis" id="toc-portfolio-ideas-chronic-absenteeism-analysis" class="nav-link" data-scroll-target="#portfolio-ideas-chronic-absenteeism-analysis">Portfolio Ideas — Chronic Absenteeism Analysis</a></li>
-  <li><a href="#portfolio-ideas-regents-graduation" id="toc-portfolio-ideas-regents-graduation" class="nav-link" data-scroll-target="#portfolio-ideas-regents-graduation">Portfolio Ideas — Regents &amp; Graduation</a></li>
-  <li><a href="#portfolio-ideas-your-choice-stakeholder-driven" id="toc-portfolio-ideas-your-choice-stakeholder-driven" class="nav-link" data-scroll-target="#portfolio-ideas-your-choice-stakeholder-driven">Portfolio Ideas — Your Choice, Stakeholder-Driven</a></li>
+  <li><a href="#portfolio-idea-chronic-absenteeism-analysis" id="toc-portfolio-idea-chronic-absenteeism-analysis" class="nav-link" data-scroll-target="#portfolio-idea-chronic-absenteeism-analysis">Portfolio Idea — Chronic Absenteeism Analysis</a></li>
+  <li><a href="#portfolio-idea-regents-graduation" id="toc-portfolio-idea-regents-graduation" class="nav-link" data-scroll-target="#portfolio-idea-regents-graduation">Portfolio Idea — Regents &amp; Graduation</a></li>
   </ul></li>
+  <li><a href="#portfolio-idea-your-choice-stakeholder-driven" id="toc-portfolio-idea-your-choice-stakeholder-driven" class="nav-link" data-scroll-target="#portfolio-idea-your-choice-stakeholder-driven">Portfolio Idea — Your Choice, Stakeholder-Driven</a></li>
   <li><a href="#phase-2-gate-ccr-project-review" id="toc-phase-2-gate-ccr-project-review" class="nav-link" data-scroll-target="#phase-2-gate-ccr-project-review">Phase 2 Gate — CCR Project Review</a></li>
+  </ul></li>
   <li><a href="#phase-3-application-months-1524" id="toc-phase-3-application-months-1524" class="nav-link" data-scroll-target="#phase-3-application-months-1524">Phase 3 — APPLICATION Months 15–24</a>
   <ul class="collapse">
-  <li><a href="#credentialing-network-and-income" id="toc-credentialing-network-and-income" class="nav-link" data-scroll-target="#credentialing-network-and-income">Credentialing, Network, and Income</a></li>
+  <li><a href="#credentialing-network-and-income" id="toc-credentialing-network-and-income" class="nav-link" data-scroll-target="#credentialing-network-and-income">Credentialing, Network, and Income</a>
+  <ul class="collapse">
   <li><a href="#credentialing-strategy" id="toc-credentialing-strategy" class="nav-link" data-scroll-target="#credentialing-strategy">Credentialing Strategy</a></li>
   <li><a href="#on-formal-degrees" id="toc-on-formal-degrees" class="nav-link" data-scroll-target="#on-formal-degrees">On Formal Degrees</a></li>
   <li><a href="#target-role-profiles" id="toc-target-role-profiles" class="nav-link" data-scroll-target="#target-role-profiles">Target Role Profiles</a></li>
@@ -235,6 +269,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#phase-3-gate-readiness-criteria" id="toc-phase-3-gate-readiness-criteria" class="nav-link" data-scroll-target="#phase-3-gate-readiness-criteria">Phase 3 Gate — Readiness Criteria</a>
   <ul class="collapse">
   <li><a href="#gate-3-market-readiness" id="toc-gate-3-market-readiness" class="nav-link" data-scroll-target="#gate-3-market-readiness">GATE 3 — MARKET READINESS</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#appendix-reference-benchmarks" id="toc-appendix-reference-benchmarks" class="nav-link" data-scroll-target="#appendix-reference-benchmarks">Appendix: Reference Benchmarks</a>
   <ul class="collapse">
@@ -298,9 +333,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-audit-tasks" class="level2">
 <h2 class="anchored" data-anchor-id="the-audit-tasks">The Audit Tasks</h2>
 <p>Do each of these without AI assistance. Record where you get stuck — that's your Phase 1 curriculum.</p>
-</section>
-<section id="python-audit-2-hours-no-ai-no-stack-overflow" class="level2">
-<h2 class="anchored" data-anchor-id="python-audit-2-hours-no-ai-no-stack-overflow">Python Audit (2 hours, no AI, no Stack Overflow)</h2>
+<section id="python-audit-2-hours-no-ai-no-stack-overflow" class="level3">
+<h3 class="anchored" data-anchor-id="python-audit-2-hours-no-ai-no-stack-overflow">Python Audit (2 hours, no AI, no Stack Overflow)</h3>
 <ul>
 <li>Load a CSV of NYCPS data into a pandas DataFrame</li>
 <li>Filter rows by a condition, group by a column, compute a mean</li>
@@ -311,8 +345,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Connect to a local PostgreSQL database and run a query</li>
 </ul>
 </section>
-<section id="r-audit-2-hours-no-ai" class="level2">
-<h2 class="anchored" data-anchor-id="r-audit-2-hours-no-ai">R Audit (2 hours, no AI)</h2>
+<section id="r-audit-2-hours-no-ai" class="level3">
+<h3 class="anchored" data-anchor-id="r-audit-2-hours-no-ai">R Audit (2 hours, no AI)</h3>
 <ul>
 <li>Load a CSV and inspect its structure using tidyverse</li>
 <li>Write a dplyr pipeline: filter, select, mutate, group<sub>by</sub>, summarize</li>
@@ -321,16 +355,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Render a Quarto document with inline R output to HTML</li>
 </ul>
 </section>
-<section id="sql-audit-1-hour-no-ai" class="level2">
-<h2 class="anchored" data-anchor-id="sql-audit-1-hour-no-ai">SQL Audit (1 hour, no AI)</h2>
+<section id="sql-audit-1-hour-no-ai" class="level3">
+<h3 class="anchored" data-anchor-id="sql-audit-1-hour-no-ai">SQL Audit (1 hour, no AI)</h3>
 <ul>
 <li>Write a query with a JOIN, a WHERE clause, and a GROUP BY</li>
 <li>Write a subquery</li>
 <li>Explain what an index does and when you'd add one</li>
 </ul>
 </section>
-<section id="statistics-audit-written-45-minutes" class="level2">
-<h2 class="anchored" data-anchor-id="statistics-audit-written-45-minutes">Statistics Audit (written, 45 minutes)</h2>
+<section id="statistics-audit-written-45-minutes" class="level3">
+<h3 class="anchored" data-anchor-id="statistics-audit-written-45-minutes">Statistics Audit (written, 45 minutes)</h3>
 <p>Answer these in writing, as if explaining to a smart non-statistician:</p>
 <ul>
 <li>What does a p-value actually mean? What does it NOT mean?</li>
@@ -339,8 +373,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>What is chronic absenteeism? How is it calculated? Why does the 20% threshold matter?</li>
 </ul>
 </section>
-<section id="domain-audit-written-30-minutes" class="level2">
-<h2 class="anchored" data-anchor-id="domain-audit-written-30-minutes">Domain Audit (written, 30 minutes)</h2>
+<section id="domain-audit-written-30-minutes" class="level3">
+<h3 class="anchored" data-anchor-id="domain-audit-written-30-minutes">Domain Audit (written, 30 minutes)</h3>
 <ul>
 <li>Name and describe five data systems used in NYCPS</li>
 <li>Explain how a school's Quality Review score is determined</li>
@@ -348,6 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>List the demographic subgroups required for ESSA reporting</li>
 <li>What is a D75 school?</li>
 </ul>
+</section>
 </section>
 <section id="audit-output" class="level2">
 <h2 class="anchored" data-anchor-id="audit-output">Audit Output</h2>
@@ -359,13 +394,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="close-the-gaps-narrow-the-stack" class="level2">
 <h2 class="anchored" data-anchor-id="close-the-gaps-narrow-the-stack">Close the Gaps, Narrow the Stack</h2>
 <p>Achieve reliable, unassisted competence in a focused core. No new tools. No side projects.</p>
-</section>
-<section id="what-you-are-deferring" class="level2">
-<h2 class="anchored" data-anchor-id="what-you-are-deferring">What you are deferring</h2>
+<section id="what-you-are-deferring" class="level3">
+<h3 class="anchored" data-anchor-id="what-you-are-deferring">What you are deferring</h3>
 <p>Emacs configuration, Positron exploration, Django feature development, new Kaggle competitions, gh-pages customization. These are real, useful things. They are Phase 2 and 3. Every hour spent on them in Phase 1 is a debt against your foundation.</p>
 </section>
-<section id="stack-decision-what-you-are-committing-to" class="level2">
-<h2 class="anchored" data-anchor-id="stack-decision-what-you-are-committing-to">Stack Decision: What You Are Committing To</h2>
+<section id="stack-decision-what-you-are-committing-to" class="level3">
+<h3 class="anchored" data-anchor-id="stack-decision-what-you-are-committing-to">Stack Decision: What You Are Committing To</h3>
 <p>For Phase 1, your working stack is exactly this, nothing else:</p>
 <table class="caption-top table">
 <tbody>
@@ -403,10 +437,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </section>
 </section>
-<section id="phase-1-technical-benchmarks" class="level1">
-<h1>Phase 1 Technical Benchmarks</h1>
-<section id="r-statistical-workflow-fluency" class="level2">
-<h2 class="anchored" data-anchor-id="r-statistical-workflow-fluency">R: Statistical Workflow Fluency</h2>
+<section id="phase-1-technical-benchmarks" class="level2">
+<h2 class="anchored" data-anchor-id="phase-1-technical-benchmarks">Phase 1 Technical Benchmarks</h2>
+<section id="r-statistical-workflow-fluency" class="level3">
+<h3 class="anchored" data-anchor-id="r-statistical-workflow-fluency">R: Statistical Workflow Fluency</h3>
 <table class="caption-top table">
 <tbody>
 <tr class="odd">
@@ -442,8 +476,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="sql-operational-fluency" class="level2">
-<h2 class="anchored" data-anchor-id="sql-operational-fluency">SQL: Operational Fluency</h2>
+<section id="sql-operational-fluency" class="level3">
+<h3 class="anchored" data-anchor-id="sql-operational-fluency">SQL: Operational Fluency</h3>
 <table class="caption-top table">
 <tbody>
 <tr class="odd">
@@ -484,8 +518,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="python-data-pipeline-fluency" class="level2">
-<h2 class="anchored" data-anchor-id="python-data-pipeline-fluency">Python: Data Pipeline Fluency</h2>
+<section id="python-data-pipeline-fluency" class="level3">
+<h3 class="anchored" data-anchor-id="python-data-pipeline-fluency">Python: Data Pipeline Fluency</h3>
 <p>You must be able to build the following pipeline from scratch, in under 90 minutes, without assistance:</p>
 <table class="caption-top table">
 <tbody>
@@ -532,8 +566,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="python-debugging-without-assistance" class="level2">
-<h2 class="anchored" data-anchor-id="python-debugging-without-assistance">Python: Debugging Without Assistance</h2>
+<section id="python-debugging-without-assistance" class="level3">
+<h3 class="anchored" data-anchor-id="python-debugging-without-assistance">Python: Debugging Without Assistance</h3>
 <p>You must be able to diagnose and fix the following error types by reading the traceback alone:</p>
 <ul>
 <li>KeyError on a DataFrame column (likely a whitespace or case issue)</li>
@@ -544,11 +578,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="phase-1-statistics-benchmarks" class="level1">
-<h1>Phase 1 Statistics Benchmarks</h1>
+<section id="phase-1-statistics-benchmarks" class="level2">
+<h2 class="anchored" data-anchor-id="phase-1-statistics-benchmarks">Phase 1 Statistics Benchmarks</h2>
 <p>Statistics is the area where novice analysts most commonly fake competence. These benchmarks are designed to expose that. Each must be demonstrated in writing or verbally without notes.</p>
-<section id="core-concepts-must-explain-correctly-to-a-non-statistician" class="level2">
-<h2 class="anchored" data-anchor-id="core-concepts-must-explain-correctly-to-a-non-statistician">Core Concepts — Must Explain Correctly to a Non-Statistician</h2>
+<section id="core-concepts-must-explain-correctly-to-a-non-statistician" class="level3">
+<h3 class="anchored" data-anchor-id="core-concepts-must-explain-correctly-to-a-non-statistician">Core Concepts — Must Explain Correctly to a Non-Statistician</h3>
 <table class="caption-top table">
 <tbody>
 <tr class="odd">
@@ -599,8 +633,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="applied-statistics-you-must-be-able-to-do-these" class="level2">
-<h2 class="anchored" data-anchor-id="applied-statistics-you-must-be-able-to-do-these">Applied Statistics: You Must Be Able to Do These</h2>
+<section id="applied-statistics-you-must-be-able-to-do-these" class="level3">
+<h3 class="anchored" data-anchor-id="applied-statistics-you-must-be-able-to-do-these">Applied Statistics: You Must Be Able to Do These</h3>
 <ul>
 <li>Run a simple and multiple OLS regression in both Python (statsmodels) and R (lm()); interpret output identically from both</li>
 <li>Check regression assumptions: linearity, homoscedasticity, normality of residuals, no multicollinearity — and know what to do when each is violated</li>
@@ -609,6 +643,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Distinguish between descriptive, inferential, and predictive analysis — and know which is appropriate for a given stakeholder question</li>
 <li>Recognize when a dataset is too small for the claims being made</li>
 </ul>
+</section>
 </section>
 <section id="phase-1-domain-fluency-benchmarks" class="level2">
 <h2 class="anchored" data-anchor-id="phase-1-domain-fluency-benchmarks">Phase 1 Domain Fluency Benchmarks</h2>
@@ -663,9 +698,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-</section>
-<section id="accountability-metrics-know-these-cold" class="level2">
-<h2 class="anchored" data-anchor-id="accountability-metrics-know-these-cold">Accountability &amp; Metrics — Know These Cold</h2>
+<section id="accountability-metrics-know-these-cold" class="level3">
+<h3 class="anchored" data-anchor-id="accountability-metrics-know-these-cold">Accountability &amp; Metrics — Know These Cold</h3>
 <table class="caption-top table">
 <tbody>
 <tr class="odd">
@@ -716,6 +750,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
+</section>
 <section id="political-organizational-context-this-is-what-separates-analysts" class="level2">
 <h2 class="anchored" data-anchor-id="political-organizational-context-this-is-what-separates-analysts">Political &amp; Organizational Context — This Is What Separates Analysts</h2>
 <p>A technically correct analysis that ignores organizational reality is useless. You must be able to speak to:</p>
@@ -728,20 +763,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Charter vs.&nbsp;district data comparisons: what's valid, what's not, why it's politically charged</li>
 </ul>
 </section>
-</section>
-<section id="phase-1-gate-you-must-pass-all-three-before-phase-2" class="level1">
-<h1>Phase 1 Gate — You Must Pass All Three Before Phase 2</h1>
-<section id="gate-1a-technical" class="level2">
-<h2 class="anchored" data-anchor-id="gate-1a-technical">GATE 1A — TECHNICAL</h2>
+<section id="phase-1-gate-you-must-pass-all-three-before-phase-2" class="level2">
+<h2 class="anchored" data-anchor-id="phase-1-gate-you-must-pass-all-three-before-phase-2">Phase 1 Gate — You Must Pass All Three Before Phase 2</h2>
+<section id="gate-1a-technical" class="level3">
+<h3 class="anchored" data-anchor-id="gate-1a-technical">GATE 1A — TECHNICAL</h3>
 <p>Complete a data analysis of NYCPS public attendance data from raw download to published Quarto report. No AI assistance. Includes: data cleaning pipeline in Python, summary statistics, one regression, one visualization in both Python and R, written interpretation of findings. Time limit: one full working day.</p>
 </section>
-<section id="gate-1b-statistical" class="level2">
-<h2 class="anchored" data-anchor-id="gate-1b-statistical">GATE 1B — STATISTICAL</h2>
+<section id="gate-1b-statistical" class="level3">
+<h3 class="anchored" data-anchor-id="gate-1b-statistical">GATE 1B — STATISTICAL</h3>
 <p>Write a two-page methodology memo explaining the statistical approach used in your Gate 1A analysis. Justify every choice. Acknowledge every limitation. A statistician should be able to read it and not find errors of interpretation.</p>
 </section>
-<section id="gate-1c-domain" class="level2">
-<h2 class="anchored" data-anchor-id="gate-1c-domain">GATE 1C — DOMAIN</h2>
+<section id="gate-1c-domain" class="level3">
+<h3 class="anchored" data-anchor-id="gate-1c-domain">GATE 1C — DOMAIN</h3>
 <p>Produce a one-page data dictionary for the dataset used in Gate 1A. Every field defined. Every known data quality issue noted. Every metric explained in terms a principal could understand. Do this from knowledge, not by copying documentation.</p>
+</section>
 </section>
 </section>
 <section id="phase-2-statistical-depth-months-614" class="level1">
@@ -750,9 +785,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="specialization-and-portfolio-construction" class="level2">
 <h2 class="anchored" data-anchor-id="specialization-and-portfolio-construction">Specialization and Portfolio Construction</h2>
 <p>Develop genuine analytical depth in education data. Publish substantial, reproducible analyses. These are the published analyses that constitute your portfolio. Each must be reproducible, documented, and publicly accessible on GitHub Pages or a Quarto Pub site.</p>
-</section>
-<section id="you-must-be-able-to-explain-and-detect" class="level2">
-<h2 class="anchored" data-anchor-id="you-must-be-able-to-explain-and-detect">You Must Be Able to Explain and Detect:</h2>
+<section id="you-must-be-able-to-explain-and-detect" class="level3">
+<h3 class="anchored" data-anchor-id="you-must-be-able-to-explain-and-detect">You Must Be Able to Explain and Detect:</h3>
 <ul>
 <li>Simpson's Paradox — give an education data example and demonstrate it in data</li>
 <li>Ecological fallacy — why school-level correlations can't be applied to students</li>
@@ -761,6 +795,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Ceiling and floor effects — why standardized tests compress variance at the extremes</li>
 <li>Multiple comparisons problem — what happens when you test 30 hypotheses at p &lt; .05</li>
 </ul>
+</section>
 </section>
 <section id="the-ccr-project-supporting-technical-depth" class="level2">
 <h2 class="anchored" data-anchor-id="the-ccr-project-supporting-technical-depth">The CCR Project + Supporting Technical Depth</h2>
@@ -818,25 +853,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Dashboards: build one interactive dashboard in R Shiny or observable/Quarto; know its limitations</li>
 </ul>
 </section>
-</section>
-<section id="phase-2-portfolio-the-ccr-project" class="level1">
-<h1>Phase 2 Portfolio: The CCR Project</h1>
+<section id="phase-2-portfolio-the-ccr-project" class="level2">
+<h2 class="anchored" data-anchor-id="phase-2-portfolio-the-ccr-project">Phase 2 Portfolio: The CCR Project</h2>
 <p>One project, four published outputs. Each must be reproducible, documented, and publicly accessible on GitHub Pages or Quarto Pub.</p>
-<section id="output-1-ccr-metric-reconstruction-pipeline" class="level2">
-<h2 class="anchored" data-anchor-id="output-1-ccr-metric-reconstruction-pipeline">OUTPUT 1 — CCR Metric Reconstruction Pipeline</h2>
+<section id="output-1-ccr-metric-reconstruction-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="output-1-ccr-metric-reconstruction-pipeline">OUTPUT 1 — CCR Metric Reconstruction Pipeline</h3>
 <p>Reproduce the CCR score from publicly available citywide results data using the Appendix A reference tables from the Educator Guide. Document every decision point: how the six scoring categories interact, how the associate degree category overrides others, how the six-category cap works, how suppression rules (n=15 general, n=10 ELL/SWD grad rates, n=5 lowest third citywide) are applied. Deliverable: a Python pipeline that takes school-level input and outputs CCR scores, validated against published values.</p>
 </section>
-<section id="output-2-comparison-group-approximation" class="level2">
-<h2 class="anchored" data-anchor-id="output-2-comparison-group-approximation">OUTPUT 2 — Comparison Group Approximation</h2>
+<section id="output-2-comparison-group-approximation" class="level3">
+<h3 class="anchored" data-anchor-id="output-2-comparison-group-approximation">OUTPUT 2 — Comparison Group Approximation</h3>
 <p>You will not have student-level data to run the full value-added model. Be explicit about that. Use publicly available school-level characteristics (ENI, % ELL, % SWD, % by race, prior graduation rates) to build a regression approximating the comparison group methodology. Compare estimates to published comparison group values. The point is not to match perfectly — it is to demonstrate you understand what the model is doing and where your approximation breaks down. Deliverable: a documented regression with honest residual analysis and a clear limitations section.</p>
 </section>
-<section id="output-3-stakeholder-dashboard" class="level2">
-<h2 class="anchored" data-anchor-id="output-3-stakeholder-dashboard">OUTPUT 3 — Stakeholder Dashboard</h2>
+<section id="output-3-stakeholder-dashboard" class="level3">
+<h3 class="anchored" data-anchor-id="output-3-stakeholder-dashboard">OUTPUT 3 — Stakeholder Dashboard</h3>
 <p>A Quarto dashboard or Shiny app for a principal or network data manager. User selects a school and sees: CCR score vs.&nbsp;comparison group estimate; decomposition by the six CCR categories; comparison to borough and citywide averages; racial subgroup breakdowns for CCPCI and PSER where available; year-over-year trend if the data supports it. Deliverable: a live, published, interactive dashboard. Tables via Great Tables (Python) or gt (R) — the people reading this are principals and superintendents; beautiful tables matter. |</p>
 </section>
-<section id="output-4-policy-memo" class="level2">
-<h2 class="anchored" data-anchor-id="output-4-policy-memo">OUTPUT 4 — Policy Memo</h2>
+<section id="output-4-policy-memo" class="level3">
+<h3 class="anchored" data-anchor-id="output-4-policy-memo">OUTPUT 4 — Policy Memo</h3>
 <p>One page, written for a superintendent or Student Pathways director. What does the CCR metric reward? What does it miss? Where do the incentives diverge from the stated goals of NY State's new graduation standards? What should a school leader attending to the broader rollout understand that the metric does not surface? This output demonstrates judgment, not just technical skill — it is often the one that gets you the interview. |</p>
+</section>
 </section>
 <section id="metric-variable-name-filtering-working-reference" class="level2">
 <h2 class="anchored" data-anchor-id="metric-variable-name-filtering-working-reference">Metric Variable Name Filtering — Working Reference</h2>
@@ -852,25 +887,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ccr_data <span class="op">=</span> data[data[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(combined, regex<span class="op">=</span><span class="va">True</span>, na<span class="op">=</span><span class="va">False</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Prefer this over a single clever pattern: it is readable, maintainable, and self-documenting to a reviewer.</p>
 </section>
-</section>
-<section id="phase-2-additional-portfolio-ideas" class="level1">
-<h1>Phase 2 Additional Portfolio Ideas</h1>
+<section id="phase-2-additional-portfolio-ideas" class="level2">
+<h2 class="anchored" data-anchor-id="phase-2-additional-portfolio-ideas">Phase 2 Additional Portfolio Ideas</h2>
 <p>These are the three published analyses that constitute your portfolio. Each must be reproducible, documented, and publicly accessible on GitHub Pages or a Quarto Pub site.</p>
-<section id="portfolio-ideas-chronic-absenteeism-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="portfolio-ideas-chronic-absenteeism-analysis">Portfolio Ideas — Chronic Absenteeism Analysis</h2>
+<section id="portfolio-idea-chronic-absenteeism-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="portfolio-idea-chronic-absenteeism-analysis">Portfolio Idea — Chronic Absenteeism Analysis</h3>
 <p>A longitudinal analysis of chronic absenteeism rates across NYC schools, 2018–present (including COVID disruption). Borough/district breakdowns. Demographic subgroup comparisons with appropriate caveats. Regression identifying school-level predictors. Written for a superintendent audience. Methodology appendix written for a research audience. These are two different documents. |</p>
 </section>
-<section id="portfolio-ideas-regents-graduation" class="level2">
-<h2 class="anchored" data-anchor-id="portfolio-ideas-regents-graduation">Portfolio Ideas — Regents &amp; Graduation</h2>
+<section id="portfolio-idea-regents-graduation" class="level3">
+<h3 class="anchored" data-anchor-id="portfolio-idea-regents-graduation">Portfolio Idea — Regents &amp; Graduation</h3>
 <p>An analysis of cohort graduation rates and Regents passage by school type (district, charter, transfer, D75). Honest about what the data can and cannot show. Includes a clearly stated limitations section. Visualizations appropriate for a policy brief. At least one finding that is counterintuitive or that challenges a common narrative.</p>
 </section>
-<section id="portfolio-ideas-your-choice-stakeholder-driven" class="level2">
-<h2 class="anchored" data-anchor-id="portfolio-ideas-your-choice-stakeholder-driven">Portfolio Ideas — Your Choice, Stakeholder-Driven</h2>
+</section>
+<section id="portfolio-idea-your-choice-stakeholder-driven" class="level2">
+<h2 class="anchored" data-anchor-id="portfolio-idea-your-choice-stakeholder-driven">Portfolio Idea — Your Choice, Stakeholder-Driven</h2>
 <p>Pick a question a specific real stakeholder (principal, parent coordinator, network data manager) has actually asked you or that you know they care about. Design the analysis to answer their question, not to demonstrate your techniques. Publish both the analysis and a one-page plain-language summary. This piece demonstrates judgment, not just skill. |</p>
 </section>
-</section>
-<section id="phase-2-gate-ccr-project-review" class="level1">
-<h1>Phase 2 Gate — CCR Project Review</h1>
+<section id="phase-2-gate-ccr-project-review" class="level2">
+<h2 class="anchored" data-anchor-id="phase-2-gate-ccr-project-review">Phase 2 Gate — CCR Project Review</h2>
 <p>All four CCR project outputs published. Each includes: a reproducible code repository, a rendered Quarto document or live dashboard, a plain-language summary, and a methodology note. Submit to one peer — ideally someone with education research background — for a written critique. Incorporate at least three substantive changes based on that feedback before proceeding to Phase 3. Target: a working version of all four outputs within 8–10 weeks of starting Phase 2.</p>
 <ul>
 <li>Explain how a school's Quality Review score is determined</li>
@@ -879,14 +913,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>What is a D75 school?</li>
 </ul>
 </section>
+</section>
 <section id="phase-3-application-months-1524" class="level1">
 <h1>Phase 3 — APPLICATION Months 15–24</h1>
 <section id="credentialing-network-and-income" class="level2">
 <h2 class="anchored" data-anchor-id="credentialing-network-and-income">Credentialing, Network, and Income</h2>
 <p>Convert competence into verifiable credentials and market-facing presence.</p>
-</section>
-<section id="credentialing-strategy" class="level2">
-<h2 class="anchored" data-anchor-id="credentialing-strategy">Credentialing Strategy</h2>
+<section id="credentialing-strategy" class="level3">
+<h3 class="anchored" data-anchor-id="credentialing-strategy">Credentialing Strategy</h3>
 <p>Credentials matter in institutional education hiring. Your published portfolio is your primary credential, but it needs to be legible to HR gatekeepers. The following are the minimum threshold:</p>
 <ul>
 <li>GitHub profile with consistent activity, clean repositories, and READMEs that explain what each project does</li>
@@ -895,12 +929,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>A one-page technical resume that lists specific tools and specific outputs, not generic skill claims</li>
 </ul>
 </section>
-<section id="on-formal-degrees" class="level2">
-<h2 class="anchored" data-anchor-id="on-formal-degrees">On Formal Degrees</h2>
+<section id="on-formal-degrees" class="level3">
+<h3 class="anchored" data-anchor-id="on-formal-degrees">On Formal Degrees</h3>
 <p>Many senior analyst postings require an MA or EdD in education research, policy, or a related field. Your NYCPS experience and published portfolio can substitute for this in some organizations — charter networks, ed-tech companies, and nonprofits are more flexible than large districts. If your target is a DOE central office or research role, a graduate credential will likely be required eventually. Don't let this paralyze Phase 3, but plan for it honestly. |</p>
 </section>
-<section id="target-role-profiles" class="level2">
-<h2 class="anchored" data-anchor-id="target-role-profiles">Target Role Profiles</h2>
+<section id="target-role-profiles" class="level3">
+<h3 class="anchored" data-anchor-id="target-role-profiles">Target Role Profiles</h3>
 <p>These are the roles you are positioning for. Understanding their differences shapes what you emphasize in your portfolio and how you describe yourself.</p>
 <table class="caption-top table">
 <thead>
@@ -939,8 +973,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="network-strategy" class="level2">
-<h2 class="anchored" data-anchor-id="network-strategy">Network Strategy</h2>
+<section id="network-strategy" class="level3">
+<h3 class="anchored" data-anchor-id="network-strategy">Network Strategy</h3>
 <p>In education data, the field is small enough that network is decisive. The following are not optional:</p>
 <ul>
 <li>Attend at least one NYAS, SREE, or AERA conference in Phase 3 — not to present, to meet people</li>
@@ -954,11 +988,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="phase-3-gate-readiness-criteria" class="level1">
-<h1>Phase 3 Gate — Readiness Criteria</h1>
-<section id="gate-3-market-readiness" class="level2">
-<h2 class="anchored" data-anchor-id="gate-3-market-readiness">GATE 3 — MARKET READINESS</h2>
+<section id="phase-3-gate-readiness-criteria" class="level2">
+<h2 class="anchored" data-anchor-id="phase-3-gate-readiness-criteria">Phase 3 Gate — Readiness Criteria</h2>
+<section id="gate-3-market-readiness" class="level3">
+<h3 class="anchored" data-anchor-id="gate-3-market-readiness">GATE 3 — MARKET READINESS</h3>
 <p>You are ready to apply when: (1) The CCR project is published and has been read and critiqued by at least one person outside your network. (2) You can walk through any output in a 20-minute technical screen without notes. (3) You can answer 'what are the limitations of this analysis?' before the interviewer asks. (4) You have applied for at least 3 positions and completed at least 1 technical screen — even if you are not ready. The screen will tell you more than this document can. |</p>
+</section>
 </section>
 </section>
 <section id="appendix-reference-benchmarks" class="level1">

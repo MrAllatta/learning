@@ -4,392 +4,340 @@
     "href": "notebooks/python_audit.html",
     "title": "Data Analysis Learning Portfolio",
     "section": "",
-    "text": "NYCPS created the College and Career Readiness metric to replace the Career Readiness Index. The effort tracks the NYSED CCCR College, Career, and (?Community) Readiness value, which will be used for grauation certification. Students are awarded points out of 100 for milestones that align with college and career readiness, such as AP exam scores and apprenticeships.\nLoad and inspect the school quality dataset. Dataset is not available through the nycschools package, and is large for the SODA Api. Exported manually from https://data.cityofnewyork.us/Education/School-Quality-Reports-Data/dnpx-dfnc/\n\nimport pandas\nfrom nycschools import schools\n\n\nschool_demographics_df = schools.load_school_demographics()\nschool_demographics_df.columns\n\nIndex(['dbn', 'beds', 'district', 'geo_district', 'boro', 'school_name',\n       'short_name', 'ay', 'year', 'school_type', 'school_level',\n       'total_enrollment', 'grade_3k', 'grade_pk', 'grade_k', 'grade_1',\n       'grade_2', 'grade_3', 'grade_4', 'grade_5', 'grade_6', 'grade_7',\n       'grade_8', 'grade_9', 'grade_10', 'grade_11', 'grade_12',\n       'non_binary_n', 'non_binary_pct', 'female_n', 'female_pct', 'male_n',\n       'male_pct', 'asian_n', 'asian_pct', 'black_n', 'black_pct',\n       'hispanic_n', 'hispanic_pct', 'multi_racial_n', 'multi_racial_pct',\n       'native_american_n', 'native_american_pct', 'white_n', 'white_pct',\n       'missing_race_ethnicity_data_n', 'missing_race_ethnicity_data_pct',\n       'swd_n', 'swd_pct', 'ell_n', 'ell_pct', 'poverty_n', 'poverty_pct',\n       'eni', 'clean_name', 'zip'],\n      dtype='str')\n\n\n\nschool_quality_df = pandas.read_csv(\"../data/school_quality.csv\")\nschool_quality_df.columns\n\nIndex(['School Year', 'Report Year',\n       'District, Borough and School Number (DBN)', 'School Name',\n       'Report Type', 'School Type', 'Metric Variable Name',\n       'Metric Display Name', 'Number of Students', 'Metric Value',\n       'Comparison Group Average', 'Metric Score'],\n      dtype='str')\n\n\n\n# Data for which unique is sensical shall be described as categorical data.\nschool_quality_df[\"School Type\"].unique()\n\n&lt;ArrowStringArray&gt;\n[          'Elementary',                  'K-8',          'High School',\n               'Middle', 'High School Transfer',                  'K-2',\n                 'YABC',                  'K-3',                  'K-1',\n                  'D75']\nLength: 10, dtype: str\n\n\n\nschool_demographics_df[\"ay\"].unique()\n\narray([2020, 2021, 2022, 2023, 2024, 2017, 2018, 2019, 2016, 2013, 2014,\n       2015, 2005, 2006, 2007, 2008, 2009, 2010, 2011])\n\n\nSchool quality is a dataset of [1493770 rows x 12 columns] of school quality metrics, by school and year. Metrics are unique by school type. Data collection and validation challenges stemming from the real world experiences of students and educators. The CCR replaces the CRI.\n\n# Get all of the variable display name pairs to lookup in the Educator's Guide. https://infohub.nyced.org/docs/default-source/default-document-library/finalized-2024-25-educator-guide-hs-1.pdf\nmetrics = school_quality_df[[\"Metric Variable Name\",\"Metric Display Name\"]].drop_duplicates()\nccr_cri_metrics = pandas.concat([metrics[metrics[\"Metric Variable Name\"].str.contains(\"cri\")],metrics[metrics[\"Metric Variable Name\"].str.contains(\"ccr\")]])\n\n\nccr_cri_df = school_quality_df[school_quality_df[\"Metric Variable Name\"].isin(ccr_cri_metrics[\"Metric Variable Name\"])]\n\n\n# merge school quality metrics with demographics\ncombined_df = pandas.merge(\n    left=ccr_cri_df,\n    right=school_demographics_df,\n    left_on=[\"District, Borough and School Number (DBN)\", \"School Year\"],\n    right_on=[\"dbn\", \"ay\"]\n    )\n\ncombined_df.head\n\n&lt;bound method NDFrame.head of        School Year  Report Year District, Borough and School Number (DBN)  \\\n0             2019         2020                                    17K524   \n1             2019         2020                                    17K524   \n2             2019         2020                                    17K524   \n3             2019         2020                                    17K524   \n4             2017         2018                                    02M416   \n...            ...          ...                                       ...   \n35357         2024         2025                                    32K556   \n35358         2024         2025                                    32K564   \n35359         2024         2025                                    32K564   \n35360         2024         2025                                    32K564   \n35361         2024         2025                                    32K564   \n\n                                             School Name Report Type  \\\n0          International High School at Prospect Heights          HS   \n1          International High School at Prospect Heights          HS   \n2          International High School at Prospect Heights          HS   \n3          International High School at Prospect Heights          HS   \n4                          Eleanor Roosevelt High School          HS   \n...                                                  ...         ...   \n35357  Bushwick Leaders High School for Academic Exce...          HS   \n35358                     Bushwick Community High School         HST   \n35359                     Bushwick Community High School         HST   \n35360                     Bushwick Community High School         HST   \n35361                     Bushwick Community High School         HST   \n\n                School Type    Metric Variable Name  \\\n0               High School  nocat_cri_engl_4yr_all   \n1               High School  nocat_cri_engl_6yr_all   \n2               High School  nocat_cri_math_4yr_all   \n3               High School  nocat_cri_math_6yr_all   \n4               High School    pct_cri_math_6yr_all   \n...                     ...                     ...   \n35357           High School             ccr_6yr_all   \n35358  High School Transfer             ccr_6yr_all   \n35359  High School Transfer      ccr_6yr_growth_all   \n35360  High School Transfer    ccr_6yr_growth_oa_uc   \n35361  High School Transfer           ccr_6yr_oa_uc   \n\n                                     Metric Display Name Number of Students  \\\n0      % Attaining English College Readiness Standard...                100   \n1      % Attaining English College Readiness Standard...                104   \n2      % Attaining Math College Readiness Standard (w...                100   \n3      % Attaining Math College Readiness Standard (6...                104   \n4      % Attaining Math College Readiness Standard (6...                137   \n...                                                  ...                ...   \n35357  6-Year College and Career Readiness - All Stud...                111   \n35358  Transfer School College and Career Readiness -...                 64   \n35359  Growth in Transfer School College and Career R...                 64   \n35360  Growth in Transfer School College and Career R...                 43   \n35361  Transfer School College and Career Readiness -...                 43   \n\n       Metric Value  ...  missing_race_ethnicity_data_pct  swd_n   swd_pct  \\\n0             0.170  ...                         0.000000   19.0  0.051351   \n1             0.288  ...                         0.000000   19.0  0.051351   \n2             0.830  ...                         0.000000   19.0  0.051351   \n3             0.875  ...                         0.000000   19.0  0.051351   \n4             1.000  ...                         0.001848   77.0  0.142329   \n...             ...  ...                              ...    ...       ...   \n35357        37.900  ...                         0.013928   84.0  0.233983   \n35358        15.100  ...                         0.000000   15.0  0.147059   \n35359         0.135  ...                         0.000000   15.0  0.147059   \n35360         0.117  ...                         0.000000   15.0  0.147059   \n35361        12.700  ...                         0.000000   15.0  0.147059   \n\n       ell_n   ell_pct  poverty_n poverty_pct       eni  \\\n0      311.0  0.840541        304    0.821622  0.960000   \n1      311.0  0.840541        304    0.821622  0.960000   \n2      311.0  0.840541        304    0.821622  0.960000   \n3      311.0  0.840541        304    0.821622  0.960000   \n4        0.0  0.000000        120    0.221811  0.231847   \n...      ...       ...        ...         ...       ...   \n35357  132.0  0.367688        328    0.913649  0.933181   \n35358   34.0  0.333333         87    0.852941  0.908735   \n35359   34.0  0.333333         87    0.852941  0.908735   \n35360   34.0  0.333333         87    0.852941  0.908735   \n35361   34.0  0.333333         87    0.852941  0.908735   \n\n                                              clean_name    zip  \n0          international high school at prospect heights  11225  \n1          international high school at prospect heights  11225  \n2          international high school at prospect heights  11225  \n3          international high school at prospect heights  11225  \n4                          eleanor roosevelt high school  10021  \n...                                                  ...    ...  \n35357  bushwick leaders high school for academic exce...  11385  \n35358                     bushwick community high school  11221  \n35359                     bushwick community high school  11221  \n35360                     bushwick community high school  11221  \n35361                     bushwick community high school  11221  \n\n[35362 rows x 68 columns]&gt;\n\n\n\ndef my_filter(df, mask):\n    \"\"\"Apply mask to df\"\"\"\n    return df[mask]\nschools_with_girls = my_filter(combined_df, combined_df[\"female_pct\"] &gt;= 0.05)\nschools_with_girls = schools_with_girls[[\"ay\", \"female_pct\"]]\nschools_with_girls = combined_df.loc[combined_df[\"female_pct\"] &gt;= 0.05, [\"ay\", \"female_pct\"]]\nschools_with_girls.groupby(\"ay\").median()\n\n\n\n\n\n\n\n\nfemale_pct\n\n\nay\n\n\n\n\n\n2015\n0.489000\n\n\n2016\n0.489000\n\n\n2017\n0.491632\n\n\n2018\n0.492754\n\n\n2019\n0.491857\n\n\n2023\n0.482935\n\n\n2024\n0.478921\n\n\n\n\n\n\n\n\nschools_with_girls.index\n\nIndex([    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,\n       ...\n       35352, 35353, 35354, 35355, 35356, 35357, 35358, 35359, 35360, 35361],\n      dtype='int64', length=35115)\n\n\n\nschools_with_girls[schools_with_girls[\"female_pct\"] &lt; 0.33].groupby(\"ay\").median()\n\n\n\n\n\n\n\n\nfemale_pct\n\n\nay\n\n\n\n\n\n2015\n0.223000\n\n\n2016\n0.219000\n\n\n2017\n0.218471\n\n\n2018\n0.228487\n\n\n2019\n0.245353\n\n\n2023\n0.248521\n\n\n2024\n0.221635\n\n\n\n\n\n\n\n\nschools_with_girls.sort_values(\"female_pct\")\n\n\n\n\n\n\n\n\nay\nschool_name\nfemale_pct\n\n\n\n\n25027\n2016\nA-Tech High School\n0.050\n\n\n25028\n2016\nA-Tech High School\n0.050\n\n\n25029\n2016\nA-Tech High School\n0.050\n\n\n26712\n2015\nAutomotive High School\n0.056\n\n\n26710\n2015\nAutomotive High School\n0.056\n\n\n...\n...\n...\n...\n\n\n30988\n2023\nYoung Women's Leadership School, Queens\n1.000\n\n\n30983\n2023\nYoung Women's Leadership School, Queens\n1.000\n\n\n30982\n2023\nYoung Women's Leadership School, Queens\n1.000\n\n\n23596\n2017\nYoung Women's Leadership School, Astoria\n1.000\n\n\n20845\n2017\nWomen's Academy of Excellence\n1.000\n\n\n\n\n35115 rows × 3 columns\n\n\n\n\nschools_with_girls.describe\n\n&lt;bound method NDFrame.describe of          ay                                        school_name  female_pct\n0      2019      International High School at Prospect Heights    0.375676\n1      2019      International High School at Prospect Heights    0.375676\n2      2019      International High School at Prospect Heights    0.375676\n3      2019      International High School at Prospect Heights    0.375676\n4      2017                      Eleanor Roosevelt High School    0.604436\n...     ...                                                ...         ...\n35357  2024  Bushwick Leaders High School for Academic Exce...    0.487465\n35358  2024                     Bushwick Community High School    0.441176\n35359  2024                     Bushwick Community High School    0.441176\n35360  2024                     Bushwick Community High School    0.441176\n35361  2024                     Bushwick Community High School    0.441176\n\n[35115 rows x 3 columns]&gt;\n\n\nYoung women do not enroll in tech. This is not a news flash. Can we see an improvement in the data?\n\ndef school_by_type(school_type):\n    criterion = school_quality_df[\"School Type\"]==school_type\n    return school_quality_df[criterion]\n\nmiddle_df = school_by_type(\"Middle\")\nhs_df = school_by_type(\"High School\")\n\nFilter rows by a column, group by a column, compute a mean\n\nccr_df = school_quality_df[school_quality_df[\"Metric Variable Name\"].str.contains(\"ccr\")]\nccr_by_year = ccr_df.groupby(by=\"Report Year\")\n\nFor what years have ccr metrics been reported?\n\nccr_by_year.count()\n\n\n\n\n\n\n\n\nSchool Year\nDistrict, Borough and School Number (DBN)\nSchool Name\nReport Type\nSchool Type\nMetric Variable Name\nMetric Display Name\nNumber of Students\nMetric Value\nComparison Group Average\nMetric Score\n\n\nReport Year\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2024\n3803\n3803\n3803\n3803\n3803\n3803\n3803\n3803\n2515\n1722\n0\n\n\n2025\n4006\n4006\n4006\n4006\n4006\n4006\n4006\n4006\n2712\n1918\n922\n\n\n\n\n\n\n\nCCR metrics have been reported for the 2024 and 2025 school year. Metric Score, the normed value relative to Comparison Group, was reported for the first time in 2025.\nCollege and Career Preparatory Course Index pct_cpci_oa_uc This metric shows the percentage of students in the school’s four-year cohort who successfully completed approved rigorous courses and assessments after four years of high school.\nFor what years was the pct_cpci_oa_uv reported.\n\npreparatory_course_index_df = school_quality_df[school_quality_df[\"Metric Variable Name\"]==\"pct_cpci_oa_uv\"]\n\n\npreparatory_course_index_df.head\n\n&lt;bound method NDFrame.head of Empty DataFrame\nColumns: [School Year, Report Year, District, Borough and School Number (DBN), School Name, Report Type, School Type, Metric Variable Name, Metric Display Name, Number of Students, Metric Value, Comparison Group Average, Metric Score]\nIndex: []&gt;\n\n\n\nschool_quality_df[school_quality_df[\"Metric Variable Name\"].str.contains(\"pct_cpci_oa_uc\")].groupby(by=\"Report Year\")[\"Metric Value\"].mean()\n\nReport Year\n2016    0.070554\n2017    0.070786\n2018    0.065679\n2019    0.070269\n2020    0.068727\n2021    0.072018\n2022    0.080246\n2023    0.099860\n2024    0.134140\n2025    0.138789\nName: Metric Value, dtype: float64\n\n\nJoin on DBN"
+    "text": "NYCPS created the College and Career Readiness metric to replace the Career Readiness Index. The effort tracks the NYSED CCCR College, Career, and (?Community) Readiness value, which will be used for grauation certification. Students are awarded points out of 100 for milestones that align with college and career readiness, such as AP exam scores and apprenticeships.\nLoad and inspect the school quality dataset. Dataset is not available through the nycschools package, and is large for the SODA Api. Exported manually from https://data.cityofnewyork.us/Education/School-Quality-Reports-Data/dnpx-dfnc/\n\nimport pandas\nfrom nycschools import schools\n\n\nschool_demographics_df = schools.load_school_demographics()\nschool_demographics_df.columns\n\nIndex(['dbn', 'beds', 'district', 'geo_district', 'boro', 'school_name',\n       'short_name', 'ay', 'year', 'school_type', 'school_level',\n       'total_enrollment', 'grade_3k', 'grade_pk', 'grade_k', 'grade_1',\n       'grade_2', 'grade_3', 'grade_4', 'grade_5', 'grade_6', 'grade_7',\n       'grade_8', 'grade_9', 'grade_10', 'grade_11', 'grade_12',\n       'non_binary_n', 'non_binary_pct', 'female_n', 'female_pct', 'male_n',\n       'male_pct', 'asian_n', 'asian_pct', 'black_n', 'black_pct',\n       'hispanic_n', 'hispanic_pct', 'multi_racial_n', 'multi_racial_pct',\n       'native_american_n', 'native_american_pct', 'white_n', 'white_pct',\n       'missing_race_ethnicity_data_n', 'missing_race_ethnicity_data_pct',\n       'swd_n', 'swd_pct', 'ell_n', 'ell_pct', 'poverty_n', 'poverty_pct',\n       'eni', 'clean_name', 'zip'],\n      dtype='str')\n\n\n\nschool_quality_df = pandas.read_csv(\"../data/school_quality.csv\")\nschool_quality_df.columns\n\nIndex(['School Year', 'Report Year',\n       'District, Borough and School Number (DBN)', 'School Name',\n       'Report Type', 'School Type', 'Metric Variable Name',\n       'Metric Display Name', 'Number of Students', 'Metric Value',\n       'Comparison Group Average', 'Metric Score'],\n      dtype='str')\n\n\n\n# Data for which unique is sensical shall be described as categorical data.\nschool_quality_df[\"School Type\"].unique()\n\n&lt;ArrowStringArray&gt;\n[          'Elementary',                  'K-8',          'High School',\n               'Middle', 'High School Transfer',                  'K-2',\n                 'YABC',                  'K-3',                  'K-1',\n                  'D75']\nLength: 10, dtype: str\n\n\n\nschool_demographics_df[\"ay\"].unique()\n\narray([2020, 2021, 2022, 2023, 2024, 2017, 2018, 2019, 2016, 2013, 2014,\n       2015, 2005, 2006, 2007, 2008, 2009, 2010, 2011])\n\n\nSchool quality is a dataset of [1493770 rows x 12 columns] of school quality metrics, by school and year. Metrics are unique by school type. Data collection and validation challenges stemming from the real world experiences of students and educators. The CCR replaces the CRI.\n\n# Get all of the variable display name pairs to lookup in the Educator's Guide. https://infohub.nyced.org/docs/default-source/default-document-library/finalized-2024-25-educator-guide-hs-1.pdf\nmetrics = school_quality_df[[\"Metric Variable Name\",\"Metric Display Name\"]].drop_duplicates()\nccr_cri_metrics = pandas.concat([metrics[metrics[\"Metric Variable Name\"].str.contains(\"cri\")],metrics[metrics[\"Metric Variable Name\"].str.contains(\"ccr\")]])\n\n\nccr_cri_df = school_quality_df[school_quality_df[\"Metric Variable Name\"].isin(ccr_cri_metrics[\"Metric Variable Name\"])]\n\n\n# merge school quality metrics with demographics\ncombined_df = pandas.merge(\n    left=ccr_cri_df,\n    right=school_demographics_df,\n    left_on=[\"District, Borough and School Number (DBN)\", \"School Year\"],\n    right_on=[\"dbn\", \"ay\"]\n    )\n\n\ndef my_filter(df, mask):\n    \"\"\"Apply mask to df\"\"\"\n    return df[mask]\nschools_with_girls = my_filter(combined_df, combined_df[\"female_pct\"] &gt;= 0.05)\nschools_with_girls = schools_with_girls[[\"ay\", \"female_pct\"]]\nschools_with_girls = combined_df.loc[combined_df[\"female_pct\"] &gt;= 0.05, [\"ay\", \"female_pct\"]]\nschools_with_girls.groupby(\"ay\").median()\n\n\n\n\n\n\n\n\nfemale_pct\n\n\nay\n\n\n\n\n\n2015\n0.489000\n\n\n2016\n0.489000\n\n\n2017\n0.491632\n\n\n2018\n0.492754\n\n\n2019\n0.491857\n\n\n2023\n0.482935\n\n\n2024\n0.478921\n\n\n\n\n\n\n\n\nschools_with_girls.index\n\nIndex([    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,\n       ...\n       35352, 35353, 35354, 35355, 35356, 35357, 35358, 35359, 35360, 35361],\n      dtype='int64', length=35115)\n\n\n\nschools_with_girls[schools_with_girls[\"female_pct\"] &lt; 0.33].groupby(\"ay\").median()\n\n\n\n\n\n\n\n\nfemale_pct\n\n\nay\n\n\n\n\n\n2015\n0.223000\n\n\n2016\n0.219000\n\n\n2017\n0.218471\n\n\n2018\n0.228487\n\n\n2019\n0.245353\n\n\n2023\n0.248521\n\n\n2024\n0.221635\n\n\n\n\n\n\n\n\nschools_with_girls.sort_values(\"female_pct\")\n\n\n\n\n\n\n\n\nay\nfemale_pct\n\n\n\n\n25027\n2016\n0.050\n\n\n25028\n2016\n0.050\n\n\n25029\n2016\n0.050\n\n\n26712\n2015\n0.056\n\n\n26710\n2015\n0.056\n\n\n...\n...\n...\n\n\n30988\n2023\n1.000\n\n\n30983\n2023\n1.000\n\n\n30982\n2023\n1.000\n\n\n23596\n2017\n1.000\n\n\n20845\n2017\n1.000\n\n\n\n\n35115 rows × 2 columns\n\n\n\n\nschools_with_girls.describe\n\n&lt;bound method NDFrame.describe of          ay  female_pct\n0      2019    0.375676\n1      2019    0.375676\n2      2019    0.375676\n3      2019    0.375676\n4      2017    0.604436\n...     ...         ...\n35357  2024    0.487465\n35358  2024    0.441176\n35359  2024    0.441176\n35360  2024    0.441176\n35361  2024    0.441176\n\n[35115 rows x 2 columns]&gt;\n\n\nYoung women do not enroll in tech. This is not a news flash. Can we see an improvement in the data?\n\ndef school_by_type(school_type):\n    criterion = school_quality_df[\"School Type\"]==school_type\n    return school_quality_df[criterion]\n\nmiddle_df = school_by_type(\"Middle\")\nhs_df = school_by_type(\"High School\")\n\nFilter rows by a column, group by a column, compute a mean\n\nccr_df = school_quality_df[school_quality_df[\"Metric Variable Name\"].str.contains(\"ccr\")]\nccr_by_year = ccr_df.groupby(by=\"Report Year\")\n\nFor what years have ccr metrics been reported?\n\nccr_by_year.count()\n\n\n\n\n\n\n\n\nSchool Year\nDistrict, Borough and School Number (DBN)\nSchool Name\nReport Type\nSchool Type\nMetric Variable Name\nMetric Display Name\nNumber of Students\nMetric Value\nComparison Group Average\nMetric Score\n\n\nReport Year\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n2024\n3803\n3803\n3803\n3803\n3803\n3803\n3803\n3803\n2515\n1722\n0\n\n\n2025\n4006\n4006\n4006\n4006\n4006\n4006\n4006\n4006\n2712\n1918\n922\n\n\n\n\n\n\n\nCCR metrics have been reported for the 2024 and 2025 school year. Metric Score, the normed value relative to Comparison Group, was reported for the first time in 2025.\nCollege and Career Preparatory Course Index pct_cpci_oa_uc This metric shows the percentage of students in the school’s four-year cohort who successfully completed approved rigorous courses and assessments after four years of high school.\nFor what years was the pct_cpci_oa_uv reported.\n\npreparatory_course_index_df = school_quality_df[school_quality_df[\"Metric Variable Name\"]==\"pct_cpci_oa_uv\"]\n\n\npreparatory_course_index_df.head\n\n&lt;bound method NDFrame.head of Empty DataFrame\nColumns: [School Year, Report Year, District, Borough and School Number (DBN), School Name, Report Type, School Type, Metric Variable Name, Metric Display Name, Number of Students, Metric Value, Comparison Group Average, Metric Score]\nIndex: []&gt;\n\n\n\nschool_quality_df[school_quality_df[\"Metric Variable Name\"].str.contains(\"pct_cpci_oa_uc\")].groupby(by=\"Report Year\")[\"Metric Value\"].mean()\n\nReport Year\n2016    0.070554\n2017    0.070786\n2018    0.065679\n2019    0.070269\n2020    0.068727\n2021    0.072018\n2022    0.080246\n2023    0.099860\n2024    0.134140\n2025    0.138789\nName: Metric Value, dtype: float64\n\n\nJoin on DBN",
+    "crumbs": [
+      "python_audit.html"
+    ]
   },
   {
     "objectID": "learning-plan.html",
     "href": "learning-plan.html",
     "title": "learning-plan.org",
     "section": "",
-    "text": "Technical & Statistical Depth + Domain Fluency Benchmarks Non-AI-Assisted Verification Standard | 24-Month Framework | NYCPS Focus\n\n\nEvery benchmark in this document must be met without AI assistance. That is the test. You can use AI to learn, to check your work, and to accelerate exploration. You cannot use it to pass a gate. The difference between knowing something and being able to retrieve it via Claude is the difference between a senior analyst and a liability.\n\n\n\nThis plan is organized into four phases spanning 24 months. Each phase has a gate: a set of non-AI-assisted tasks you must complete before proceeding. The gates are not theoretical—they are the things a hiring manager will ask you to demonstrate in an interview or on a skills assessment. The plan is built around three parallel tracks that develop simultaneously:\n\nTechnical depth: Python, R, SQL, and reproducible research workflow\nStatistical literacy: The ability to select, apply, and explain methods correctly\nDomain fluency: NYCPS-specific knowledge that makes your analysis credible and legible to education stakeholders"
+    "text": "Technical & Statistical Depth + Domain Fluency Benchmarks Non-AI-Assisted Verification Standard | 24-Month Framework | NYCPS Focus\n\n\nEvery benchmark in this document must be met without AI assistance. That is the test. You can use AI to learn, to check your work, and to accelerate exploration. You cannot use it to pass a gate. The difference between knowing something and being able to retrieve it via Claude is the difference between a senior analyst and a liability.\n\n\n\nThis plan is organized into four phases spanning 24 months. Each phase has a gate: a set of non-AI-assisted tasks you must complete before proceeding. The gates are not theoretical—they are the things a hiring manager will ask you to demonstrate in an interview or on a skills assessment. The plan is built around three parallel tracks that develop simultaneously:\n\nTechnical depth: Python, R, SQL, and reproducible research workflow\nStatistical literacy: The ability to select, apply, and explain methods correctly\nDomain fluency: NYCPS-specific knowledge that makes your analysis credible and legible to education stakeholders",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#core-principle",
     "href": "learning-plan.html#core-principle",
     "title": "learning-plan.org",
     "section": "",
-    "text": "Every benchmark in this document must be met without AI assistance. That is the test. You can use AI to learn, to check your work, and to accelerate exploration. You cannot use it to pass a gate. The difference between knowing something and being able to retrieve it via Claude is the difference between a senior analyst and a liability."
+    "text": "Every benchmark in this document must be met without AI assistance. That is the test. You can use AI to learn, to check your work, and to accelerate exploration. You cannot use it to pass a gate. The difference between knowing something and being able to retrieve it via Claude is the difference between a senior analyst and a liability.",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#how-to-use-this-plan",
     "href": "learning-plan.html#how-to-use-this-plan",
     "title": "learning-plan.org",
     "section": "",
-    "text": "This plan is organized into four phases spanning 24 months. Each phase has a gate: a set of non-AI-assisted tasks you must complete before proceeding. The gates are not theoretical—they are the things a hiring manager will ask you to demonstrate in an interview or on a skills assessment. The plan is built around three parallel tracks that develop simultaneously:\n\nTechnical depth: Python, R, SQL, and reproducible research workflow\nStatistical literacy: The ability to select, apply, and explain methods correctly\nDomain fluency: NYCPS-specific knowledge that makes your analysis credible and legible to education stakeholders"
+    "text": "This plan is organized into four phases spanning 24 months. Each phase has a gate: a set of non-AI-assisted tasks you must complete before proceeding. The gates are not theoretical—they are the things a hiring manager will ask you to demonstrate in an interview or on a skills assessment. The plan is built around three parallel tracks that develop simultaneously:\n\nTechnical depth: Python, R, SQL, and reproducible research workflow\nStatistical literacy: The ability to select, apply, and explain methods correctly\nDomain fluency: NYCPS-specific knowledge that makes your analysis credible and legible to education stakeholders",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#before-you-begin",
     "href": "learning-plan.html#before-you-begin",
     "title": "learning-plan.org",
     "section": "Before You Begin",
-    "text": "Before You Begin\nEstablish an honest baseline. No learning yet. Just measurement."
+    "text": "Before You Begin\nEstablish an honest baseline. No learning yet. Just measurement.",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#the-audit-tasks",
     "href": "learning-plan.html#the-audit-tasks",
     "title": "learning-plan.org",
     "section": "The Audit Tasks",
-    "text": "The Audit Tasks\nDo each of these without AI assistance. Record where you get stuck — that's your Phase 1 curriculum."
-  },
-  {
-    "objectID": "learning-plan.html#python-audit-2-hours-no-ai-no-stack-overflow",
-    "href": "learning-plan.html#python-audit-2-hours-no-ai-no-stack-overflow",
-    "title": "learning-plan.org",
-    "section": "Python Audit (2 hours, no AI, no Stack Overflow)",
-    "text": "Python Audit (2 hours, no AI, no Stack Overflow)\n\nLoad a CSV of NYCPS data into a pandas DataFrame\nFilter rows by a condition, group by a column, compute a mean\nJoin two DataFrames on a common key\nHandle a column with mixed types or missing values\nPlot a bar chart with proper axis labels and a title\nWrite a function that takes a DataFrame and returns a summary\nConnect to a local PostgreSQL database and run a query"
-  },
-  {
-    "objectID": "learning-plan.html#r-audit-2-hours-no-ai",
-    "href": "learning-plan.html#r-audit-2-hours-no-ai",
-    "title": "learning-plan.org",
-    "section": "R Audit (2 hours, no AI)",
-    "text": "R Audit (2 hours, no AI)\n\nLoad a CSV and inspect its structure using tidyverse\nWrite a dplyr pipeline: filter, select, mutate, groupby, summarize\nProduce a ggplot2 bar chart with correct labels\nRun a linear regression, call summary(), and explain each component of the output in writing\nRender a Quarto document with inline R output to HTML"
-  },
-  {
-    "objectID": "learning-plan.html#sql-audit-1-hour-no-ai",
-    "href": "learning-plan.html#sql-audit-1-hour-no-ai",
-    "title": "learning-plan.org",
-    "section": "SQL Audit (1 hour, no AI)",
-    "text": "SQL Audit (1 hour, no AI)\n\nWrite a query with a JOIN, a WHERE clause, and a GROUP BY\nWrite a subquery\nExplain what an index does and when you'd add one"
-  },
-  {
-    "objectID": "learning-plan.html#statistics-audit-written-45-minutes",
-    "href": "learning-plan.html#statistics-audit-written-45-minutes",
-    "title": "learning-plan.org",
-    "section": "Statistics Audit (written, 45 minutes)",
-    "text": "Statistics Audit (written, 45 minutes)\nAnswer these in writing, as if explaining to a smart non-statistician:\n\nWhat does a p-value actually mean? What does it NOT mean?\nA school's test scores went up 5 points. Is that meaningful? What would you need to know?\nWhat is the difference between correlation and causation? Give an example from education data.\nWhat is chronic absenteeism? How is it calculated? Why does the 20% threshold matter?"
-  },
-  {
-    "objectID": "learning-plan.html#domain-audit-written-30-minutes",
-    "href": "learning-plan.html#domain-audit-written-30-minutes",
-    "title": "learning-plan.org",
-    "section": "Domain Audit (written, 30 minutes)",
-    "text": "Domain Audit (written, 30 minutes)\n\nName and describe five data systems used in NYCPS\nExplain how a school's Quality Review score is determined\nWhat is a NYSSIS ID and why does it exist?\nList the demographic subgroups required for ESSA reporting\nWhat is a D75 school?"
+    "text": "The Audit Tasks\nDo each of these without AI assistance. Record where you get stuck — that's your Phase 1 curriculum.\n\nPython Audit (2 hours, no AI, no Stack Overflow)\n\nLoad a CSV of NYCPS data into a pandas DataFrame\nFilter rows by a condition, group by a column, compute a mean\nJoin two DataFrames on a common key\nHandle a column with mixed types or missing values\nPlot a bar chart with proper axis labels and a title\nWrite a function that takes a DataFrame and returns a summary\nConnect to a local PostgreSQL database and run a query\n\n\n\nR Audit (2 hours, no AI)\n\nLoad a CSV and inspect its structure using tidyverse\nWrite a dplyr pipeline: filter, select, mutate, groupby, summarize\nProduce a ggplot2 bar chart with correct labels\nRun a linear regression, call summary(), and explain each component of the output in writing\nRender a Quarto document with inline R output to HTML\n\n\n\nSQL Audit (1 hour, no AI)\n\nWrite a query with a JOIN, a WHERE clause, and a GROUP BY\nWrite a subquery\nExplain what an index does and when you'd add one\n\n\n\nStatistics Audit (written, 45 minutes)\nAnswer these in writing, as if explaining to a smart non-statistician:\n\nWhat does a p-value actually mean? What does it NOT mean?\nA school's test scores went up 5 points. Is that meaningful? What would you need to know?\nWhat is the difference between correlation and causation? Give an example from education data.\nWhat is chronic absenteeism? How is it calculated? Why does the 20% threshold matter?\n\n\n\nDomain Audit (written, 30 minutes)\n\nName and describe five data systems used in NYCPS\nExplain how a school's Quality Review score is determined\nWhat is a NYSSIS ID and why does it exist?\nList the demographic subgroups required for ESSA reporting\nWhat is a D75 school?",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#audit-output",
     "href": "learning-plan.html#audit-output",
     "title": "learning-plan.org",
     "section": "Audit Output",
-    "text": "Audit Output\nAfter completing the audit, score yourself: Strong / Shaky / Gap for each area. The gaps are your Phase 1 priorities. Be ruthless. Shaky means you needed to think too hard or hedged your answer. Gap means you couldn't do it."
+    "text": "Audit Output\nAfter completing the audit, score yourself: Strong / Shaky / Gap for each area. The gaps are your Phase 1 priorities. Be ruthless. Shaky means you needed to think too hard or hedged your answer. Gap means you couldn't do it.",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#close-the-gaps-narrow-the-stack",
     "href": "learning-plan.html#close-the-gaps-narrow-the-stack",
     "title": "learning-plan.org",
     "section": "Close the Gaps, Narrow the Stack",
-    "text": "Close the Gaps, Narrow the Stack\nAchieve reliable, unassisted competence in a focused core. No new tools. No side projects."
+    "text": "Close the Gaps, Narrow the Stack\nAchieve reliable, unassisted competence in a focused core. No new tools. No side projects.\n\nWhat you are deferring\nEmacs configuration, Positron exploration, Django feature development, new Kaggle competitions, gh-pages customization. These are real, useful things. They are Phase 2 and 3. Every hour spent on them in Phase 1 is a debt against your foundation.\n\n\nStack Decision: What You Are Committing To\nFor Phase 1, your working stack is exactly this, nothing else:\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nPrimary language\nPython with pandas, matplotlib, seaborn, SQLAlchemy\nCan produce output from scratch\n\n\nSecondary language\nR with tidyverse, ggplot2, broom\nCan produce output from scratch\n\n\nReporting\nQuarto (parametrized reports, HTML output)\nCan render from scratch\n\n\nDatabase\nPostgreSQL via psycopg2 or SQLAlchemy\nCan connect, query, load\n\n\nVersion control\nGit + GitHub (command line, not GUI)\nCan commit, branch, push, resolve conflict",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
-    "objectID": "learning-plan.html#what-you-are-deferring",
-    "href": "learning-plan.html#what-you-are-deferring",
+    "objectID": "learning-plan.html#phase-1-technical-benchmarks",
+    "href": "learning-plan.html#phase-1-technical-benchmarks",
     "title": "learning-plan.org",
-    "section": "What you are deferring",
-    "text": "What you are deferring\nEmacs configuration, Positron exploration, Django feature development, new Kaggle competitions, gh-pages customization. These are real, useful things. They are Phase 2 and 3. Every hour spent on them in Phase 1 is a debt against your foundation."
+    "section": "Phase 1 Technical Benchmarks",
+    "text": "Phase 1 Technical Benchmarks\n\nR: Statistical Workflow Fluency\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nData wrangling\ntidyverse pipeline: filter, mutate, groupby, summarize, pivotlonger/wider\nTimed exercise\n\n\nVisualization\nggplot2 chart with correct geom, scales, labels, theme; faceted by a variable\nPortfolio artifact\n\n\nModeling\nlm() with multiple predictors; interpret coefficients, R-squared, residuals\nWritten explanation\n\n\nReporting\nParametrized Quarto doc with inline R, tables via kableExtra or gt\nPublished output\n\n\nReproducibility\nrenv lockfile, seed-set, no absolute paths in code\nCode review\n\n\n\n\n\nSQL: Operational Fluency\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nJoins\nWrite LEFT, INNER, FULL OUTER, SELF join; explain when each is appropriate\nWhiteboard\n\n\nAggregation\nGROUP BY with HAVING; distinguish WHERE vs HAVING\nWritten exercise\n\n\nWindow functions\nROWNUMBER, RANK, LAG, LEAD, running totals with OVER/PARTITION BY\nTimed exercise\n\n\nCTEs\nWrite a multi-step CTE; explain why CTEs improve readability\nCode review\n\n\nSubqueries\nCorrelated subquery; explain when a subquery beats a join\nTimed exercise\n\n\nPerformance\nExplain what EXPLAIN ANALYZE output shows; when to add an index\nVerbal/written\n\n\n\n\n\nPython: Data Pipeline Fluency\nYou must be able to build the following pipeline from scratch, in under 90 minutes, without assistance:\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nIngest\nLoad a multi-sheet Excel file or messy CSV, detect encoding, parse dates, coerce types\nTimed exercise\n\n\nClean\nIdentify and handle nulls, duplicates, outliers, inconsistent categoricals\nCode review\n\n\nTransform\nMulti-condition filtering, window calculations, reshaping (wide/long)\nTimed exercise\n\n\nAggregate\nGroupBy with multiple aggregation functions, custom apply()\nTimed exercise\n\n\nJoin\nLeft, inner, and anti-join; diagnose a fan-out; explain when to use each\nWhiteboard/verbal\n\n\nExport\nWrite to CSV, to PostgreSQL table, and to a Quarto-compatible format\nTimed exercise\n\n\nDocument\nInline comments, docstrings, README describing what the pipeline does\nCode review\n\n\n\n\n\nPython: Debugging Without Assistance\nYou must be able to diagnose and fix the following error types by reading the traceback alone:\n\nKeyError on a DataFrame column (likely a whitespace or case issue)\nMergeError or unexpected row count after a join (likely a duplicate key)\nTypeError from mixed types in a column operation\nSettingWithCopyWarning — explain what it means and fix it correctly\nA PostgreSQL connection timeout or authentication error",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
-    "objectID": "learning-plan.html#stack-decision-what-you-are-committing-to",
-    "href": "learning-plan.html#stack-decision-what-you-are-committing-to",
+    "objectID": "learning-plan.html#phase-1-statistics-benchmarks",
+    "href": "learning-plan.html#phase-1-statistics-benchmarks",
     "title": "learning-plan.org",
-    "section": "Stack Decision: What You Are Committing To",
-    "text": "Stack Decision: What You Are Committing To\nFor Phase 1, your working stack is exactly this, nothing else:\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nPrimary language\nPython with pandas, matplotlib, seaborn, SQLAlchemy\nCan produce output from scratch\n\n\nSecondary language\nR with tidyverse, ggplot2, broom\nCan produce output from scratch\n\n\nReporting\nQuarto (parametrized reports, HTML output)\nCan render from scratch\n\n\nDatabase\nPostgreSQL via psycopg2 or SQLAlchemy\nCan connect, query, load\n\n\nVersion control\nGit + GitHub (command line, not GUI)\nCan commit, branch, push, resolve conflict"
-  },
-  {
-    "objectID": "learning-plan.html#r-statistical-workflow-fluency",
-    "href": "learning-plan.html#r-statistical-workflow-fluency",
-    "title": "learning-plan.org",
-    "section": "R: Statistical Workflow Fluency",
-    "text": "R: Statistical Workflow Fluency\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nData wrangling\ntidyverse pipeline: filter, mutate, groupby, summarize, pivotlonger/wider\nTimed exercise\n\n\nVisualization\nggplot2 chart with correct geom, scales, labels, theme; faceted by a variable\nPortfolio artifact\n\n\nModeling\nlm() with multiple predictors; interpret coefficients, R-squared, residuals\nWritten explanation\n\n\nReporting\nParametrized Quarto doc with inline R, tables via kableExtra or gt\nPublished output\n\n\nReproducibility\nrenv lockfile, seed-set, no absolute paths in code\nCode review"
-  },
-  {
-    "objectID": "learning-plan.html#sql-operational-fluency",
-    "href": "learning-plan.html#sql-operational-fluency",
-    "title": "learning-plan.org",
-    "section": "SQL: Operational Fluency",
-    "text": "SQL: Operational Fluency\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nJoins\nWrite LEFT, INNER, FULL OUTER, SELF join; explain when each is appropriate\nWhiteboard\n\n\nAggregation\nGROUP BY with HAVING; distinguish WHERE vs HAVING\nWritten exercise\n\n\nWindow functions\nROWNUMBER, RANK, LAG, LEAD, running totals with OVER/PARTITION BY\nTimed exercise\n\n\nCTEs\nWrite a multi-step CTE; explain why CTEs improve readability\nCode review\n\n\nSubqueries\nCorrelated subquery; explain when a subquery beats a join\nTimed exercise\n\n\nPerformance\nExplain what EXPLAIN ANALYZE output shows; when to add an index\nVerbal/written"
-  },
-  {
-    "objectID": "learning-plan.html#python-data-pipeline-fluency",
-    "href": "learning-plan.html#python-data-pipeline-fluency",
-    "title": "learning-plan.org",
-    "section": "Python: Data Pipeline Fluency",
-    "text": "Python: Data Pipeline Fluency\nYou must be able to build the following pipeline from scratch, in under 90 minutes, without assistance:\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nIngest\nLoad a multi-sheet Excel file or messy CSV, detect encoding, parse dates, coerce types\nTimed exercise\n\n\nClean\nIdentify and handle nulls, duplicates, outliers, inconsistent categoricals\nCode review\n\n\nTransform\nMulti-condition filtering, window calculations, reshaping (wide/long)\nTimed exercise\n\n\nAggregate\nGroupBy with multiple aggregation functions, custom apply()\nTimed exercise\n\n\nJoin\nLeft, inner, and anti-join; diagnose a fan-out; explain when to use each\nWhiteboard/verbal\n\n\nExport\nWrite to CSV, to PostgreSQL table, and to a Quarto-compatible format\nTimed exercise\n\n\nDocument\nInline comments, docstrings, README describing what the pipeline does\nCode review"
-  },
-  {
-    "objectID": "learning-plan.html#python-debugging-without-assistance",
-    "href": "learning-plan.html#python-debugging-without-assistance",
-    "title": "learning-plan.org",
-    "section": "Python: Debugging Without Assistance",
-    "text": "Python: Debugging Without Assistance\nYou must be able to diagnose and fix the following error types by reading the traceback alone:\n\nKeyError on a DataFrame column (likely a whitespace or case issue)\nMergeError or unexpected row count after a join (likely a duplicate key)\nTypeError from mixed types in a column operation\nSettingWithCopyWarning — explain what it means and fix it correctly\nA PostgreSQL connection timeout or authentication error"
-  },
-  {
-    "objectID": "learning-plan.html#core-concepts-must-explain-correctly-to-a-non-statistician",
-    "href": "learning-plan.html#core-concepts-must-explain-correctly-to-a-non-statistician",
-    "title": "learning-plan.org",
-    "section": "Core Concepts — Must Explain Correctly to a Non-Statistician",
-    "text": "Core Concepts — Must Explain Correctly to a Non-Statistician\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nMean vs. median\nWhen does mean mislead? Give an education data example where median is more honest.\nVerbal\n\n\nStandard deviation\nExplain what 1 SD means in a distribution of school attendance rates.\nWritten\n\n\nConfidence interval\nWhat does a 95% CI actually mean? What does it NOT mean?\nWritten\n\n\np-value\nExplain correctly — most analysts explain this wrong. What is the null hypothesis? What does p &lt; .05 actually say?\nWritten\n\n\nEffect size\nWhy is a statistically significant result not necessarily meaningful? Explain Cohen's d with a test score example.\nWritten\n\n\nCorrelation\nWhat is r = .3 between attendance and test scores telling you? What can't you conclude?\nVerbal\n\n\nRegression coefficient\nIn a model predicting graduation rate from attendance and SES, interpret a coefficient of 0.4 on attendance.\nWritten\n\n\nConfounding\nGive two examples from education data where a confound changes the interpretation of a finding.\nWritten"
-  },
-  {
-    "objectID": "learning-plan.html#applied-statistics-you-must-be-able-to-do-these",
-    "href": "learning-plan.html#applied-statistics-you-must-be-able-to-do-these",
-    "title": "learning-plan.org",
-    "section": "Applied Statistics: You Must Be Able to Do These",
-    "text": "Applied Statistics: You Must Be Able to Do These\n\nRun a simple and multiple OLS regression in both Python (statsmodels) and R (lm()); interpret output identically from both\nCheck regression assumptions: linearity, homoscedasticity, normality of residuals, no multicollinearity — and know what to do when each is violated\nRun a chi-square test of independence on categorical education data; interpret the result\nCalculate and interpret Pearson and Spearman correlation; know when to use each\nDistinguish between descriptive, inferential, and predictive analysis — and know which is appropriate for a given stakeholder question\nRecognize when a dataset is too small for the claims being made"
+    "section": "Phase 1 Statistics Benchmarks",
+    "text": "Phase 1 Statistics Benchmarks\nStatistics is the area where novice analysts most commonly fake competence. These benchmarks are designed to expose that. Each must be demonstrated in writing or verbally without notes.\n\nCore Concepts — Must Explain Correctly to a Non-Statistician\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nMean vs. median\nWhen does mean mislead? Give an education data example where median is more honest.\nVerbal\n\n\nStandard deviation\nExplain what 1 SD means in a distribution of school attendance rates.\nWritten\n\n\nConfidence interval\nWhat does a 95% CI actually mean? What does it NOT mean?\nWritten\n\n\np-value\nExplain correctly — most analysts explain this wrong. What is the null hypothesis? What does p &lt; .05 actually say?\nWritten\n\n\nEffect size\nWhy is a statistically significant result not necessarily meaningful? Explain Cohen's d with a test score example.\nWritten\n\n\nCorrelation\nWhat is r = .3 between attendance and test scores telling you? What can't you conclude?\nVerbal\n\n\nRegression coefficient\nIn a model predicting graduation rate from attendance and SES, interpret a coefficient of 0.4 on attendance.\nWritten\n\n\nConfounding\nGive two examples from education data where a confound changes the interpretation of a finding.\nWritten\n\n\n\n\n\nApplied Statistics: You Must Be Able to Do These\n\nRun a simple and multiple OLS regression in both Python (statsmodels) and R (lm()); interpret output identically from both\nCheck regression assumptions: linearity, homoscedasticity, normality of residuals, no multicollinearity — and know what to do when each is violated\nRun a chi-square test of independence on categorical education data; interpret the result\nCalculate and interpret Pearson and Spearman correlation; know when to use each\nDistinguish between descriptive, inferential, and predictive analysis — and know which is appropriate for a given stakeholder question\nRecognize when a dataset is too small for the claims being made",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#phase-1-domain-fluency-benchmarks",
     "href": "learning-plan.html#phase-1-domain-fluency-benchmarks",
     "title": "learning-plan.org",
     "section": "Phase 1 Domain Fluency Benchmarks",
-    "text": "Phase 1 Domain Fluency Benchmarks\nThese are the non-negotiable NYCPS knowledge requirements. If you cannot speak to these without hesitation, you will not be taken seriously in an interview with a district research director.\nData Systems — Know These Cold\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nATS\nAttendance Tracking System — what it tracks, who enters data, its known reliability issues\nVerbal explanation\n\n\nSTARS\nStudent Transcript and Academic Reporting System — Regents records, graduation data, credit accumulation\nVerbal explanation\n\n\nNYSSIS ID\nStatewide Student Identifier — why it exists, how it differs from OSIS/student ID\nVerbal explanation\n\n\nBEDS\nBasic Educational Data System — school-level enrollment and staff data for state reporting\nVerbal explanation\n\n\nSESIS\nSpecial Education Student Information System — what it contains, why access is restricted\nVerbal explanation\n\n\nDOE Data Site\nWhat data is publicly available, what the download formats are, known gotchas\nDemonstrated use\n\n\nNYC Open Data\nSchools-relevant datasets, how to query via API or direct download\nDemonstrated use\n\n\nnycschools package\nWhat it provides, its data currency limits, how to extend it\nDemonstrated use"
-  },
-  {
-    "objectID": "learning-plan.html#accountability-metrics-know-these-cold",
-    "href": "learning-plan.html#accountability-metrics-know-these-cold",
-    "title": "learning-plan.org",
-    "section": "Accountability & Metrics — Know These Cold",
-    "text": "Accountability & Metrics — Know These Cold\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nChronic absenteeism\nFederal definition (20% threshold), NYC calculation, why it replaced raw attendance rate, equity implications\nWritten explanation\n\n\nESSA subgroups\nAll required subgroups, minimum n-count for reporting, suppression rules\nFrom memory\n\n\nSchool Quality Report\nWhat it measures, how scores are calculated, what principals actually do with it\nVerbal\n\n\nRegents exams\nWhich are required for graduation, score thresholds, local diploma vs. Regents diploma distinction\nVerbal\n\n\nELL/MLL classification\nNYSITELL, NYSESLAT, reclassification criteria, why this population is analytically tricky\nWritten\n\n\nSWD subgroup\nIEP vs. 504, LRE, why graduation outcomes differ, what the data does/doesn't capture\nWritten\n\n\nCohort graduation rate\n4-year vs. 6-year, August graduates, GED vs. diploma, how transfers affect cohort\nVerbal\n\n\nCommunity District vs. Network\nHow schools are organized administratively; why this matters for aggregation\nVerbal"
+    "text": "Phase 1 Domain Fluency Benchmarks\nThese are the non-negotiable NYCPS knowledge requirements. If you cannot speak to these without hesitation, you will not be taken seriously in an interview with a district research director.\nData Systems — Know These Cold\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nATS\nAttendance Tracking System — what it tracks, who enters data, its known reliability issues\nVerbal explanation\n\n\nSTARS\nStudent Transcript and Academic Reporting System — Regents records, graduation data, credit accumulation\nVerbal explanation\n\n\nNYSSIS ID\nStatewide Student Identifier — why it exists, how it differs from OSIS/student ID\nVerbal explanation\n\n\nBEDS\nBasic Educational Data System — school-level enrollment and staff data for state reporting\nVerbal explanation\n\n\nSESIS\nSpecial Education Student Information System — what it contains, why access is restricted\nVerbal explanation\n\n\nDOE Data Site\nWhat data is publicly available, what the download formats are, known gotchas\nDemonstrated use\n\n\nNYC Open Data\nSchools-relevant datasets, how to query via API or direct download\nDemonstrated use\n\n\nnycschools package\nWhat it provides, its data currency limits, how to extend it\nDemonstrated use\n\n\n\n\nAccountability & Metrics — Know These Cold\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nChronic absenteeism\nFederal definition (20% threshold), NYC calculation, why it replaced raw attendance rate, equity implications\nWritten explanation\n\n\nESSA subgroups\nAll required subgroups, minimum n-count for reporting, suppression rules\nFrom memory\n\n\nSchool Quality Report\nWhat it measures, how scores are calculated, what principals actually do with it\nVerbal\n\n\nRegents exams\nWhich are required for graduation, score thresholds, local diploma vs. Regents diploma distinction\nVerbal\n\n\nELL/MLL classification\nNYSITELL, NYSESLAT, reclassification criteria, why this population is analytically tricky\nWritten\n\n\nSWD subgroup\nIEP vs. 504, LRE, why graduation outcomes differ, what the data does/doesn't capture\nWritten\n\n\nCohort graduation rate\n4-year vs. 6-year, August graduates, GED vs. diploma, how transfers affect cohort\nVerbal\n\n\nCommunity District vs. Network\nHow schools are organized administratively; why this matters for aggregation\nVerbal",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#political-organizational-context-this-is-what-separates-analysts",
     "href": "learning-plan.html#political-organizational-context-this-is-what-separates-analysts",
     "title": "learning-plan.org",
     "section": "Political & Organizational Context — This Is What Separates Analysts",
-    "text": "Political & Organizational Context — This Is What Separates Analysts\nA technically correct analysis that ignores organizational reality is useless. You must be able to speak to:\n\nWhy school-level data comparisons are almost always misleading without context (demographics, school type, selection effects)\nThe difference in how principals vs. superintendents vs. central office staff use data — and what they distrust\nWhy teachers are often skeptical of attendance data and what legitimate complaints they have\nWhich metrics are known to be gamed and why — and how to account for that in analysis\nThe history of mayoral control and how it shapes DOE data governance\nCharter vs. district data comparisons: what's valid, what's not, why it's politically charged"
+    "text": "Political & Organizational Context — This Is What Separates Analysts\nA technically correct analysis that ignores organizational reality is useless. You must be able to speak to:\n\nWhy school-level data comparisons are almost always misleading without context (demographics, school type, selection effects)\nThe difference in how principals vs. superintendents vs. central office staff use data — and what they distrust\nWhy teachers are often skeptical of attendance data and what legitimate complaints they have\nWhich metrics are known to be gamed and why — and how to account for that in analysis\nThe history of mayoral control and how it shapes DOE data governance\nCharter vs. district data comparisons: what's valid, what's not, why it's politically charged",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
-    "objectID": "learning-plan.html#gate-1a-technical",
-    "href": "learning-plan.html#gate-1a-technical",
+    "objectID": "learning-plan.html#phase-1-gate-you-must-pass-all-three-before-phase-2",
+    "href": "learning-plan.html#phase-1-gate-you-must-pass-all-three-before-phase-2",
     "title": "learning-plan.org",
-    "section": "GATE 1A — TECHNICAL",
-    "text": "GATE 1A — TECHNICAL\nComplete a data analysis of NYCPS public attendance data from raw download to published Quarto report. No AI assistance. Includes: data cleaning pipeline in Python, summary statistics, one regression, one visualization in both Python and R, written interpretation of findings. Time limit: one full working day."
-  },
-  {
-    "objectID": "learning-plan.html#gate-1b-statistical",
-    "href": "learning-plan.html#gate-1b-statistical",
-    "title": "learning-plan.org",
-    "section": "GATE 1B — STATISTICAL",
-    "text": "GATE 1B — STATISTICAL\nWrite a two-page methodology memo explaining the statistical approach used in your Gate 1A analysis. Justify every choice. Acknowledge every limitation. A statistician should be able to read it and not find errors of interpretation."
-  },
-  {
-    "objectID": "learning-plan.html#gate-1c-domain",
-    "href": "learning-plan.html#gate-1c-domain",
-    "title": "learning-plan.org",
-    "section": "GATE 1C — DOMAIN",
-    "text": "GATE 1C — DOMAIN\nProduce a one-page data dictionary for the dataset used in Gate 1A. Every field defined. Every known data quality issue noted. Every metric explained in terms a principal could understand. Do this from knowledge, not by copying documentation."
+    "section": "Phase 1 Gate — You Must Pass All Three Before Phase 2",
+    "text": "Phase 1 Gate — You Must Pass All Three Before Phase 2\n\nGATE 1A — TECHNICAL\nComplete a data analysis of NYCPS public attendance data from raw download to published Quarto report. No AI assistance. Includes: data cleaning pipeline in Python, summary statistics, one regression, one visualization in both Python and R, written interpretation of findings. Time limit: one full working day.\n\n\nGATE 1B — STATISTICAL\nWrite a two-page methodology memo explaining the statistical approach used in your Gate 1A analysis. Justify every choice. Acknowledge every limitation. A statistician should be able to read it and not find errors of interpretation.\n\n\nGATE 1C — DOMAIN\nProduce a one-page data dictionary for the dataset used in Gate 1A. Every field defined. Every known data quality issue noted. Every metric explained in terms a principal could understand. Do this from knowledge, not by copying documentation.",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#specialization-and-portfolio-construction",
     "href": "learning-plan.html#specialization-and-portfolio-construction",
     "title": "learning-plan.org",
     "section": "Specialization and Portfolio Construction",
-    "text": "Specialization and Portfolio Construction\nDevelop genuine analytical depth in education data. Publish substantial, reproducible analyses. These are the published analyses that constitute your portfolio. Each must be reproducible, documented, and publicly accessible on GitHub Pages or a Quarto Pub site."
-  },
-  {
-    "objectID": "learning-plan.html#you-must-be-able-to-explain-and-detect",
-    "href": "learning-plan.html#you-must-be-able-to-explain-and-detect",
-    "title": "learning-plan.org",
-    "section": "You Must Be Able to Explain and Detect:",
-    "text": "You Must Be Able to Explain and Detect:\n\nSimpson's Paradox — give an education data example and demonstrate it in data\nEcological fallacy — why school-level correlations can't be applied to students\nSelection bias — why schools that opted into a program are not comparable to those that didn't\nRegression to the mean — why the lowest-performing schools 'improve' without intervention\nCeiling and floor effects — why standardized tests compress variance at the extremes\nMultiple comparisons problem — what happens when you test 30 hypotheses at p &lt; .05"
+    "text": "Specialization and Portfolio Construction\nDevelop genuine analytical depth in education data. Publish substantial, reproducible analyses. These are the published analyses that constitute your portfolio. Each must be reproducible, documented, and publicly accessible on GitHub Pages or a Quarto Pub site.\n\nYou Must Be Able to Explain and Detect:\n\nSimpson's Paradox — give an education data example and demonstrate it in data\nEcological fallacy — why school-level correlations can't be applied to students\nSelection bias — why schools that opted into a program are not comparable to those that didn't\nRegression to the mean — why the lowest-performing schools 'improve' without intervention\nCeiling and floor effects — why standardized tests compress variance at the extremes\nMultiple comparisons problem — what happens when you test 30 hypotheses at p &lt; .05",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#the-ccr-project-supporting-technical-depth",
     "href": "learning-plan.html#the-ccr-project-supporting-technical-depth",
     "title": "learning-plan.org",
     "section": "The CCR Project + Supporting Technical Depth",
-    "text": "The CCR Project + Supporting Technical Depth\nOne deep project with four outputs. Supporting technical additions on a disciplined schedule."
+    "text": "The CCR Project + Supporting Technical Depth\nOne deep project with four outputs. Supporting technical additions on a disciplined schedule.",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#phase-2-technical-additions",
     "href": "learning-plan.html#phase-2-technical-additions",
     "title": "learning-plan.org",
     "section": "Phase 2 Technical Additions",
-    "text": "Phase 2 Technical Additions\nPhase 2 reintroduces deferred tools on a disciplined schedule, only after Phase 1 gates are passed.\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nMonth 6–7\nGit workflow: branches, pull requests, meaningful commit messages, .gitignore hygiene\nGitHub portfolio\n\n\nMonth 7–8\ngh-pages publishing: Quarto site or R Markdown site with multiple reports\nLive published site\n\n\nMonth 9–10\nAdvanced pandas: method chaining, custom aggregations, memory-efficient operations on larger datasets\nTimed exercise\n\n\nMonth 10–11\nGreat Tables (Python) or gt (R): publication-quality tables for principal and superintendent audiences\nPortfolio artifact\n\n\nMonth 12–14\nPositron + Emacs: configured, productive environment — not a distraction, a tool\nDaily use"
+    "text": "Phase 2 Technical Additions\nPhase 2 reintroduces deferred tools on a disciplined schedule, only after Phase 1 gates are passed.\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\nMonth 6–7\nGit workflow: branches, pull requests, meaningful commit messages, .gitignore hygiene\nGitHub portfolio\n\n\nMonth 7–8\ngh-pages publishing: Quarto site or R Markdown site with multiple reports\nLive published site\n\n\nMonth 9–10\nAdvanced pandas: method chaining, custom aggregations, memory-efficient operations on larger datasets\nTimed exercise\n\n\nMonth 10–11\nGreat Tables (Python) or gt (R): publication-quality tables for principal and superintendent audiences\nPortfolio artifact\n\n\nMonth 12–14\nPositron + Emacs: configured, productive environment — not a distraction, a tool\nDaily use",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#what-remains-deferred-in-phase-2",
     "href": "learning-plan.html#what-remains-deferred-in-phase-2",
     "title": "learning-plan.org",
     "section": "WHAT REMAINS DEFERRED IN PHASE 2",
-    "text": "WHAT REMAINS DEFERRED IN PHASE 2\nDjango integration: nobody hiring for education data roles cares about this. Cut it entirely. Geospatial analysis (geopandas, sf): valuable but not core to the CCR project. Reintroduce in Phase 3 if a specific stakeholder question requires it."
+    "text": "WHAT REMAINS DEFERRED IN PHASE 2\nDjango integration: nobody hiring for education data roles cares about this. Cut it entirely. Geospatial analysis (geopandas, sf): valuable but not core to the CCR project. Reintroduce in Phase 3 if a specific stakeholder question requires it.",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#methods-to-add-in-phase-2",
     "href": "learning-plan.html#methods-to-add-in-phase-2",
     "title": "learning-plan.org",
     "section": "Methods to Add in Phase 2",
-    "text": "Methods to Add in Phase 2\n\nLogistic regression: predict a binary outcome (e.g., graduated yes/no); interpret log-odds correctly\nDifference-in-differences: conceptual understanding of quasi-experimental design in education policy\nInterrupted time series: before/after analysis of a policy change using longitudinal school data\nClustering: k-means on school characteristics; interpret and critique the output honestly\nDashboards: build one interactive dashboard in R Shiny or observable/Quarto; know its limitations"
+    "text": "Methods to Add in Phase 2\n\nLogistic regression: predict a binary outcome (e.g., graduated yes/no); interpret log-odds correctly\nDifference-in-differences: conceptual understanding of quasi-experimental design in education policy\nInterrupted time series: before/after analysis of a policy change using longitudinal school data\nClustering: k-means on school characteristics; interpret and critique the output honestly\nDashboards: build one interactive dashboard in R Shiny or observable/Quarto; know its limitations",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
-    "objectID": "learning-plan.html#output-1-ccr-metric-reconstruction-pipeline",
-    "href": "learning-plan.html#output-1-ccr-metric-reconstruction-pipeline",
+    "objectID": "learning-plan.html#phase-2-portfolio-the-ccr-project",
+    "href": "learning-plan.html#phase-2-portfolio-the-ccr-project",
     "title": "learning-plan.org",
-    "section": "OUTPUT 1 — CCR Metric Reconstruction Pipeline",
-    "text": "OUTPUT 1 — CCR Metric Reconstruction Pipeline\nReproduce the CCR score from publicly available citywide results data using the Appendix A reference tables from the Educator Guide. Document every decision point: how the six scoring categories interact, how the associate degree category overrides others, how the six-category cap works, how suppression rules (n=15 general, n=10 ELL/SWD grad rates, n=5 lowest third citywide) are applied. Deliverable: a Python pipeline that takes school-level input and outputs CCR scores, validated against published values."
-  },
-  {
-    "objectID": "learning-plan.html#output-2-comparison-group-approximation",
-    "href": "learning-plan.html#output-2-comparison-group-approximation",
-    "title": "learning-plan.org",
-    "section": "OUTPUT 2 — Comparison Group Approximation",
-    "text": "OUTPUT 2 — Comparison Group Approximation\nYou will not have student-level data to run the full value-added model. Be explicit about that. Use publicly available school-level characteristics (ENI, % ELL, % SWD, % by race, prior graduation rates) to build a regression approximating the comparison group methodology. Compare estimates to published comparison group values. The point is not to match perfectly — it is to demonstrate you understand what the model is doing and where your approximation breaks down. Deliverable: a documented regression with honest residual analysis and a clear limitations section."
-  },
-  {
-    "objectID": "learning-plan.html#output-3-stakeholder-dashboard",
-    "href": "learning-plan.html#output-3-stakeholder-dashboard",
-    "title": "learning-plan.org",
-    "section": "OUTPUT 3 — Stakeholder Dashboard",
-    "text": "OUTPUT 3 — Stakeholder Dashboard\nA Quarto dashboard or Shiny app for a principal or network data manager. User selects a school and sees: CCR score vs. comparison group estimate; decomposition by the six CCR categories; comparison to borough and citywide averages; racial subgroup breakdowns for CCPCI and PSER where available; year-over-year trend if the data supports it. Deliverable: a live, published, interactive dashboard. Tables via Great Tables (Python) or gt (R) — the people reading this are principals and superintendents; beautiful tables matter. |"
-  },
-  {
-    "objectID": "learning-plan.html#output-4-policy-memo",
-    "href": "learning-plan.html#output-4-policy-memo",
-    "title": "learning-plan.org",
-    "section": "OUTPUT 4 — Policy Memo",
-    "text": "OUTPUT 4 — Policy Memo\nOne page, written for a superintendent or Student Pathways director. What does the CCR metric reward? What does it miss? Where do the incentives diverge from the stated goals of NY State's new graduation standards? What should a school leader attending to the broader rollout understand that the metric does not surface? This output demonstrates judgment, not just technical skill — it is often the one that gets you the interview. |"
+    "section": "Phase 2 Portfolio: The CCR Project",
+    "text": "Phase 2 Portfolio: The CCR Project\nOne project, four published outputs. Each must be reproducible, documented, and publicly accessible on GitHub Pages or Quarto Pub.\n\nOUTPUT 1 — CCR Metric Reconstruction Pipeline\nReproduce the CCR score from publicly available citywide results data using the Appendix A reference tables from the Educator Guide. Document every decision point: how the six scoring categories interact, how the associate degree category overrides others, how the six-category cap works, how suppression rules (n=15 general, n=10 ELL/SWD grad rates, n=5 lowest third citywide) are applied. Deliverable: a Python pipeline that takes school-level input and outputs CCR scores, validated against published values.\n\n\nOUTPUT 2 — Comparison Group Approximation\nYou will not have student-level data to run the full value-added model. Be explicit about that. Use publicly available school-level characteristics (ENI, % ELL, % SWD, % by race, prior graduation rates) to build a regression approximating the comparison group methodology. Compare estimates to published comparison group values. The point is not to match perfectly — it is to demonstrate you understand what the model is doing and where your approximation breaks down. Deliverable: a documented regression with honest residual analysis and a clear limitations section.\n\n\nOUTPUT 3 — Stakeholder Dashboard\nA Quarto dashboard or Shiny app for a principal or network data manager. User selects a school and sees: CCR score vs. comparison group estimate; decomposition by the six CCR categories; comparison to borough and citywide averages; racial subgroup breakdowns for CCPCI and PSER where available; year-over-year trend if the data supports it. Deliverable: a live, published, interactive dashboard. Tables via Great Tables (Python) or gt (R) — the people reading this are principals and superintendents; beautiful tables matter. |\n\n\nOUTPUT 4 — Policy Memo\nOne page, written for a superintendent or Student Pathways director. What does the CCR metric reward? What does it miss? Where do the incentives diverge from the stated goals of NY State's new graduation standards? What should a school leader attending to the broader rollout understand that the metric does not surface? This output demonstrates judgment, not just technical skill — it is often the one that gets you the interview. |",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#metric-variable-name-filtering-working-reference",
     "href": "learning-plan.html#metric-variable-name-filtering-working-reference",
     "title": "learning-plan.org",
     "section": "Metric Variable Name Filtering — Working Reference",
-    "text": "Metric Variable Name Filtering — Working Reference\nWhen filtering the citywide school quality data for CCR-related metrics, use explicit named patterns rather than a single complex regex. The data's ~1.49M rows span Report Years 2016–2025; CCR metrics appear from 2024 onward.\nccr_patterns = [\n    r'^ccr_',       # CCR score metrics (e.g., ccr_4y_all, ccr_4yr_l3c_hs)\n    r'^ccpci_',     # College and Career Preparatory Course Index\n    r'^pser_',      # Postsecondary Enrollment Rate\n    r'^coll_pers',  # College persistence\n]\n\ncombined = '|'.join(ccr_patterns)\nccr_data = data[data[\"Metric Variable Name\"].str.contains(combined, regex=True, na=False)]\nPrefer this over a single clever pattern: it is readable, maintainable, and self-documenting to a reviewer."
+    "text": "Metric Variable Name Filtering — Working Reference\nWhen filtering the citywide school quality data for CCR-related metrics, use explicit named patterns rather than a single complex regex. The data's ~1.49M rows span Report Years 2016–2025; CCR metrics appear from 2024 onward.\nccr_patterns = [\n    r'^ccr_',       # CCR score metrics (e.g., ccr_4y_all, ccr_4yr_l3c_hs)\n    r'^ccpci_',     # College and Career Preparatory Course Index\n    r'^pser_',      # Postsecondary Enrollment Rate\n    r'^coll_pers',  # College persistence\n]\n\ncombined = '|'.join(ccr_patterns)\nccr_data = data[data[\"Metric Variable Name\"].str.contains(combined, regex=True, na=False)]\nPrefer this over a single clever pattern: it is readable, maintainable, and self-documenting to a reviewer.",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
-    "objectID": "learning-plan.html#portfolio-ideas-chronic-absenteeism-analysis",
-    "href": "learning-plan.html#portfolio-ideas-chronic-absenteeism-analysis",
+    "objectID": "learning-plan.html#phase-2-additional-portfolio-ideas",
+    "href": "learning-plan.html#phase-2-additional-portfolio-ideas",
     "title": "learning-plan.org",
-    "section": "Portfolio Ideas — Chronic Absenteeism Analysis",
-    "text": "Portfolio Ideas — Chronic Absenteeism Analysis\nA longitudinal analysis of chronic absenteeism rates across NYC schools, 2018–present (including COVID disruption). Borough/district breakdowns. Demographic subgroup comparisons with appropriate caveats. Regression identifying school-level predictors. Written for a superintendent audience. Methodology appendix written for a research audience. These are two different documents. |"
+    "section": "Phase 2 Additional Portfolio Ideas",
+    "text": "Phase 2 Additional Portfolio Ideas\nThese are the three published analyses that constitute your portfolio. Each must be reproducible, documented, and publicly accessible on GitHub Pages or a Quarto Pub site.\n\nPortfolio Idea — Chronic Absenteeism Analysis\nA longitudinal analysis of chronic absenteeism rates across NYC schools, 2018–present (including COVID disruption). Borough/district breakdowns. Demographic subgroup comparisons with appropriate caveats. Regression identifying school-level predictors. Written for a superintendent audience. Methodology appendix written for a research audience. These are two different documents. |\n\n\nPortfolio Idea — Regents & Graduation\nAn analysis of cohort graduation rates and Regents passage by school type (district, charter, transfer, D75). Honest about what the data can and cannot show. Includes a clearly stated limitations section. Visualizations appropriate for a policy brief. At least one finding that is counterintuitive or that challenges a common narrative.",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
-    "objectID": "learning-plan.html#portfolio-ideas-regents-graduation",
-    "href": "learning-plan.html#portfolio-ideas-regents-graduation",
+    "objectID": "learning-plan.html#portfolio-idea-your-choice-stakeholder-driven",
+    "href": "learning-plan.html#portfolio-idea-your-choice-stakeholder-driven",
     "title": "learning-plan.org",
-    "section": "Portfolio Ideas — Regents & Graduation",
-    "text": "Portfolio Ideas — Regents & Graduation\nAn analysis of cohort graduation rates and Regents passage by school type (district, charter, transfer, D75). Honest about what the data can and cannot show. Includes a clearly stated limitations section. Visualizations appropriate for a policy brief. At least one finding that is counterintuitive or that challenges a common narrative."
+    "section": "Portfolio Idea — Your Choice, Stakeholder-Driven",
+    "text": "Portfolio Idea — Your Choice, Stakeholder-Driven\nPick a question a specific real stakeholder (principal, parent coordinator, network data manager) has actually asked you or that you know they care about. Design the analysis to answer their question, not to demonstrate your techniques. Publish both the analysis and a one-page plain-language summary. This piece demonstrates judgment, not just skill. |",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
-    "objectID": "learning-plan.html#portfolio-ideas-your-choice-stakeholder-driven",
-    "href": "learning-plan.html#portfolio-ideas-your-choice-stakeholder-driven",
+    "objectID": "learning-plan.html#phase-2-gate-ccr-project-review",
+    "href": "learning-plan.html#phase-2-gate-ccr-project-review",
     "title": "learning-plan.org",
-    "section": "Portfolio Ideas — Your Choice, Stakeholder-Driven",
-    "text": "Portfolio Ideas — Your Choice, Stakeholder-Driven\nPick a question a specific real stakeholder (principal, parent coordinator, network data manager) has actually asked you or that you know they care about. Design the analysis to answer their question, not to demonstrate your techniques. Publish both the analysis and a one-page plain-language summary. This piece demonstrates judgment, not just skill. |"
+    "section": "Phase 2 Gate — CCR Project Review",
+    "text": "Phase 2 Gate — CCR Project Review\nAll four CCR project outputs published. Each includes: a reproducible code repository, a rendered Quarto document or live dashboard, a plain-language summary, and a methodology note. Submit to one peer — ideally someone with education research background — for a written critique. Incorporate at least three substantive changes based on that feedback before proceeding to Phase 3. Target: a working version of all four outputs within 8–10 weeks of starting Phase 2.\n\nExplain how a school's Quality Review score is determined\nWhat is a NYSSIS ID and why does it exist?\nList the demographic subgroups required for ESSA reporting\nWhat is a D75 school?",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#credentialing-network-and-income",
     "href": "learning-plan.html#credentialing-network-and-income",
     "title": "learning-plan.org",
     "section": "Credentialing, Network, and Income",
-    "text": "Credentialing, Network, and Income\nConvert competence into verifiable credentials and market-facing presence."
+    "text": "Credentialing, Network, and Income\nConvert competence into verifiable credentials and market-facing presence.\n\nCredentialing Strategy\nCredentials matter in institutional education hiring. Your published portfolio is your primary credential, but it needs to be legible to HR gatekeepers. The following are the minimum threshold:\n\nGitHub profile with consistent activity, clean repositories, and READMEs that explain what each project does\nA personal site or Quarto Pub profile that presents the portfolio as a coherent body of work, not just a list of files\nAt least one piece of work cited or referenced outside your own channels — a blog post by someone else, a conference poster, a mention in a district newsletter\nA one-page technical resume that lists specific tools and specific outputs, not generic skill claims\n\n\n\nOn Formal Degrees\nMany senior analyst postings require an MA or EdD in education research, policy, or a related field. Your NYCPS experience and published portfolio can substitute for this in some organizations — charter networks, ed-tech companies, and nonprofits are more flexible than large districts. If your target is a DOE central office or research role, a graduate credential will likely be required eventually. Don't let this paralyze Phase 3, but plan for it honestly. |\n\n\nTarget Role Profiles\nThese are the roles you are positioning for. Understanding their differences shapes what you emphasize in your portfolio and how you describe yourself.\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\n\n\nData Analyst, Charter Network\nSmaller team, broader scope, faster-moving. High value on Python/SQL fluency, dashboard building, quick turnaround. Domain knowledge valued but not assumed.\nMost accessible entry point\n\n\nResearch Analyst, NYC DOE\nSlower hiring, more formal, often requires prior DOE experience or graduate credentials. Values methodological rigor and knowledge of DOE sy\n18–36 month target; credential likely needed\n\n\nSenior Analyst, Education Nonprofit\nstems. Policy-facing. Values communication as much as technical skill. Published work is a strong differentiator. Smaller orgs more flexible on credentials.\nStrong fit for your profile\n\n\nData Strategist / Manager\nHybrid technical-leadership role. Requires both technical depth and ability to advise others. Usually requires several years of analyst experience first.\nPhase 4 target, not Phase 3\n\n\nEd-Tech Company (data/analytics)\nMost similar to tech industry norms. Strong Python/SQL emphasis. Domain knowledge a differentiator over generalist candidates. Often remote.\nGood fit; portfolio more important than credentials\n\n\n\n\n\nNetwork Strategy\nIn education data, the field is small enough that network is decisive. The following are not optional:\n\nAttend at least one NYAS, SREE, or AERA conference in Phase 3 — not to present, to meet people\n\nNew York Academy of Sciences Society for Research on Educational Effectiveness American Education Research Association\n\nIdentify 5–8 people doing the work you want to do. Read their published work. Engage with it in writing. Ask a specific, non-generic question.\nConnect with NYCPS data managers and research directors you've interacted with as a teacher. A warm introduction from a former colleague is worth more than 20 cold applications.\nPost about your published work — briefly, specifically, with a link. LinkedIn is not beneath you. One specific post about a finding is better than a profile update.\nThe Office of Student Pathways is an explicit target audience for the CCR project. If the dashboard or memo is good, it is a direct conversation starter with the people iterating on the metric.",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
-    "objectID": "learning-plan.html#credentialing-strategy",
-    "href": "learning-plan.html#credentialing-strategy",
+    "objectID": "learning-plan.html#phase-3-gate-readiness-criteria",
+    "href": "learning-plan.html#phase-3-gate-readiness-criteria",
     "title": "learning-plan.org",
-    "section": "Credentialing Strategy",
-    "text": "Credentialing Strategy\nCredentials matter in institutional education hiring. Your published portfolio is your primary credential, but it needs to be legible to HR gatekeepers. The following are the minimum threshold:\n\nGitHub profile with consistent activity, clean repositories, and READMEs that explain what each project does\nA personal site or Quarto Pub profile that presents the portfolio as a coherent body of work, not just a list of files\nAt least one piece of work cited or referenced outside your own channels — a blog post by someone else, a conference poster, a mention in a district newsletter\nA one-page technical resume that lists specific tools and specific outputs, not generic skill claims"
-  },
-  {
-    "objectID": "learning-plan.html#on-formal-degrees",
-    "href": "learning-plan.html#on-formal-degrees",
-    "title": "learning-plan.org",
-    "section": "On Formal Degrees",
-    "text": "On Formal Degrees\nMany senior analyst postings require an MA or EdD in education research, policy, or a related field. Your NYCPS experience and published portfolio can substitute for this in some organizations — charter networks, ed-tech companies, and nonprofits are more flexible than large districts. If your target is a DOE central office or research role, a graduate credential will likely be required eventually. Don't let this paralyze Phase 3, but plan for it honestly. |"
-  },
-  {
-    "objectID": "learning-plan.html#target-role-profiles",
-    "href": "learning-plan.html#target-role-profiles",
-    "title": "learning-plan.org",
-    "section": "Target Role Profiles",
-    "text": "Target Role Profiles\nThese are the roles you are positioning for. Understanding their differences shapes what you emphasize in your portfolio and how you describe yourself.\n\n\n\nBenchmark\nWhat you must do without AI assistance\nVerification\n\n\n\n\nData Analyst, Charter Network\nSmaller team, broader scope, faster-moving. High value on Python/SQL fluency, dashboard building, quick turnaround. Domain knowledge valued but not assumed.\nMost accessible entry point\n\n\nResearch Analyst, NYC DOE\nSlower hiring, more formal, often requires prior DOE experience or graduate credentials. Values methodological rigor and knowledge of DOE sy\n18–36 month target; credential likely needed\n\n\nSenior Analyst, Education Nonprofit\nstems. Policy-facing. Values communication as much as technical skill. Published work is a strong differentiator. Smaller orgs more flexible on credentials.\nStrong fit for your profile\n\n\nData Strategist / Manager\nHybrid technical-leadership role. Requires both technical depth and ability to advise others. Usually requires several years of analyst experience first.\nPhase 4 target, not Phase 3\n\n\nEd-Tech Company (data/analytics)\nMost similar to tech industry norms. Strong Python/SQL emphasis. Domain knowledge a differentiator over generalist candidates. Often remote.\nGood fit; portfolio more important than credentials"
-  },
-  {
-    "objectID": "learning-plan.html#network-strategy",
-    "href": "learning-plan.html#network-strategy",
-    "title": "learning-plan.org",
-    "section": "Network Strategy",
-    "text": "Network Strategy\nIn education data, the field is small enough that network is decisive. The following are not optional:\n\nAttend at least one NYAS, SREE, or AERA conference in Phase 3 — not to present, to meet people\n\nNew York Academy of Sciences Society for Research on Educational Effectiveness American Education Research Association\n\nIdentify 5–8 people doing the work you want to do. Read their published work. Engage with it in writing. Ask a specific, non-generic question.\nConnect with NYCPS data managers and research directors you've interacted with as a teacher. A warm introduction from a former colleague is worth more than 20 cold applications.\nPost about your published work — briefly, specifically, with a link. LinkedIn is not beneath you. One specific post about a finding is better than a profile update.\nThe Office of Student Pathways is an explicit target audience for the CCR project. If the dashboard or memo is good, it is a direct conversation starter with the people iterating on the metric."
-  },
-  {
-    "objectID": "learning-plan.html#gate-3-market-readiness",
-    "href": "learning-plan.html#gate-3-market-readiness",
-    "title": "learning-plan.org",
-    "section": "GATE 3 — MARKET READINESS",
-    "text": "GATE 3 — MARKET READINESS\nYou are ready to apply when: (1) The CCR project is published and has been read and critiqued by at least one person outside your network. (2) You can walk through any output in a 20-minute technical screen without notes. (3) You can answer 'what are the limitations of this analysis?' before the interviewer asks. (4) You have applied for at least 3 positions and completed at least 1 technical screen — even if you are not ready. The screen will tell you more than this document can. |"
+    "section": "Phase 3 Gate — Readiness Criteria",
+    "text": "Phase 3 Gate — Readiness Criteria\n\nGATE 3 — MARKET READINESS\nYou are ready to apply when: (1) The CCR project is published and has been read and critiqued by at least one person outside your network. (2) You can walk through any output in a 20-minute technical screen without notes. (3) You can answer 'what are the limitations of this analysis?' before the interviewer asks. (4) You have applied for at least 3 positions and completed at least 1 technical screen — even if you are not ready. The screen will tell you more than this document can. |",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#ai-use-policy-for-this-plan",
     "href": "learning-plan.html#ai-use-policy-for-this-plan",
     "title": "learning-plan.org",
     "section": "AI Use Policy for This Plan",
-    "text": "AI Use Policy for This Plan\nThis is the working rule: AI is a tutor, not a ghostwriter.\n\nAI-permitted use: Ask it to explain a concept, check your understanding of a definition, suggest resources, review your written explanation of a method\nAI-permitted use: After you've written code that works, ask it to critique or optimize it\nAI-permitted use: Rubber duck debugging — describe a problem to AI after you've genuinely tried to solve it\nAI-prohibited use: Writing any code that goes into a portfolio piece before you understand it line by line\nAI-prohibited use: Producing any written analysis, methodology note, or data dictionary that you cannot regenerate independently\nAI-prohibited use: Passing any gate described in this document"
+    "text": "AI Use Policy for This Plan\nThis is the working rule: AI is a tutor, not a ghostwriter.\n\nAI-permitted use: Ask it to explain a concept, check your understanding of a definition, suggest resources, review your written explanation of a method\nAI-permitted use: After you've written code that works, ask it to critique or optimize it\nAI-permitted use: Rubber duck debugging — describe a problem to AI after you've genuinely tried to solve it\nAI-prohibited use: Writing any code that goes into a portfolio piece before you understand it line by line\nAI-prohibited use: Producing any written analysis, methodology note, or data dictionary that you cannot regenerate independently\nAI-prohibited use: Passing any gate described in this document",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#the-self-deception-risk",
     "href": "learning-plan.html#the-self-deception-risk",
     "title": "learning-plan.org",
     "section": "The Self Deception Risk",
-    "text": "The Self Deception Risk\nThe specific failure mode to watch for: you use AI to build something, it works, you feel competent, but you haven't actually learned anything. Six months later you're in an interview and can't explain your own portfolio. This is the most common and most damaging misuse of AI as a learning tool. The antidote is to rebuild things from scratch after AI helps you understand them — not once, but repeatedly."
+    "text": "The Self Deception Risk\nThe specific failure mode to watch for: you use AI to build something, it works, you feel competent, but you haven't actually learned anything. Six months later you're in an interview and can't explain your own portfolio. This is the most common and most damaging misuse of AI as a learning tool. The antidote is to rebuild things from scratch after AI helps you understand them — not once, but repeatedly.",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#recommended-resources-curated-not-exhaustive",
     "href": "learning-plan.html#recommended-resources-curated-not-exhaustive",
     "title": "learning-plan.org",
     "section": "Recommended Resources (Curated, Not Exhaustive)",
-    "text": "Recommended Resources (Curated, Not Exhaustive)"
+    "text": "Recommended Resources (Curated, Not Exhaustive)",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#statistics",
     "href": "learning-plan.html#statistics",
     "title": "learning-plan.org",
     "section": "Statistics",
-    "text": "Statistics\n\nOpenIntro Statistics (free) — start here; covers everything in Phase 1 without calculus\n\nhttps://openintro-ims.netlify.app/ Introudction to Modern Statistscs cloned\n\nStatistical Rethinking by Richard McElreath — for Phase 2 depth; Bayesian, but the conceptual framework is the value\n\nhttps://xcelab.net/rm/\n\nCommon statistical mistakes in education research — search for work by Andrew Gelman and Kristin Rowan on replication and misuse of p-values in education studies"
+    "text": "Statistics\n\nOpenIntro Statistics (free) — start here; covers everything in Phase 1 without calculus\n\nhttps://openintro-ims.netlify.app/ Introudction to Modern Statistscs cloned\n\nStatistical Rethinking by Richard McElreath — for Phase 2 depth; Bayesian, but the conceptual framework is the value\n\nhttps://xcelab.net/rm/\n\nCommon statistical mistakes in education research — search for work by Andrew Gelman and Kristin Rowan on replication and misuse of p-values in education studies",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#python-data",
     "href": "learning-plan.html#python-data",
     "title": "learning-plan.org",
     "section": "Python / Data",
-    "text": "Python / Data\n\nPython for Data Analysis by Wes McKinney (pandas author) — the authoritative reference https://wesmckinney.com/book/ cloned\nKaggle's free pandas course — mechanical but fast for filling gaps\nMode Analytics SQL tutorial — covers window functions with real examples"
+    "text": "Python / Data\n\nPython for Data Analysis by Wes McKinney (pandas author) — the authoritative reference https://wesmckinney.com/book/ cloned\nKaggle's free pandas course — mechanical but fast for filling gaps\nMode Analytics SQL tutorial — covers window functions with real examples",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#r-visualization",
     "href": "learning-plan.html#r-visualization",
     "title": "learning-plan.org",
     "section": "R / Visualization",
-    "text": "R / Visualization\n\nR for Data Science by Hadley Wickham (free online) — the standard curriculum\nFundamentals of Data Visualization by Claus Wilke (free online) — the conceptual layer that ggplot2 skills need\nQuarto documentation — read the official docs, not tutorials; the docs are good"
+    "text": "R / Visualization\n\nR for Data Science by Hadley Wickham (free online) — the standard curriculum\nFundamentals of Data Visualization by Claus Wilke (free online) — the conceptual layer that ggplot2 skills need\nQuarto documentation — read the official docs, not tutorials; the docs are good",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#education-data-domain",
     "href": "learning-plan.html#education-data-domain",
     "title": "learning-plan.org",
     "section": "Education Data / Domain",
-    "text": "Education Data / Domain\n\nNYSED data portal and technical documentation — read the actual methodology notes, not summaries\nNYCPS Educator Guide for School Quality Reports, Appendix A — your primary reference for CCR scoring rubric and metric variable name definitions\nUrban Institute education data resources — high quality, often city-specific\nCREDO studies on charter school performance — read to understand methodological debates in the field, not just findings\nNYU Steinhardt and Teachers College working papers — how education researchers in your city frame questions"
+    "text": "Education Data / Domain\n\nNYSED data portal and technical documentation — read the actual methodology notes, not summaries\nNYCPS Educator Guide for School Quality Reports, Appendix A — your primary reference for CCR scoring rubric and metric variable name definitions\nUrban Institute education data resources — high quality, often city-specific\nCREDO studies on charter school performance — read to understand methodological debates in the field, not just findings\nNYU Steinhardt and Teachers College working papers — how education researchers in your city frame questions",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "learning-plan.html#monthly-review-checklist",
     "href": "learning-plan.html#monthly-review-checklist",
     "title": "learning-plan.org",
     "section": "Monthly Review Checklist",
-    "text": "Monthly Review Checklist\nAt the end of each month, answer these without AI:\n\nWhat can I do now that I could not do 30 days ago? Be specific.\nWhat did I try to do this month that I could not do? What specifically blocked me?\nDid I use AI as a crutch at any point? Where? What should I do instead?\nIs there something in my stack I am still just pattern-matching without understanding? Name it.\nWhat is the one technical thing I will master completely in the next 30 days?\n\nThe wave favors those who know things deeply, not those who can access things quickly.\nBuild depth. The tools will keep changing."
+    "text": "Monthly Review Checklist\nAt the end of each month, answer these without AI:\n\nWhat can I do now that I could not do 30 days ago? Be specific.\nWhat did I try to do this month that I could not do? What specifically blocked me?\nDid I use AI as a crutch at any point? Where? What should I do instead?\nIs there something in my stack I am still just pattern-matching without understanding? Name it.\nWhat is the one technical thing I will master completely in the next 30 days?\n\nThe wave favors those who know things deeply, not those who can access things quickly.\nBuild depth. The tools will keep changing.",
+    "crumbs": [
+      "Learning Plan"
+    ]
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "My Learning Blog",
     "section": "",
-    "text": "This is my education analytics learning portfolio and blog.\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nMar 18, 2026\n\n\nfirst post\n\n\nEric Allatta\n\n\n\n\n\n\nNo matching items"
+    "text": "This is my education analytics learning portfolio and blog.\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nMar 18, 2026\n\n\nfirst post\n\n\nEric Allatta\n\n\n\n\n\n\nNo matching items",
+    "crumbs": [
+      "Home"
+    ]
   },
   {
     "objectID": "posts/2026_03_18__first_post/index.html",
@@ -399,25 +347,51 @@
     "text": "Embarking\nThis learning blog marks a beginning. Something of a formal step toward transitioning to a new career. My experience as a NYC computer science teacher and school spreadsheet builder has given me a foundation in institutional education and computing. I seek to build on the combined foundation toward education data systems and analysis. My hope is to find sustainability in a career that calls upon me as a problem solver, communicator, and mathematician."
   },
   {
+    "objectID": "r/r_audit.html",
+    "href": "r/r_audit.html",
+    "title": "r audit",
+    "section": "",
+    "text": "Import School Data\n\n\nCode\nlibrary(tidyverse)\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.2.0     ✔ readr     2.2.0\n✔ forcats   1.0.1     ✔ stringr   1.6.0\n✔ ggplot2   4.0.2     ✔ tibble    3.3.1\n✔ lubridate 1.9.5     ✔ tidyr     1.3.2\n✔ purrr     1.2.1     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ purrr::%||%()   masks base::%||%()\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\n\nCode\nlibrary(readxl)\nlibrary(here)\n\n\nhere() starts at /home/teacher/projects/edu-analytics/learning\n\n\n\n\nCode\nfile &lt;- here(\"data/school_quality.csv\")\n# school_quality &lt;- read.table(file=file, header=TRUE, sep=\",\")\nschool_quality &lt;- read_delim(file=file,\ndelim=\",\",\ncol_names=c('ay', 'ry', 'dbn', 'school_name', 'report_type', 'school_type', 'metric_variable', 'metric_display', 'students_n', 'metric_value', 'comparison_group_average', 'metric_score'),\ncol_types=cols(\n  ay=col_integer(),\n  ry=col_integer(),\n  dbn=col_character(),\n  school_name=col_character(),\n  report_type=col_character(),\n  school_type=col_character(),\n  metric_variable=col_character(),\n  metric_display=col_character(),\n  students_n=col_number(),\n  metric_value=col_double(),\n  comparison_group_average=col_double(),\n  metric_score=col_double()\n),\nskip=1)\n# school_quality &lt;- fread(input=file, sep=',', header=TRUE)\ntail(school_quality)\n\n\n# A tibble: 6 × 12\n     ay    ry dbn    school_name         report_type school_type metric_variable\n  &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;               &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;          \n1  2024  2025 84X730 Bronx Charter Scho… EMS         K-8         rating_mean_mt…\n2  2024  2025 84X730 Bronx Charter Scho… EMS         K-8         rating_mean_mt…\n3  2024  2025 84X730 Bronx Charter Scho… EMS         K-8         rating_mean_mt…\n4  2024  2025 84X730 Bronx Charter Scho… EMS         K-8         rating_mean_mt…\n5  2024  2025 84X730 Bronx Charter Scho… EMS         K-8         rating_mean_sc…\n6  2024  2025 84X886 Success Academy Ch… EC          K-1         lre_all        \n# ℹ 5 more variables: metric_display &lt;chr&gt;, students_n &lt;dbl&gt;,\n#   metric_value &lt;dbl&gt;, comparison_group_average &lt;dbl&gt;, metric_score &lt;dbl&gt;\n\n\n\n\nCode\nhs_directory &lt;- local(\n  {\n    url &lt;- c('https://infohub.nyced.org/docs/default-source/default-document-library/ose/fall-2025---hs-directory-datab85f64a0-05b9-439a-8e29-052ce60a5d86.xlsx')\n    download.file(url=url,\n      destfile=here('data/hs_directory_2025.xlsx'),\n      method='wget')\n    destfile=file &lt;- here('data/hs_directory_2025.xlsx')\n    hs_directory &lt;- read_xlsx(path=destfile, sheet='Data') %&gt;% write_csv(here('data/hs_directory_2025.csv'))\n  }\n)\ntail(hs_directory)\n\n\n# A tibble: 6 × 317\n  dbn    school_name      overview_paragraph neighborhood primary_address_line_1\n  &lt;chr&gt;  &lt;chr&gt;            &lt;chr&gt;              &lt;chr&gt;        &lt;chr&gt;                 \n1 32K403 Academy for Exc… \"Formerly the Aca… Bushwick     400 Irving Avenue     \n2 32K545 EBC High School… \"EBC High School … Bushwick     1155 Dekalb Avenue    \n3 32K549 Brooklyn School… \"At The Brooklyn … Bushwick     400 Irving Avenue     \n4 32K552 Academy of Urba… \"Our school aims … Bushwick     400 Irving Avenue     \n5 32K554 All City Leader… \"We educate stude… Bushwick     321 PALMETTO STREET   \n6 32K556 Bushwick Leader… \"Bushwick Leaders… Bushwick     797 Bushwick Avenue   \n# ℹ 312 more variables: shared_space &lt;chr&gt;,\n#   school_accessibility_description &lt;chr&gt;, phone_number &lt;chr&gt;, website &lt;chr&gt;,\n#   url &lt;chr&gt;, subway &lt;chr&gt;, bus &lt;chr&gt;, academicopportunities1 &lt;chr&gt;,\n#   academicopportunities2 &lt;chr&gt;, academicopportunities3 &lt;chr&gt;,\n#   academicopportunities4 &lt;chr&gt;, academicopportunities5 &lt;chr&gt;,\n#   academicopportunities6 &lt;chr&gt;, addtl_info1 &lt;chr&gt;, priority1_prog1 &lt;chr&gt;,\n#   priority2_prog1 &lt;chr&gt;, priority3_prog1 &lt;chr&gt;, priority1_prog2 &lt;chr&gt;, …",
+    "crumbs": [
+      "r audit"
+    ]
+  },
+  {
+    "objectID": "r/flight.html",
+    "href": "r/flight.html",
+    "title": "Lessons from flight package",
+    "section": "",
+    "text": "Lessons from flight package\nVectors, Factors and Flight\nFactor Vectors are an important concept. Factor levels. Order of a factor. Factors seem like objects with properties. A factor has an internal vector c(…) and other meta data such as levels=… and ordered=… factor(name=c(…), …=…, ) Only store unique values.\n\nfactor(c('a', 'b', 'c'),\n#levels=, \n#labels=, \nexclude=NA, \nordered=is.ordered(x=c('c', 'b', 'a')),nmax=NA)\n\n[1] a b c\nLevels: a b c\n\n\nCreate a set of indicator or ‘dummy’ variables using model.matrix. One colomn for each level of the factor.\n\nnf &lt;- factor(c('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'))\nmodel.matrix(~ nf - 1) # with 1 if a row contains that level or 0 otherwise\n\n   nfa nfb nfc nfd nfe nff nfg nfh nfi nfj\n1    1   0   0   0   0   0   0   0   0   0\n2    0   1   0   0   0   0   0   0   0   0\n3    0   0   1   0   0   0   0   0   0   0\n4    0   0   0   1   0   0   0   0   0   0\n5    0   0   0   0   1   0   0   0   0   0\n6    0   0   0   0   0   1   0   0   0   0\n7    0   0   0   0   0   0   1   0   0   0\n8    0   0   0   0   0   0   0   1   0   0\n9    0   0   0   0   0   0   0   0   1   0\n10   0   0   0   0   0   0   0   0   0   1\nattr(,\"assign\")\n [1] 1 1 1 1 1 1 1 1 1 1\nattr(,\"contrasts\")\nattr(,\"contrasts\")$nf\n[1] \"contr.treatment\""
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "This site is a learning project. It is early work along a pathway targeting institutional education data analysis. This project will focus on showcasing the learning The technology stack is Python + Jupyter, R + knitr, Postgresql with psycopg2, and Quarto for publishing. The learning plan is in collaboration with various Claude models. On going learning questions are answered by ChatGPT 5 Nano. The work itself is hand written toward the goal of strong interview performance on technical, statistical, and institutional/political topics. Future work will focus on NYC school quality models and distributions of the new College and Career Readiness Metric."
+    "text": "This site is a learning project. It is early work along a pathway targeting institutional education data analysis. This project will focus on showcasing the learning The technology stack is Python + Jupyter, R + knitr, Postgresql with psycopg2, and Quarto for publishing. The learning plan is in collaboration with various Claude models. On going learning questions are answered by ChatGPT 5 Nano. The work itself is hand written toward the goal of strong interview performance on technical, statistical, and institutional/political topics. Future work will focus on NYC school quality models and distributions of the new College and Career Readiness Metric.",
+    "crumbs": [
+      "About"
+    ]
   },
   {
     "objectID": "about.html#education",
     "href": "about.html#education",
     "title": "About",
     "section": "Education",
-    "text": "Education\nHunter College, City University of New York | New York, NY Masters in Urban Adolescent Mathematics Education | June 2011 - Sept 2012\nSt. John’s College | Santa Fe, NM Bachelors in Liberal Arts, History of Math and Science, Philosophy, Comparative Literature | Sept 2003 - May 2007"
+    "text": "Education\nHunter College, City University of New York | New York, NY Masters in Urban Adolescent Mathematics Education | June 2011 - Sept 2012\nSt. John’s College | Santa Fe, NM Bachelors in Liberal Arts, History of Math and Science, Philosophy, Comparative Literature | Sept 2003 - May 2007",
+    "crumbs": [
+      "About"
+    ]
   },
   {
     "objectID": "about.html#experience",
     "href": "about.html#experience",
     "title": "About",
     "section": "Experience",
-    "text": "Experience\nFreelance | Consultant | Sept 2021 - Present\nAcademy for Software Engineering | Lead Computer Science Teacher | Sept 2012 - Aug 2021\nUrban Teacher Resident | NYCDOE + New Visions for Public Schools | Sept 2011 - Aug 2012"
+    "text": "Experience\nFreelance | Consultant | Sept 2021 - Present\nAcademy for Software Engineering | Lead Computer Science Teacher | Sept 2012 - Aug 2021\nUrban Teacher Resident | NYCDOE + New Visions for Public Schools | Sept 2011 - Aug 2012",
+    "crumbs": [
+      "About"
+    ]
   },
   {
     "objectID": "faq.html",

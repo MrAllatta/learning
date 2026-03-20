@@ -77,11 +77,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-960fc19d9da332a83abe416fce972e1d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
@@ -111,49 +111,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Data Analysis Learning Portfolio</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
-<span class="menu-text">About</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../learning-plan.html"> 
-<span class="menu-text">Learning Plan</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="../notebooks/python_audit.html" aria-current="page"> 
-<span class="menu-text">python_audit.html</span></a>
-  </li>  
-</ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/python_audit.html">python_audit.html</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Data Analysis Learning Portfolio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../learning-plan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning Plan</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../r/r_audit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">r audit</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notebooks/python_audit.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">python_audit.html</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
         
@@ -236,112 +261,16 @@ Length: 10, dtype: str</code></pre>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    right<span class="op">=</span>school_demographics_df,</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span>[<span class="st">"District, Borough and School Number (DBN)"</span>, <span class="st">"School Year"</span>],</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span>[<span class="st">"dbn"</span>, <span class="st">"ay"</span>]</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>combined_df.head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<pre><code>&lt;bound method NDFrame.head of        School Year  Report Year District, Borough and School Number (DBN)  \
-0             2019         2020                                    17K524   
-1             2019         2020                                    17K524   
-2             2019         2020                                    17K524   
-3             2019         2020                                    17K524   
-4             2017         2018                                    02M416   
-...            ...          ...                                       ...   
-35357         2024         2025                                    32K556   
-35358         2024         2025                                    32K564   
-35359         2024         2025                                    32K564   
-35360         2024         2025                                    32K564   
-35361         2024         2025                                    32K564   
-
-                                             School Name Report Type  \
-0          International High School at Prospect Heights          HS   
-1          International High School at Prospect Heights          HS   
-2          International High School at Prospect Heights          HS   
-3          International High School at Prospect Heights          HS   
-4                          Eleanor Roosevelt High School          HS   
-...                                                  ...         ...   
-35357  Bushwick Leaders High School for Academic Exce...          HS   
-35358                     Bushwick Community High School         HST   
-35359                     Bushwick Community High School         HST   
-35360                     Bushwick Community High School         HST   
-35361                     Bushwick Community High School         HST   
-
-                School Type    Metric Variable Name  \
-0               High School  nocat_cri_engl_4yr_all   
-1               High School  nocat_cri_engl_6yr_all   
-2               High School  nocat_cri_math_4yr_all   
-3               High School  nocat_cri_math_6yr_all   
-4               High School    pct_cri_math_6yr_all   
-...                     ...                     ...   
-35357           High School             ccr_6yr_all   
-35358  High School Transfer             ccr_6yr_all   
-35359  High School Transfer      ccr_6yr_growth_all   
-35360  High School Transfer    ccr_6yr_growth_oa_uc   
-35361  High School Transfer           ccr_6yr_oa_uc   
-
-                                     Metric Display Name Number of Students  \
-0      % Attaining English College Readiness Standard...                100   
-1      % Attaining English College Readiness Standard...                104   
-2      % Attaining Math College Readiness Standard (w...                100   
-3      % Attaining Math College Readiness Standard (6...                104   
-4      % Attaining Math College Readiness Standard (6...                137   
-...                                                  ...                ...   
-35357  6-Year College and Career Readiness - All Stud...                111   
-35358  Transfer School College and Career Readiness -...                 64   
-35359  Growth in Transfer School College and Career R...                 64   
-35360  Growth in Transfer School College and Career R...                 43   
-35361  Transfer School College and Career Readiness -...                 43   
-
-       Metric Value  ...  missing_race_ethnicity_data_pct  swd_n   swd_pct  \
-0             0.170  ...                         0.000000   19.0  0.051351   
-1             0.288  ...                         0.000000   19.0  0.051351   
-2             0.830  ...                         0.000000   19.0  0.051351   
-3             0.875  ...                         0.000000   19.0  0.051351   
-4             1.000  ...                         0.001848   77.0  0.142329   
-...             ...  ...                              ...    ...       ...   
-35357        37.900  ...                         0.013928   84.0  0.233983   
-35358        15.100  ...                         0.000000   15.0  0.147059   
-35359         0.135  ...                         0.000000   15.0  0.147059   
-35360         0.117  ...                         0.000000   15.0  0.147059   
-35361        12.700  ...                         0.000000   15.0  0.147059   
-
-       ell_n   ell_pct  poverty_n poverty_pct       eni  \
-0      311.0  0.840541        304    0.821622  0.960000   
-1      311.0  0.840541        304    0.821622  0.960000   
-2      311.0  0.840541        304    0.821622  0.960000   
-3      311.0  0.840541        304    0.821622  0.960000   
-4        0.0  0.000000        120    0.221811  0.231847   
-...      ...       ...        ...         ...       ...   
-35357  132.0  0.367688        328    0.913649  0.933181   
-35358   34.0  0.333333         87    0.852941  0.908735   
-35359   34.0  0.333333         87    0.852941  0.908735   
-35360   34.0  0.333333         87    0.852941  0.908735   
-35361   34.0  0.333333         87    0.852941  0.908735   
-
-                                              clean_name    zip  
-0          international high school at prospect heights  11225  
-1          international high school at prospect heights  11225  
-2          international high school at prospect heights  11225  
-3          international high school at prospect heights  11225  
-4                          eleanor roosevelt high school  10021  
-...                                                  ...    ...  
-35357  bushwick leaders high school for academic exce...  11385  
-35358                     bushwick community high school  11221  
-35359                     bushwick community high school  11221  
-35360                     bushwick community high school  11221  
-35361                     bushwick community high school  11221  
-
-[35362 rows x 68 columns]&gt;</code></pre>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-<div id="69eb30c4" class="cell" data-execution_count="21">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_filter(df, mask):</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Apply mask to df"""</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df[mask]</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> my_filter(combined_df, combined_df[<span class="st">"female_pct"</span>] <span class="op">&gt;=</span> <span class="fl">0.05</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> schools_with_girls[[<span class="st">"ay"</span>, <span class="st">"female_pct"</span>]]</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> combined_df.loc[combined_df[<span class="st">"female_pct"</span>] <span class="op">&gt;=</span> <span class="fl">0.05</span>, [<span class="st">"ay"</span>, <span class="st">"female_pct"</span>]]</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>schools_with_girls.groupby(<span class="st">"ay"</span>).median()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="69eb30c4" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_filter(df, mask):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Apply mask to df"""</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df[mask]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> my_filter(combined_df, combined_df[<span class="st">"female_pct"</span>] <span class="op">&gt;=</span> <span class="fl">0.05</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> schools_with_girls[[<span class="st">"ay"</span>, <span class="st">"female_pct"</span>]]</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> combined_df.loc[combined_df[<span class="st">"female_pct"</span>] <span class="op">&gt;=</span> <span class="fl">0.05</span>, [<span class="st">"ay"</span>, <span class="st">"female_pct"</span>]]</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>schools_with_girls.groupby(<span class="st">"ay"</span>).median()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -393,7 +322,7 @@ Length: 10, dtype: str</code></pre>
 </div>
 </div>
 <div id="c29af8ae" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.index</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.index</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>Index([    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,
        ...
@@ -401,8 +330,8 @@ Length: 10, dtype: str</code></pre>
       dtype='int64', length=35115)</code></pre>
 </div>
 </div>
-<div id="98e0edfe" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls[schools_with_girls[<span class="st">"female_pct"</span>] <span class="op">&lt;</span> <span class="fl">0.33</span>].groupby(<span class="st">"ay"</span>).median()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="98e0edfe" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls[schools_with_girls[<span class="st">"female_pct"</span>] <span class="op">&lt;</span> <span class="fl">0.33</span>].groupby(<span class="st">"ay"</span>).median()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -453,8 +382,8 @@ Length: 10, dtype: str</code></pre>
 </div>
 </div>
 </div>
-<div id="d9b130d3" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.sort_values(<span class="st">"female_pct"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="d9b130d3" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.sort_values(<span class="st">"female_pct"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -464,7 +393,6 @@ Length: 10, dtype: str</code></pre>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">ay</th>
-<th data-quarto-table-cell-role="th">school_name</th>
 <th data-quarto-table-cell-role="th">female_pct</th>
 </tr>
 </thead>
@@ -472,112 +400,101 @@ Length: 10, dtype: str</code></pre>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">25027</th>
 <td>2016</td>
-<td>A-Tech High School</td>
 <td>0.050</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">25028</th>
 <td>2016</td>
-<td>A-Tech High School</td>
 <td>0.050</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">25029</th>
 <td>2016</td>
-<td>A-Tech High School</td>
 <td>0.050</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">26712</th>
 <td>2015</td>
-<td>Automotive High School</td>
 <td>0.056</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">26710</th>
 <td>2015</td>
-<td>Automotive High School</td>
 <td>0.056</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">...</th>
 <td>...</td>
 <td>...</td>
-<td>...</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">30988</th>
 <td>2023</td>
-<td>Young Women's Leadership School, Queens</td>
 <td>1.000</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">30983</th>
 <td>2023</td>
-<td>Young Women's Leadership School, Queens</td>
 <td>1.000</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">30982</th>
 <td>2023</td>
-<td>Young Women's Leadership School, Queens</td>
 <td>1.000</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">23596</th>
 <td>2017</td>
-<td>Young Women's Leadership School, Astoria</td>
 <td>1.000</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">20845</th>
 <td>2017</td>
-<td>Women's Academy of Excellence</td>
 <td>1.000</td>
 </tr>
 </tbody>
 </table>
 
-<p>35115 rows × 3 columns</p>
+<p>35115 rows × 2 columns</p>
 </div>
 </div>
 </div>
-<div id="4f4f162b" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.describe</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="4f4f162b" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.describe</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<pre><code>&lt;bound method NDFrame.describe of          ay                                        school_name  female_pct
-0      2019      International High School at Prospect Heights    0.375676
-1      2019      International High School at Prospect Heights    0.375676
-2      2019      International High School at Prospect Heights    0.375676
-3      2019      International High School at Prospect Heights    0.375676
-4      2017                      Eleanor Roosevelt High School    0.604436
-...     ...                                                ...         ...
-35357  2024  Bushwick Leaders High School for Academic Exce...    0.487465
-35358  2024                     Bushwick Community High School    0.441176
-35359  2024                     Bushwick Community High School    0.441176
-35360  2024                     Bushwick Community High School    0.441176
-35361  2024                     Bushwick Community High School    0.441176
+<pre><code>&lt;bound method NDFrame.describe of          ay  female_pct
+0      2019    0.375676
+1      2019    0.375676
+2      2019    0.375676
+3      2019    0.375676
+4      2017    0.604436
+...     ...         ...
+35357  2024    0.487465
+35358  2024    0.441176
+35359  2024    0.441176
+35360  2024    0.441176
+35361  2024    0.441176
 
-[35115 rows x 3 columns]&gt;</code></pre>
+[35115 rows x 2 columns]&gt;</code></pre>
 </div>
 </div>
 <p>Young women do not enroll in tech. This is not a news flash. Can we see an improvement in the data?</p>
-<div id="091bcc79" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> school_by_type(school_type):</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    criterion <span class="op">=</span> school_quality_df[<span class="st">"School Type"</span>]<span class="op">==</span>school_type</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> school_quality_df[criterion]</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>middle_df <span class="op">=</span> school_by_type(<span class="st">"Middle"</span>)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>hs_df <span class="op">=</span> school_by_type(<span class="st">"High School"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="091bcc79" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> school_by_type(school_type):</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    criterion <span class="op">=</span> school_quality_df[<span class="st">"School Type"</span>]<span class="op">==</span>school_type</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> school_quality_df[criterion]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>middle_df <span class="op">=</span> school_by_type(<span class="st">"Middle"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>hs_df <span class="op">=</span> school_by_type(<span class="st">"High School"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Filter rows by a column, group by a column, compute a mean</p>
-<div id="96970357" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ccr_df <span class="op">=</span> school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"ccr"</span>)]</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>ccr_by_year <span class="op">=</span> ccr_df.groupby(by<span class="op">=</span><span class="st">"Report Year"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="96970357" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ccr_df <span class="op">=</span> school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"ccr"</span>)]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ccr_by_year <span class="op">=</span> ccr_df.groupby(by<span class="op">=</span><span class="st">"Report Year"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>For what years have ccr metrics been reported?</p>
-<div id="1bbd4454" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>ccr_by_year.count()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="1bbd4454" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ccr_by_year.count()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -651,19 +568,19 @@ Length: 10, dtype: str</code></pre>
 <p>CCR metrics have been reported for the 2024 and 2025 school year. Metric Score, the normed value relative to Comparison Group, was reported for the first time in 2025.</p>
 <p>College and Career Preparatory Course Index pct_cpci_oa_uc This metric shows the percentage of students in the school’s four-year cohort who successfully completed approved rigorous courses and assessments after four years of high school.</p>
 <p>For what years was the pct_cpci_oa_uv reported.</p>
-<div id="680817ad" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>preparatory_course_index_df <span class="op">=</span> school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>]<span class="op">==</span><span class="st">"pct_cpci_oa_uv"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="680817ad" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>preparatory_course_index_df <span class="op">=</span> school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>]<span class="op">==</span><span class="st">"pct_cpci_oa_uv"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="3a811d9c" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>preparatory_course_index_df.head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="3a811d9c" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>preparatory_course_index_df.head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;bound method NDFrame.head of Empty DataFrame
 Columns: [School Year, Report Year, District, Borough and School Number (DBN), School Name, Report Type, School Type, Metric Variable Name, Metric Display Name, Number of Students, Metric Value, Comparison Group Average, Metric Score]
 Index: []&gt;</code></pre>
 </div>
 </div>
-<div id="f159ca0e" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"pct_cpci_oa_uc"</span>)].groupby(by<span class="op">=</span><span class="st">"Report Year"</span>)[<span class="st">"Metric Value"</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="f159ca0e" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"pct_cpci_oa_uc"</span>)].groupby(by<span class="op">=</span><span class="st">"Report Year"</span>)[<span class="st">"Metric Value"</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>Report Year
 2016    0.070554
