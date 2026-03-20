@@ -3,14 +3,15 @@ project:
 
 website:
   title: Data Analysis Learning Portfolio
-  navbar:
-    left:
+  sidebar:
+    contents:
       - href: index.qmd
         text: Home
       - href: about.qmd
         text: About
       - href: learning-plan.qmd
         text: Learning Plan
+      - r/r_audit.qmd
       - notebooks/python_audit.ipynb
       
 format:
