@@ -4,7 +4,11 @@ author: "Eric Allatta"
 date: "03/22/2026"
 ---
 
-Exercises and examples from [R 4 Data Science](https://r4ds.hadley.nz/)
+Exercises and examples from [R 4 Data Science](https://r4ds.hadley.nz/) and [R for Everyone](https://www.jaredlander.com/r-for-everyone/), combined and grouped by topic and package.
+
+```{r}
+library('data.table')
+```
 
 # Chapter 5 - Data tidying
 ```{r}
