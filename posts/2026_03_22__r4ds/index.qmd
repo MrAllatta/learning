@@ -1,0 +1,44 @@
+---
+title: "R4DS Notes and Exercises"
+author: "Eric Allatta"
+date: "03/22/2026"
+---
+
+Exercises and examples from [R 4 Data Science](https://r4ds.hadley.nz/)
+
+# Chapter 5 - Data tidying
+```{r}
+#| echo: true
+#| eval: true
+#| output: false
+library('tidyverse')
+```
+
+```{r}
+billboard
+```
+Billboard has 79 columns, mostly wk1, wk2. Needs to be flattened, i.e. pivot_longer()
+Similar to program groups in hs_directory, but only one group: the week.
+
+In tidy data each column is a variable. Week is the variable, so one column per week is not a variable.
+```{r}
+billboard %>%
+    pivot_longer(
+        cols = starts_with('wk'), # specifies which columns need to be pivoted
+        names_to = 'week', # names the variable stored in the column name
+        values_to = 'rank', # the value stored in the cell values, new variables quoted because they don't exist yet
+        values_drop_na = TRUE # because missing data was forced by the structure, not having data for a week means you weren't on the chart, not that data is missing
+    ) %>%
+        mutate(
+            week = parse_number(week) # this is a new column; parse_number is a very powerful parser that extracts just the number
+        ) -> billboard_longer
+billboard_longer
+```
+
+
+```{r}
+billboard_longer %>%
+    ggplot(aes(x = week, y = rank, group = track)) +
+    geom_line(alpha = 0.25) +
+    scale_y_reverse()
+```

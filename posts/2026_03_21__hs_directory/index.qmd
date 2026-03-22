@@ -1,0 +1,14 @@
+---
+title: 'NYC High School Directory'
+date: '03/21/2026'
+---
+
+# hs_directory
+Most current NYCDOE data is found on infohub.nyced.org
+https://infohub.nyced.org/reports/admissions-and-enrollment/directory-data
+
+
+```{r}
+library(here)
+source(here('r/dataloader.R'))
+```

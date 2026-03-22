@@ -12,7 +12,7 @@ format:
 #| label: include_code
 #| echo: true
 #| eval: false
-{{< include r_audit.R >}}
+{{< include ../../r/dataloader.R >}}
 ```
 
 ```{r}
@@ -20,7 +20,7 @@ format:
 #| echo: false
 #| eval: true
 library(here)
-source(here('r/r_audit.R'))
+source(here('r/dataloader.R'))
 ```
 
 # HS Directory
@@ -62,6 +62,7 @@ list_matches <- function(regx) {
 
 
 ```{r}
+#| eval: false
 local({
   # cols %>% grep("^grade9geapplicantsperseat\\d+$", ., value=TRUE)
   # cols %>% grep("^seats9ge\\d$", ., value=TRUE)
