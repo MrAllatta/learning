@@ -11,10 +11,6 @@ website:
         text: About
       - href: learning-plan.qmd
         text: Learning Plan
-      - href: r/r_audit.qmd
-        text: R Audit
-      - href: notebooks/python_audit.ipynb
-        text: Python Audit
       
 format:
   html:
@@ -23,6 +19,11 @@ format:
       - brand
     css: styles.css
     toc: true
+
+execute:
+  echo: true
+  project:
+    execute-dir: .
 
 
 
