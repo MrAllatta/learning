@@ -1,0 +1,1230 @@
+User: I need a survey of strategies for handling wide tibble with blocks or families of data, which I will compress into a long table for program level questions. I've started manually building the mapping to the families by inspecting a helper table of column names. I want to learn additional techniques, but as always am looking for incremental learning. Nonetheless be sure to include the most sophisticated and seasoned professional statistitions solution along with the near field suggestions.
+
+Positron Assistant: For this kind of data, the core problem is usually:
+
+- some columns are school-level identifiers
+- some columns come in repeated program-level blocks
+- the block index is encoded in the column name
+- not every family is named consistently
+- you want a reliable school-to-program long table, not just a one-off pivot
+
+A useful way to think about strategies is by maturity level.
+
+## 1. Manual family mapping by inspection
+This is what you’ve started doing. It is a good first step.
+
+Typical workflow:
+
+- list all column names
+- sort by length or pattern
+- identify repeated families
+- write regex rules for each family
+- pivot those families into long form
+
+This is slow but valuable because it teaches the schema.
+
+Your current `classify_families()` is the right instinct. A few issues in it:
+
+- `str()` should be `str_detect()`
+- some patterns are not anchored consistently
+- you probably want to extract a program index, not only assign a family
+- a family table is more useful if it includes both `family` and `index`
+
+## 2. Pattern inventory table
+A stronger next step is to create a metadata table of all columns and parse their structure before pivoting anything.
+
+This is often the first professional move because it separates:
+
+- schema understanding
+- transformation logic
+
+You can build a table like:
+
+- `col`
+- `family`
+- `program_index`
+- `is_program_level`
+- `base_name`
+- `notes`
+
+Example:
+
+```{r}
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(tibble)
+
+build_column_dictionary <- function(data) {
+  tibble(col = names(data)) |>
+    mutate(
+      family = case_when(
+        str_detect(col, "^program\\d+$") ~ "program",
+        str_detect(col, "^seats9ge\\d+$") ~ "seats9ge",
+        str_detect(col, "^grade9geapplicantsperseat\\d+$") ~ "grade9geapplicantsperseat",
+        str_detect(col, "^grade9swdapplicatsperseat\\d+$") ~ "grade9swdapplicatsperseat",
+        str_detect(col, "^grade9swdseatsperseat\\d+$") ~ "grade9swdseatsperseat",
+        str_detect(col, "^grade9swdpriority\\d+$") ~ "grade9swdpriority",
+        str_detect(col, "^grade9gepriority\\d+$") ~ "grade9gepriority",
+        str_detect(col, "^requirement_\\d+_\\d+$") ~ "requirement",
+        TRUE ~ "other"
+      ),
+      program_index = case_when(
+        str_detect(col, "\\d+$") ~ str_extract(col, "\\d+$"),
+        str_detect(col, "^requirement_\\d+_\\d+$") ~ str_match(col, "^requirement_(\\d+)_(\\d+)$")[, 2],
+        TRUE ~ NA_character_
+      ),
+      sub_index = case_when(
+        str_detect(col, "^requirement_\\d+_\\d+$") ~ str_match(col, "^requirement_(\\d+)_(\\d+)$")[, 3],
+        TRUE ~ NA_character_
+      ),
+      is_program_level = family != "other"
+    )
+}
+```
+
+This gives you a reusable schema object.
+
+## 3. Regex-driven pivoting with `.value`
+Once families are understood, the most effective tidyverse approach is usually `pivot_longer()` with `names_pattern` and `.value`.
+
+This is the standard “wide repeated blocks to long” solution when names are regular enough.
+
+If names looked like:
+
+- `program1`, `program2`
+- `seats9ge1`, `seats9ge2`
+- `grade9gepriority1`, `grade9gepriority2`
+
+then you can reshape many families at once.
+
+Example:
+
+```r
+library(dplyr)
+library(tidyr)
+library(stringr)
+
+program_long <- hs_directory |>
+  pivot_longer(
+    cols = matches("^(program|seats9ge|grade9gepriority|grade9swdpriority|grade9geapplicantsperseat|grade9swdapplicatsperseat|grade9swdseatsperseat)\\d+$"),
+    names_to = c(".value", "program_index"),
+    names_pattern = "^(.*?)(\\d+)$"
+  ) |>
+  mutate(program_index = as.integer(program_index))
+```
+
+Why this is strong:
+
+- one pivot handles multiple families
+- the suffix becomes `program_index`
+- family names become output columns automatically
+
+This is usually the best next step if your schema is mostly regular.
+
+## 4. Family-by-family pivots, then join
+If the naming conventions are messy, a more robust approach is to pivot each family separately and join them by school keys plus `program_index`.
+
+This is less elegant, but often safer.
+
+Why professionals do this:
+
+- each family can have its own parsing rule
+- easier to debug
+- easier to validate row counts
+- easier to handle malformed exceptions
+
+Pattern:
+
+```r
+id_cols <- c("dbn", "school_name")
+
+program_tbl <- hs_directory |>
+  select(all_of(id_cols), matches("^program\\d+$")) |>
+  pivot_longer(
+    cols = matches("^program\\d+$"),
+    names_to = "program_index",
+    names_pattern = "^program(\\d+)$",
+    values_to = "program"
+  )
+
+seats_tbl <- hs_directory |>
+  select(all_of(id_cols), matches("^seats9ge\\d+$")) |>
+  pivot_longer(
+    cols = matches("^seats9ge\\d+$"),
+    names_to = "program_index",
+    names_pattern = "^seats9ge(\\d+)$",
+    values_to = "seats9ge"
+  )
+
+program_long <- program_tbl |>
+  left_join(seats_tbl, join_by(dbn, school_name, program_index))
+```
+
+This is often the right middle ground for real administrative data.
+
+## 5. Spec table + generated reshape plan
+A more seasoned approach is to make the schema explicit as data: a “pivot spec” table.
+
+Instead of hardcoding regex inside transformation code, you create a tibble describing each family:
+
+- family name
+- regex
+- value column name
+- whether it is indexed by program only
+- whether it has a second sub-index
+- optional cleaning function
+
+Example:
+
+```r
+library(tibble)
+
+family_spec <- tribble(
+  ~family,                      ~pattern,                                      ~value_name,                    ~kind,
+  "program",                    "^program(\\d+)$",                             "program",                      "program",
+  "seats9ge",                   "^seats9ge(\\d+)$",                            "seats9ge",                     "program",
+  "grade9geapplicantsperseat",  "^grade9geapplicantsperseat(\\d+)$",           "grade9geapplicantsperseat",    "program",
+  "grade9swdapplicatsperseat",  "^grade9swdapplicatsperseat(\\d+)$",           "grade9swdapplicatsperseat",    "program",
+  "grade9swdpriority",          "^grade9swdpriority(\\d+)$",                   "grade9swdpriority",            "program",
+  "grade9gepriority",           "^grade9gepriority(\\d+)$",                    "grade9gepriority",             "program",
+  "requirement",                "^requirement_(\\d+)_(\\d+)$",                 "requirement",                  "program_sub"
+)
+```
+
+Then write functions that consume this spec.
+
+Benefits:
+
+- transformation is declarative
+- easier to audit
+- easier to extend
+- better for messy public-sector datasets that evolve over time
+
+This is much closer to how an experienced data engineer or statistical programmer would stabilize the pipeline.
+
+## 6. Nested / list-column strategy for multi-valued families
+Some families, like `requirement_1_1`, `requirement_1_2`, etc., are not really scalar program attributes. They are repeated values within program.
+
+In that case, forcing them into one flat program row too early can make the model awkward.
+
+Better pattern:
+
+- first create one row per school-program
+- keep repeated-within-program families in nested child tables or list-columns
+- unnest only when needed
+
+Example mental model:
+
+- `school_tbl`: one row per school
+- `program_tbl`: one row per school-program
+- `requirement_tbl`: one row per school-program-requirement
+
+This is often the most correct relational design.
+
+For example:
+
+```r
+requirement_long <- hs_directory |>
+  select(dbn, matches("^requirement_\\d+_\\d+$")) |>
+  pivot_longer(
+    cols = matches("^requirement_\\d+_\\d+$"),
+    names_to = c("program_index", "requirement_index"),
+    names_pattern = "^requirement_(\\d+)_(\\d+)$",
+    values_to = "requirement"
+  ) |>
+  filter(!is.na(requirement), requirement != "")
+```
+
+This is better than trying to paste all requirements into a single field unless your downstream questions truly need that.
+
+## 7. Relational normalization, not just pivoting
+The most seasoned professional solution is usually not “make one big long table.”
+
+It is:
+
+- identify the unit of observation for each analytical question
+- normalize the source into several linked tables
+- validate keys and cardinality
+- only denormalize for specific outputs
+
+For your case, likely target tables are:
+
+1. `schools`
+   - school-level attributes
+   - one row per `dbn`
+
+2. `programs`
+   - one row per `dbn + program_index`
+   - program name, seats, applicants per seat, priorities
+
+3. `program_requirements`
+   - one row per `dbn + program_index + requirement_index`
+
+4. maybe `program_priorities` too, if priorities are also repeated categories rather than a single scalar
+
+Why this is the senior solution:
+
+- matches the data-generating structure
+- easier to test
+- less information loss
+- avoids giant fragile pivots
+- works better when some families have different multiplicities
+
+Statisticians working with institutional data often arrive here because “one tidy table” is not always the best storage form. Tidy analysis tables are often downstream products, not the canonical cleaned data model.
+
+## 8. Use a name parser function
+Another strong technique is to stop thinking in terms of family-specific regex scattered everywhere and instead write a parser for column names.
+
+Example output for each column:
+
+- `program12` -> family = `program`, index = 12
+- `seats9ge4` -> family = `seats9ge`, index = 4
+- `requirement_3_2` -> family = `requirement`, index = 3, sub_index = 2
+
+Example:
+
+```r
+parse_hs_column <- function(col) {
+  case_when(
+    str_detect(col, "^program\\d+$") ~ "program",
+    str_detect(col, "^seats9ge\\d+$") ~ "seats9ge",
+    str_detect(col, "^grade9geapplicantsperseat\\d+$") ~ "grade9geapplicantsperseat",
+    str_detect(col, "^requirement_\\d+_\\d+$") ~ "requirement",
+    TRUE ~ "other"
+  )
+}
+```
+
+More sophisticated version returns a tibble row, not just a label.
+
+This becomes the foundation for:
+
+- schema reports
+- validation
+- family counts
+- selecting pivotable columns
+- generating documentation
+
+## 9. Validation-first workflow
+A very professional addition is to validate structure before and after reshaping.
+
+Examples of checks:
+
+- maximum observed program index by school
+- whether `program3` is populated when `program2` is missing
+- whether all family members share the same set of indices
+- whether program rows with missing `program` name should be dropped
+- whether requirements exist for nonexistent programs
+
+Useful checks:
+
+```r
+hs_directory |>
+  transmute(
+    dbn,
+    n_program_cols = rowSums(!is.na(select(cur_data(), matches("^program\\d+$"))))
+  )
+```
+
+And after pivoting:
+
+- unique key check on `dbn + program_index`
+- row count by school
+- missingness profile by family
+
+The professional habit is:
+do not trust the wide structure just because the names look regular.
+
+## 10. “Schema dictionary first” as a Quarto artifact
+Since you are already working in Quarto, a very useful incremental practice is to produce a column family audit table as part of the notebook.
+
+That artifact can include:
+
+- family counts
+- unmatched columns
+- parsed indices
+- example names from each family
+
+This is low effort and high value.
+
+Example summary:
+
+```r
+column_dict <- build_column_dictionary(hs_directory)
+
+family_summary <- column_dict |>
+  count(family, is_program_level, sort = TRUE)
+
+family_examples <- column_dict |>
+  filter(family != "other") |>
+  summarize(
+    example_cols = paste(head(col, 5), collapse = ", "),
+    .by = family
+  )
+```
+
+That gives you a documented schema exploration layer before transformation.
+
+---
+
+# My recommendation by stage
+
+## Near-field next step
+Do this next:
+
+1. build a proper column dictionary
+2. parse `family`, `program_index`, and `sub_index`
+3. pivot only the clean one-index families first
+4. keep `requirement_*_*` as a separate long table
+
+That is incremental and teaches the right concepts.
+
+## Strong intermediate solution
+Use:
+
+- one dictionary table
+- one `pivot_longer(..., names_to = c(".value", "program_index"))` for regular families
+- separate pivots for irregular families
+- joins on school id + program index
+
+This is likely the best balance of learning and practicality.
+
+## Most seasoned professional solution
+Treat this as normalization, not just reshaping.
+
+Build a small schema system:
+
+- a column dictionary
+- a family spec table
+- parsing functions
+- validation checks
+- output relational tables:
+  - `schools`
+  - `programs`
+  - `program_requirements`
+
+That is the solution I would trust for repeated use, auditing, and future extension.
+
+---
+
+# Specific notes on your current code
+
+I would adjust your function in this direction:
+
+```r
+library(dplyr)
+library(stringr)
+library(tibble)
+
+classify_families <- function(data) {
+  tibble(col = names(data)) |>
+    mutate(
+      family = case_when(
+        str_detect(col, "^grade9geapplicantsperseat\\d+$") ~ "grade9geapplicantsperseat",
+        str_detect(col, "^seats9ge\\d+$") ~ "seats9ge",
+        str_detect(col, "^requirement_\\d+_\\d+$") ~ "requirement",
+        str_detect(col, "^program\\d+$") ~ "program",
+        str_detect(col, "^grade9swdapplicatsperseat\\d+$") ~ "grade9swdapplicatsperseat",
+        str_detect(col, "^grade9swdseatsperseat\\d+$") ~ "grade9swdseatsperseat",
+        str_detect(col, "^grade9swdpriority\\d+$") ~ "grade9swdpriority",
+        str_detect(col, "^grade9gepriority\\d+$") ~ "grade9gepriority",
+        TRUE ~ "other"
+      ),
+      program_index = case_when(
+        str_detect(col, "^requirement_\\d+_\\d+$") ~ str_match(col, "^requirement_(\\d+)_(\\d+)$")[, 2],
+        str_detect(col, "\\d+$") ~ str_extract(col, "\\d+$"),
+        TRUE ~ NA_character_
+      ),
+      sub_index = case_when(
+        str_detect(col, "^requirement_\\d+_\\d+$") ~ str_match(col, "^requirement_(\\d+)_(\\d+)$")[, 3],
+        TRUE ~ NA_character_
+      )
+    )
+}
+```
+
+Two reasons:
+
+- it gives you a reusable metadata object, not just counts
+- it sets up the next step naturally: pivoting
+
+---
+
+# If you want a concrete learning path
+I’d do this in three passes:
+
+## Pass 1
+Only create and inspect the dictionary table.
+
+Questions to answer:
+
+- which families exist?
+- which are unmatched?
+- what indices exist?
+- are there gaps?
+
+## Pass 2
+Build `programs` from the simple one-index families only.
+
+Questions to answer:
+
+- what is the key?
+- how many programs per school?
+- which rows are empty shell programs?
+
+## Pass 3
+Add `requirements` as a child table.
+
+Questions to answer:
+
+- is requirement count variable by program?
+- do requirement rows exist for missing programs?
+
+If you want, I can sketch a concrete `schools` / `programs` / `program_requirements` pipeline for your `hs_directory` schema using tidyverse only.
+
+User: Thank you. After your response we can move to using most seasoned data engineering strategy. Please consume the full column list and confirm recommendations. 
+.
+school_accessibility_description
+grade9swdapplicantsperseat10
+grade9swdapplicantsperseat11
+grade9swdapplicantsperseat1
+grade9swdapplicantsperseat2
+grade9swdapplicantsperseat3
+grade9swdapplicantsperseat4
+grade9swdapplicantsperseat5
+grade9swdapplicantsperseat6
+grade9swdapplicantsperseat7
+grade9swdapplicantsperseat8
+grade9swdapplicantsperseat9
+grade9geapplicantsperseat10
+grade9geapplicantsperseat11
+extracurricular_activities
+grade9geapplicantsperseat1
+grade9geapplicantsperseat2
+grade9geapplicantsperseat3
+grade9geapplicantsperseat4
+grade9geapplicantsperseat5
+grade9geapplicantsperseat6
+grade9geapplicantsperseat7
+grade9geapplicantsperseat8
+grade9geapplicantsperseat9
+advancedplacement_courses
+diversity_in_admissions
+primary_address_line_1
+academicopportunities1
+academicopportunities2
+academicopportunities3
+academicopportunities4
+academicopportunities5
+academicopportunities6
+applicants1specialized
+applicants2specialized
+applicants3specialized
+applicants4specialized
+applicants5specialized
+applicants6specialized
+appperseat1specialized
+appperseat2specialized
+appperseat3specialized
+appperseat4specialized
+appperseat5specialized
+appperseat6specialized
+pct_stu_enough_variety
+auditioninformation10
+auditioninformation11
+grade9swdapplicants10
+grade9swdfilledflag10
+grade9swdapplicants11
+grade9swdfilledflag11
+auditioninformation1
+auditioninformation2
+auditioninformation3
+auditioninformation4
+auditioninformation5
+auditioninformation6
+auditioninformation7
+auditioninformation8
+auditioninformation9
+grade9swdapplicants1
+grade9swdfilledflag1
+grade9swdapplicants2
+grade9swdfilledflag2
+grade9swdapplicants3
+grade9swdfilledflag3
+grade9swdapplicants4
+grade9swdfilledflag4
+grade9swdapplicants5
+grade9swdfilledflag5
+grade9swdapplicants6
+grade9swdfilledflag6
+grade9swdapplicants7
+grade9swdfilledflag7
+grade9swdapplicants8
+grade9swdfilledflag8
+grade9swdapplicants9
+grade9swdfilledflag9
+grade9geapplicants10
+grade9gefilledflag10
+grade9geapplicants11
+grade9gefilledflag11
+college_career_rate
+diplomaendorsements
+grade9geapplicants1
+grade9gefilledflag1
+grade9geapplicants2
+grade9gefilledflag2
+grade9geapplicants3
+grade9gefilledflag3
+grade9geapplicants4
+grade9gefilledflag4
+grade9geapplicants5
+grade9gefilledflag5
+grade9geapplicants6
+grade9gefilledflag6
+grade9geapplicants7
+grade9gefilledflag7
+grade9geapplicants8
+grade9gefilledflag8
+grade9geapplicants9
+grade9gefilledflag9
+recruitment_website
+overview_paragraph
+common_audition10
+common_audition11
+psal_sports_girls
+school_10th_seats
+seats1specialized
+seats2specialized
+seats3specialized
+seats4specialized
+seats5specialized
+seats6specialized
+priority1_prog10
+priority2_prog10
+priority1_prog11
+priority2_prog11
+common_audition1
+common_audition2
+common_audition3
+common_audition4
+common_audition5
+common_audition6
+common_audition7
+common_audition8
+common_audition9
+freshmanschedule
+language_classes
+psal_sports_boys
+psal_sports_coed
+requirement_1_10
+requirement_2_10
+requirement_1_11
+priority1_prog1
+priority2_prog1
+priority3_prog1
+priority1_prog2
+priority2_prog2
+priority3_prog2
+priority1_prog3
+priority2_prog3
+priority3_prog3
+priority1_prog4
+priority2_prog4
+priority3_prog4
+priority1_prog5
+priority2_prog5
+priority3_prog5
+priority1_prog6
+priority2_prog6
+priority3_prog6
+priority1_prog7
+priority2_prog7
+priority1_prog8
+priority2_prog8
+priority1_prog9
+priority2_prog9
+graduation_rate
+requirement_1_1
+requirement_2_1
+requirement_3_1
+requirement_4_1
+requirement_1_2
+requirement_2_2
+requirement_1_3
+requirement_2_3
+requirement_1_4
+requirement_2_4
+requirement_1_5
+requirement_2_5
+requirement_1_6
+requirement_2_6
+requirement_1_7
+requirement_2_7
+requirement_1_8
+requirement_2_8
+requirement_1_9
+requirement_2_9
+attendance_rate
+total_students
+building_code
+eligibility10
+eligibility11
+school_sports
+international
+neighborhood
+shared_space
+phone_number
+eligibility1
+eligibility2
+eligibility3
+eligibility4
+eligibility5
+eligibility6
+eligibility7
+eligibility8
+eligibility9
+ell_programs
+pct_stu_safe
+school_email
+earlycollege
+school_name
+addtl_info1
+campus_name
+finalgrades
+seats9swd10
+seats9swd11
+specialized
+sqr_website
+diadetails
+fax_number
+interest10
+interest11
+seats9swd1
+seats9swd2
+seats9swd3
+seats9swd4
+seats9swd5
+seats9swd6
+seats9swd7
+seats9swd8
+seats9swd9
+seats9ge10
+seats9ge11
+start_time
+state_code
+gradespan
+interest1
+interest2
+interest3
+interest4
+interest5
+interest6
+interest7
+interest8
+interest9
+prgdesc10
+prgdesc11
+program10
+program11
+seats9ge1
+seats9ge2
+seats9ge3
+seats9ge4
+seats9ge5
+seats9ge6
+seats9ge7
+seats9ge8
+seats9ge9
+seats1010
+seats1011
+end_time
+location
+method10
+method11
+prgdesc1
+prgdesc2
+prgdesc3
+prgdesc4
+prgdesc5
+prgdesc6
+prgdesc7
+prgdesc8
+prgdesc9
+program1
+program2
+program3
+program4
+program5
+program6
+program7
+program8
+program9
+seats101
+seats102
+seats103
+seats104
+seats105
+seats106
+seats107
+seats108
+seats109
+transfer
+website
+method1
+method2
+method3
+method4
+method5
+method6
+method7
+method8
+method9
+subway
+code10
+code11
+code1
+code2
+code3
+code4
+code5
+code6
+code7
+code8
+code9
+girls
+ptech
+boro
+boys
+city
+pbat
+dbn
+url
+bus
+zip
+
+Positron Assistant: Yes. With the full column list, I’d confirm the recommendation and sharpen it.
+
+This dataset is not just “wide.” It is a mixed-grain table containing at least three structural levels:
+
+1. `school` level
+2. `program` level
+3. `program sub-record` level for repeated fields like requirements and priorities
+
+That means the most seasoned strategy is indeed a small normalized model, not a single giant long table.
+
+## What the full column list confirms
+
+The columns break pretty cleanly into these groups.
+
+### 1. School-level columns
+These appear to be one-per-school attributes:
+
+- identifiers: `dbn`, `school_name`, `boro`, `city`, `zip`, `building_code`
+- contact/location: `website`, `url`, `phone_number`, `fax_number`, `school_email`, `location`, `primary_address_line_1`
+- operations: `start_time`, `end_time`, `gradespan`, `shared_space`, `transfer`, `international`, `specialized`, `earlycollege`, `ptech`, `pbat`, `girls`, `boys`
+- descriptive text: `overview_paragraph`, `extracurricular_activities`, `advancedplacement_courses`, `language_classes`, `academicopportunities1` to `academicopportunities6`, `freshmanschedule`, `school_accessibility_description`, `diversity_in_admissions`
+- metrics: `graduation_rate`, `attendance_rate`, `college_career_rate`, `pct_stu_safe`, `pct_stu_enough_variety`, `total_students`
+- programs/support/offers: `school_sports`, `psal_sports_boys`, `psal_sports_girls`, `psal_sports_coed`, `ell_programs`, `finalgrades`, `diplomaendorsements`
+- other site-like fields: `recruitment_website`, `sqr_website`
+- transit: `subway`, `bus`
+- neighborhood-ish: `neighborhood`, `campus_name`
+
+These should stay in a `schools` table.
+
+### 2. Program-level repeated blocks
+These clearly repeat over program index, mostly `1` through `11`:
+
+- `program1` … `program11`
+- `code1` … `code11`
+- `interest1` … `interest11`
+- `method1` … `method11`
+- `eligibility1` … `eligibility11`
+- `prgdesc1` … `prgdesc11`
+- `auditioninformation1` … `auditioninformation11`
+- `common_audition1` … `common_audition11`
+- `seats9ge1` … `seats9ge11`
+- `seats9swd1` … `seats9swd11`
+- `seats101` … `seats1011`
+- `grade9geapplicants1` … `grade9geapplicants11`
+- `grade9swdapplicants1` … `grade9swdapplicants11`
+- `grade9geapplicantsperseat1` … `11`
+- `grade9swdapplicantsperseat1` … `11`
+- `grade9gefilledflag1` … `11`
+- `grade9swdfilledflag1` … `11`
+
+These belong in a `programs` table keyed by `dbn + program_index`.
+
+### 3. Program-level but nonstandard repeated blocks
+These are still program-level, but naming is less regular:
+
+- `priority1_prog1`, `priority2_prog1`, `priority3_prog1`, etc.
+- `requirement_1_1`, `requirement_2_1`, `requirement_3_1`, `requirement_4_1`, etc.
+- specialized-specific fields:
+  - `applicants1specialized` … `applicants6specialized`
+  - `appperseat1specialized` … `appperseat6specialized`
+  - `seats1specialized` … `seats6specialized`
+
+These confirm that one long table would either:
+
+- become sparse and awkward, or
+- force lossy flattening
+
+So I would not recommend a single canonical long table.
+
+## Important structural observation
+
+There are actually multiple program-like systems in the same sheet:
+
+### A. General school program blocks
+Indexed by `1` to `11`, using names like:
+
+- `program{n}`
+- `code{n}`
+- `interest{n}`
+
+### B. Priority subrecords within program
+Indexed by both:
+
+- priority rank
+- program index
+
+Example:
+
+- `priority1_prog10`
+- `priority2_prog10`
+- `priority3_prog4`
+
+This is a separate child table:
+`program_priorities`
+
+with key:
+- `dbn`
+- `program_index`
+- `priority_rank`
+
+### C. Requirement subrecords within program
+Indexed by both:
+
+- requirement rank
+- program index
+
+Example:
+- `requirement_1_10`
+- `requirement_2_10`
+- `requirement_4_1`
+
+This is another child table:
+`program_requirements`
+
+with key:
+- `dbn`
+- `program_index`
+- `requirement_index`
+
+### D. Specialized admissions block
+These look like a different subsystem, likely not aligned to the ordinary `program1` to `program11` block:
+
+- `applicants1specialized`
+- `appperseat1specialized`
+- `seats1specialized`
+
+I would treat these cautiously. They may need their own table:
+`specialized_tracks` or `specialized_programs`
+
+rather than being forced into the ordinary program index.
+
+## Confirmed recommendation: normalized target model
+
+I would now recommend these output tables.
+
+## 1. `schools`
+One row per `dbn`.
+
+Contains only non-indexed columns.
+
+Candidate key:
+- `dbn`
+
+## 2. `school_academic_opportunities`
+Because `academicopportunities1` to `academicopportunities6` are repeated but not obviously program-indexed.
+
+Key:
+- `dbn`
+- `opportunity_index`
+
+This is optional, but cleaner than six columns.
+
+## 3. `programs`
+One row per school-program block.
+
+Key:
+- `dbn`
+- `program_index`
+
+Fields likely include:
+
+- `program`
+- `code`
+- `interest`
+- `method`
+- `eligibility`
+- `prgdesc`
+- `auditioninformation`
+- `common_audition`
+- `seats9ge`
+- `seats9swd`
+- `seats10`
+- `grade9geapplicants`
+- `grade9swdapplicants`
+- `grade9geapplicantsperseat`
+- `grade9swdapplicantsperseat`
+- `grade9gefilledflag`
+- `grade9swdfilledflag`
+
+This is your main analysis-ready program table.
+
+## 4. `program_priorities`
+One row per priority attached to a program.
+
+Key:
+- `dbn`
+- `program_index`
+- `priority_rank`
+
+Value:
+- `priority_text`
+
+## 5. `program_requirements`
+One row per requirement attached to a program.
+
+Key:
+- `dbn`
+- `program_index`
+- `requirement_index`
+
+Value:
+- `requirement_text`
+
+## 6. `specialized_programs` or `specialized_admissions`
+One row per specialized track index.
+
+Key:
+- `dbn`
+- `specialized_index`
+
+Fields:
+- `specialized_applicants`
+- `specialized_applicants_per_seat`
+- `specialized_seats`
+
+I would keep this separate until you verify how it maps to the named school programs.
+
+---
+
+# Why this is the right professional solution here
+
+Because the column list shows mixed multiplicities:
+
+- some fields repeat once per school
+- some once per program
+- some multiple times within program
+- some appear to belong to a separate specialized subsystem
+
+That is exactly the situation where normalization beats a single pivot.
+
+A professional data engineering pipeline would usually:
+
+1. build a column dictionary
+2. parse every column into structural metadata
+3. partition columns by grain
+4. reshape each grain separately
+5. validate keys and cardinality
+6. save the normalized tables as the cleaned layer
+
+---
+
+# Concrete family classification from your list
+
+Here is the family structure I would use conceptually.
+
+## School grain
+Columns with no trailing program index and no embedded sub-index.
+
+Examples:
+- `dbn`
+- `school_name`
+- `city`
+- `zip`
+- `attendance_rate`
+- `overview_paragraph`
+
+## Program grain, suffix index pattern
+Pattern:
+- `^(family)([0-9]+)$`
+
+Examples:
+- `program10`
+- `code3`
+- `seats9ge7`
+- `grade9gefilledflag11`
+
+## Program child grain, embedded rank + program index
+Pattern:
+- `^priority([0-9]+)_prog([0-9]+)$`
+- `^requirement_([0-9]+)_([0-9]+)$`
+
+These need two indices.
+
+## Specialized grain
+Pattern:
+- `^(applicants|appperseat|seats)([0-9]+)specialized$`
+
+This is its own indexed family.
+
+## Repeated school child grain
+Pattern:
+- `^academicopportunities([0-9]+)$`
+
+These are repeated school-level descriptors, not program descriptors.
+
+That means your parser should extract:
+
+- `grain`
+- `family`
+- `index_1`
+- `index_2`
+
+not just `family`.
+
+---
+
+# Subtle points / gotchas
+
+## 1. `seats101` to `seats1011`
+This family is easy to misread.
+
+These likely mean:
+- `seats10` for program 1
+- `seats10` for program 11
+
+not:
+- seat count 101, 102, etc.
+
+So this family should probably be parsed as:
+
+- family = `seats10`
+- program_index = `1` to `11`
+
+That means regex must prefer the known family prefix, not just “split trailing digits.”
+
+## 2. Missing maximum priority count
+Some programs have up to `priority3`, others only `priority2`.
+
+So `program_priorities` must allow varying row counts by program.
+
+## 3. Missing maximum requirement count
+Some programs have up to `requirement_4_1`, others only two.
+
+Same point: this is a child table, not a fixed-width attribute block.
+
+## 4. `academicopportunities1` to `6`
+These may be better collapsed into a single list/string for reporting, but for canonical cleaned data I’d normalize them.
+
+## 5. Specialized admissions may not map one-to-one to `program{n}`
+Do not assume alignment until inspected.
+
+That is one of the highest-risk mistakes in this kind of file.
+
+---
+
+# If I were reviewing this as a data engineering design
+
+I would endorse this sequence:
+
+## Phase 1: schema dictionary
+Build a dictionary with columns:
+
+- `col`
+- `grain`
+- `family`
+- `index_1`
+- `index_2`
+- `parse_status`
+
+Where examples would be:
+
+- `program10` -> `grain = "program"`, `family = "program"`, `index_1 = 10`
+- `priority2_prog4` -> `grain = "program_priority"`, `family = "priority"`, `index_1 = 4`, `index_2 = 2`
+- `requirement_3_1` -> `grain = "program_requirement"`, `family = "requirement"`, `index_1 = 1`, `index_2 = 3`
+- `academicopportunities5` -> `grain = "school_opportunity"`, `family = "academicopportunities"`, `index_1 = 5`
+
+## Phase 2: normalized tables
+Produce:
+
+- `schools`
+- `school_academic_opportunities`
+- `programs`
+- `program_priorities`
+- `program_requirements`
+- `specialized_programs`
+
+## Phase 3: validation
+Check:
+
+- `dbn` unique in `schools`
+- `dbn + program_index` unique in `programs`
+- all priority rows match an existing program
+- all requirement rows match an existing program
+- no orphan specialized rows if you later map them
+
+## Phase 4: analysis marts
+Only then create convenience tables like:
+
+- `programs_with_school_context`
+- `programs_with_priority_summary`
+- `programs_with_requirement_summary`
+
+These are denormalized products for analysis, not the canonical cleaned data.
+
+---
+
+# Incremental learning recommendation, now confirmed by the column list
+
+Given your preference for incremental learning, I would move in this order:
+
+## Step 1
+Write the parser and dictionary.
+
+This is the most important step.
+
+## Step 2
+Build only `programs`.
+
+Ignore priorities, requirements, specialized for one pass.
+
+## Step 3
+Build `program_priorities` and `program_requirements`.
+
+## Step 4
+Handle `academicopportunities`.
+
+## Step 5
+Inspect specialized fields separately and decide whether to integrate or keep separate.
+
+That preserves learning while still following the senior architecture.
+
+---
+
+# Bottom line
+
+After consuming the full column list, I would strengthen rather than weaken the earlier recommendation:
+
+- Do not use one canonical long table as your cleaned base.
+- Use a normalized multi-table design.
+- Use one parsed column dictionary to drive all reshaping.
+- Keep priorities, requirements, and specialized admissions as separate child tables.
+
+This is the seasoned data engineering answer, and in this case it is also the safer statistical answer because it preserves the observational units.
+
+If you want, next I can help you design the exact dictionary schema and parsing rules for this file, before any pivots.
