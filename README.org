@@ -6,11 +6,14 @@
 #+begin_src 
 ~/learn-sql/
 ├── .venv/                    # Python virtual environment
+___ renv/
 ├── sql/                      # Pure SQL files (syntax highlighted, lintable)
 │   ├── 01-select-basics.sql
 │   ├── 02-aggregations.sql
 │   └── ...
-├── notebooks/                # Jupyter, Quarto, Org-mode "notebooks"
+├── notebooks/                # Jupyter notebooks
+    ___ lesson-01.ipynb
+___ org/                      # Orgmode notebooks configured for export to quarto
 │   └── lesson-01.org
 ├── utils/
 │   └── query.py              # Helper to load & run SQL from files
@@ -104,7 +107,7 @@
 ((nil . ((pyvenv-activate . ".venv"))))
 #+end_src
 
-** Key Piece: SQL Loader Utility
+** SQL Loader Utility
 *=utils/query.py=*
 #+begin_src python :tangle utils/query.py
 from pathlib import Path
@@ -205,7 +208,6 @@ You get *Python highlighting* in the =#+begin_src python= blocks and *SQL highli
 ---
 
 ** Recommendations Beyond Immediate Scope
-
 *** 1. *Authentication*
 Set =GOOGLE_APPLICATION_CREDENTIALS= env var or use =gcloud auth application-default login=. Add to your Org file's setup block or =.envrc= (with =direnv=):
 #+begin_src elisp
