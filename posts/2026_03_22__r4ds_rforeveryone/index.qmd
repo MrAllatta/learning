@@ -6,9 +6,141 @@ date: "03/22/2026"
 
 Exercises and examples from [R 4 Data Science](https://r4ds.hadley.nz/) and [R for Everyone](https://www.jaredlander.com/r-for-everyone/), combined and grouped by topic and package.
 
+## setup
+
+```{r}
+library('here')
+```
+
+# data.table
+
+https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html
+Everyone says this is super fast package, but you need to understand some other style than tidy.
+Let's take a look.
+
 ```{r}
 library('data.table')
 ```
+
+```{r}
+download.file('https://raw.githubusercontent.com/Rdatatable/data.table/master/vignettes/flights14.csv',destfile=here('data/flights14.csv'))
+```
+
+```{r}
+input <- here('data/flights14.csv')
+flights <- fread(input)
+flights
+```
+
+fread is pretty cool. You can give it just about anything.
+
+```{r}
+?fread
+```
+
+## basics
+
+data.table is (provides) an enhanced data.frame.
+fread or call data.table() function
+
+```{r}
+DT = data.table(
+    ID = c('b', 'b', 'b', 'a', 'a', 'c'),
+    a = 1.6,
+    b = 7:12,
+    c = 13:18
+)
+DT
+```
+
+```{r}
+class(DT$ID)
+```
+
+See ?setDT and ?as.data.table for converting existing objects to data.table
+data.table doesn't set or use *row names* ever. Something about this is why it's so fast.
+[See](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-keys-fast-subset.html)
+
+### enhanced?
+a lot can happen inside DT[ ... ], this more like querying DT analog to SQL
+
+### general form
+DT[i, j, by]
+
+### subset rows
+Get all the flights with 'JFK' as the origin airport in the month of June.
+
+```{r}
+##   R:                i                 j        by
+## SQL: where | order by   select | update  group by
+
+```
+
+Take DT, subset/reorder rows using i, then calculate j, group by `by`.
+
+Refer to the columns as if they are variables!
+Check out `origin` and `month`
+
+```{r}
+ans <- flights[origin == 'JFK' & month == 6L]
+head(ans)
+```
+
+*get the first two rows from flights*
+
+```{r}
+ans <- flights[1:2]
+ans
+```
+
+*Sort `flights` by  column*
+Sounds like order is pretty cool, base::R switch to using its algorithm
+```{r}
+# sort by origin and reverse sort by dest
+ans <- flights[order(origin, -dest)]
+head(ans)
+```
+### select and comput columns
+
+```{r}
+# select arr_delay column, but return as a data.table instead
+ans <- flights[, list(arr_delay)] # wrapping in list ensure data.table is returned
+head(ans)
+```
+`.()` is an *alias* to `list()`
+data.table and data.frame are internally `list`. every element has to be the same lenght and the `list` has a `class` attribute
+
+```{r}
+# select both arr_delay and dep_delay columns
+ans <- flights[, .(arr_delay, dep_delay)]
+head(ans)
+```
+
+**select and rename**
+
+```{r}
+ans <- flights[, .(delay_arr = arr_delay, delay_dep = dep_delay)]
+head(ans)
+```
+
+### compute or do in j
+
+Sum the number of trips that have delays < 0. Functions expressed directly on columns as variables.
+
+```{r}
+ans <- flights[, sum( (arr_delay + dep_delay) < 0 )]
+ans
+```
+
+### subset in `i` *and* do in `j`
+
+```{r}
+ans <- flights[origin == 'JFK' & month == 6L,
+               .(m_arr = mean(arr_delay), m_dep = mean(dep_delay))]
+ans
+```
+
+### perform data aggregatios by group
 
 # Chapter 5 - Data tidying
 ```{r}
@@ -25,6 +157,7 @@ Billboard has 79 columns, mostly wk1, wk2. Needs to be flattened, i.e. pivot_lon
 Similar to program groups in hs_directory, but only one group: the week.
 
 In tidy data each column is a variable. Week is the variable, so one column per week is not a variable.
+
 ```{r}
 billboard %>%
     pivot_longer(
@@ -38,7 +171,6 @@ billboard %>%
         ) -> billboard_longer
 billboard_longer
 ```
-
 
 ```{r}
 billboard_longer %>%
