@@ -34,9 +34,7 @@ flights
 
 fread is pretty cool. You can give it just about anything.
 
-```{r}
-?fread
-```
+`?fread`
 
 ## basics
 
@@ -73,7 +71,6 @@ Get all the flights with 'JFK' as the origin airport in the month of June.
 ```{r}
 ##   R:                i                 j        by
 ## SQL: where | order by   select | update  group by
-
 ```
 
 Take DT, subset/reorder rows using i, then calculate j, group by `by`.
