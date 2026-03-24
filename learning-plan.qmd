@@ -31,6 +31,39 @@ simultaneously:
 -   Domain fluency: NYCPS-specific knowledge that makes your analysis
     credible and legible to education stakeholders
 
+## Current Evidence Snapshot --- 2026-03-23
+
+Evidence in this project now shows a real working R/Quarto analysis and
+publishing flow, plus hand-written exploratory code and explanations in
+project posts. That changes the immediate planning baseline.
+
+### Confirmed Strengths
+
+-   R + Quarto workflow is operational enough to support regular study
+    notes and rendered analysis posts
+-   The learner is producing hand-written code and explanatory writing,
+    not only assembling generated snippets
+-   Reproducible project conventions are present enough to support
+    continued portfolio-style work in-place
+-   The learner is sustaining momentum through real artifacts rather
+    than only drills
+
+### Still Unverified or Shaky
+
+-   Timed, no-AI completion of the full R audit under explicit audit
+    conditions
+-   Python and SQL speed under independent recall
+-   Statistical interpretation in writing, especially regression output
+    and core inferential concepts
+-   NYCPS domain knowledge recall from memory rather than recognition
+
+### Immediate Planning Consequence
+
+Do not stay in a vague "audit forever" mode. Treat the audit as nearly
+complete on workflow and basic R reporting, then use the next 2--3 weeks
+to produce explicit Strong / Shaky / Gap ratings and convert the gaps
+into a narrow Phase 1 curriculum.
+
 # Phase 0 --- Audit Weeks 1--3
 
 ## Before You Begin
@@ -94,6 +127,18 @@ each area. The gaps are your Phase 1 priorities. Be ruthless. Shaky
 means you needed to think too hard or hedged your answer. Gap means you
 couldn\'t do it.
 
+## Phase 0 Exit Criteria --- Updated
+
+You do not need perfect confidence in every area to leave pure audit
+mode. Phase 0 is complete when all of the following are true:
+
+-   You have written Strong / Shaky / Gap ratings for R, Python, SQL,
+    statistics, and domain knowledge
+-   You have at least one real artifact demonstrating your current R /
+    Quarto workflow
+-   You can name the next one or two weakest areas without hedging
+-   Your weekly plan stops trying to advance every area equally
+
 # Phase 1 --- Foundation Months 1--5
 
 ## Close the Gaps, Narrow the Stack
@@ -120,6 +165,22 @@ For Phase 1, your working stack is exactly this, nothing else:
   **Database**             PostgreSQL via psycopg2 or SQLAlchemy                 Can connect, query, load
   **Version control**      Git + GitHub (command line, not GUI)                  Can commit, branch, push, resolve conflict
   ------------------------ ----------------------------------------------------- --------------------------------------------
+
+## Phase 1 Immediate Priority Order --- Updated 2026-03-23
+
+For the next several weeks, prioritize in this order:
+
+1.  Convert current R/Quarto momentum into repeatable, no-AI statistical
+    workflow fluency
+2.  Tighten statistical writing and regression interpretation
+3.  Restore Python and SQL recall through short, timed, finishable
+    exercises
+4.  Build NYCPS domain fluency through written recall, not passive
+    reading
+
+This means the current R workflow is no longer the main uncertainty. The
+main uncertainty is independent recall across stats, SQL, Python, and
+domain knowledge.
 
 ## Phase 1 Technical Benchmarks
 
