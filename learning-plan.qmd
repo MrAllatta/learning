@@ -1,6 +1,6 @@
 ---
 title: learning-plan.org
-data: "03/12/2026"
+date: "03/12/2026"
 ---
 # Education Data Analyst --- Mid-Career Track
 
