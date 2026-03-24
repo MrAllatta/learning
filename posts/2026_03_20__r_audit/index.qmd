@@ -6,14 +6,131 @@ format:
     code-fold: true
 ---
 
-# Import School Data
+# The Audit
+Timed, two hours. Reference only. Honest self evaluation of skill using STRONG / SHAKY / GAP
+
+| Task                                                                                         | Rating |
+|:---------------------------------------------------------------------------------------------|:------:|
+| Load a CSV and inspect its structure using tidyverse                                         | Strong |
+| Write a dplyr pipeline: filter, select, mutate, group~by~, summarize                         | Shaky  |
+| Produce a ggplot2 bar chart with correct labels                                              | Shaky  |
+| Run a linear regression, call summary(), and explain each component of the output in writing |  Gap   |
+| Render a Quarto document with inline R output to HTML                                        | Strong |
+
+
+## Load a CSV and inspect its structure using tidyverse
+Start time: 14:00
 
 ```{r}
-#| label: include_code
-#| echo: true
-#| eval: false
-{{< include ../../r/dataloader.R >}}
+library('tidyverse')
+library('here')
+library('fs')
 ```
+
+```{r}
+data_dir <- here('data')
+data_files_names <- c('school_quality.csv', 'hs_directory.csv', 'school_demographics.csv')
+# construct a relative to the project root
+```
+
+```{r}
+# data_files <- paste(data_dir, data_files_names, sep = '/')
+# or
+data_files <- tibble(path=fs::path(data_dir, data_files_names),file=data_files_names)
+```
+
+```{r}
+school_quality_path <- data_files[1]
+```
+
+#### Stop trying to load three tables
+
+```{r}
+school_quality_tib <- read_csv(here('data/school_quality.csv'))
+# could specify column types but won't for the audit
+school_quality_tib
+```
+
+```{r}
+names(school_quality_tib)
+```
+There are `{r} length(names(school_quality_tib))` (should be 12) columns. 
+
+Report grain is a school quality metrics values per school per year. Table is already long with metric_variable column containing metric scoring categories. Further analysis requires choosing pertinent subgroups.
+
+## Write a dplyr pipeline: filter, select, mutate, group~by~, summarize 
+Start time: 14:30
+
+The following school quality metric variables are available:
+```{r}
+variables <- data.frame(unique(school_quality_tib$metric_variable_name))
+years <- data.frame(unique(school_quality_tib$report_year))
+```
+There are `{r} count( variables )[1,1]` (should be 212) variables. Let's focus on chronic absenteeism. Metrics are probably unique by year, so we'll also look at the most recent year.
+
+High school chronic absenteesim as a tbl_df.
+```{r}
+hs_chronic_absent_2021 <- school_quality_tib %>%
+  filter( school_quality_tib$metric_variable_name=='chronic_absent_hs_all') 
+    
+hs_chronic_absent_2021  %>%
+      select(metric_value)
+```
+
+Took a long sojourn into the school quality educator guide to find the key to the race coding, such as  chronic_absent_hs_allea
+40                          chronic_absent_hs_alleb
+41                          chronic_absent_hs_alleh
+42                          chronic_absent_hs_allei
+43                          chronic_absent_hs_allem
+
+Also I can't find the chronic absent metric for special education. Moving on.
+
+Let's try a regular expression on the chronic_absent_hs and drop the year filter. By the way there is no real data for report years 2020 and 2021. I think it is carry over data, but haven't investigated.
+
+We'll select rows matching a regular expression and group by year.
+
+```{r}
+hs_chronic_absent_grouped <- filter(school_quality_tib,
+  school_quality_tib$metric_variable_name=='chronic_absent_hs')
+```
+
+
+(`years` shows a year 2025, but for some reason filtering on 2025 returns an empty tibble.)
+
+```{r}
+school_quality_tib %>% filter(
+  str_detect(string = school_quality_tib$metric_variable_name, 
+            pattern = 'chronic_absent_hs_all[a-z]+'
+            ),
+  ) %>% 
+    select(c(report_year, metric_value, dbn)) %>%
+      group_by(report_year) %>%
+        summarize(avg = mean(metric_value))
+
+```
+
+## Produce a ggplot2 bar chart with correct labels 
+Start time: 15:45
+
+```{r}
+data <- school_quality_tib %>%
+          filter(metric_variable_name=='chronic_absent_hs_all') %>%
+            select(metric_value)
+
+data %>% ggplot(mapping = aes(x=metric_value)) +
+           geom_histogram()
+```
+
+## Create a linear regression, call summary(), and explain each component of the output in writing 
+Ran out of time for this. I could call lm() and summary()
+
+## Render a Quarto document with inline R output to HTML
+This document and the whole learning site build without errors.
+## Reflection
+The biggest take away after completing the audit is that I can figure out a lot, but have to make many decisions and then relarn as I working. There isn't one this is how I do this that I'm comfortable with. Even within one library. 
+# Experiments
+
+## Import School Data
 
 ```{r}
 #| label: source_code
@@ -23,13 +140,14 @@ library(here)
 source(here('r/dataloader.R'))
 ```
 
-# HS Directory
-## Program parsing
+## HS Directory
+### Program parsing
 Each row of the hs_directory dataset is a school. Schools house one or more programs, which independently enroll students. Programs offer a number of seats available to general education and special education students and may also audition students. Programs can screen for grades and have priorities for enrolling from geographic areas and underrepresented minorities.
 
 We want both one row per school and one row per program data. To get one row per program we 
 
 ```{r}
+#| eval: false
 column_schema_helper <- function() {
   cols <- names(hs_directory)
   cols_len <- cols %>%
@@ -43,12 +161,13 @@ column_schema_helper <- function() {
 ```
 
 ```{r}
+#| eval: false
 column_schema <- column_schema_helper()
 print(column_schema)
 ```
 
 ```{r}
- 
+#| eval: false
 list_matches <- function(regx) {
   regx_list <- list(
     '^grade9swdapplicatsperseat\\d+$',
@@ -60,7 +179,6 @@ list_matches <- function(regx) {
 }
 ```
 
-
 ```{r}
 #| eval: false
 local({
@@ -71,8 +189,8 @@ local({
 })
 ```
 
-
 ```{r}
+#| eval: false
 classify_families <- function() {
   cols_tbl = tibble(col = names(hs_directory)) %>%
     mutate(

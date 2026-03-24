@@ -87,12 +87,26 @@ that\'s your Phase 1 curriculum.
 
 ### R Audit (2 hours, no AI)
 
--   Load a CSV and inspect its structure using tidyverse
--   Write a dplyr pipeline: filter, select, mutate, group~by~, summarize
--   Produce a ggplot2 bar chart with correct labels
--   Run a linear regression, call summary(), and explain each component
-    of the output in writing
--   Render a Quarto document with inline R output to HTML
+- Load a CSV and inspect its structure using tidyverse
+- Write a dplyr pipeline: filter, select, mutate, group~by~, summarize
+- Produce a ggplot2 bar chart with correct labels
+- Run a linear regression, call summary(), and explain each component of the output in writing
+- Render a Quarto document with inline R output to HTML
+
+#### Begin R Audit --- 2026-03-24 11:00-13:00
+
+First ensure you have eaten. Then paste the audit into a the r_audit quarto post and begin as a table where you will record STRONG / SHAKY / GAP. You can use documentation through > ?thing, but no internet and no llm.
+
+#### Results
+Actual task time 14:00-16:00. Difficult to start but fun once I got going. Still debate over which approach to take and over complicate for the required outcome.
+
+| Task                                                                                         | Rating |
+|:---------------------------------------------------------------------------------------------|:------:|
+| Load a CSV and inspect its structure using tidyverse                                         | Strong |
+| Write a dplyr pipeline: filter, select, mutate, group~by~, summarize                         | Shaky  |
+| Produce a ggplot2 bar chart with correct labels                                              | Shaky  |
+| Run a linear regression, call summary(), and explain each component of the output in writing | Shaky  |
+| Render a Quarto document with inline R output to HTML                                        | Strong |
 
 ### SQL Audit (1 hour, no AI)
 
