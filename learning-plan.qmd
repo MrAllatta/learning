@@ -31,38 +31,109 @@ simultaneously:
 -   Domain fluency: NYCPS-specific knowledge that makes your analysis
     credible and legible to education stakeholders
 
-## Current Evidence Snapshot --- 2026-03-23
+## Revenue Constraint --- Governing Priority as of 2026-03-27
 
-Evidence in this project now shows a real working R/Quarto analysis and
-publishing flow, plus hand-written exploratory code and explanations in
-project posts. That changes the immediate planning baseline.
+Revenue is the inescapable constraint facilitating everything else. This
+must be named explicitly in the plan and applied as a filter on every
+planning decision.
 
-### Confirmed Strengths
+**What this means in practice:**
 
--   R + Quarto workflow is operational enough to support regular study
-    notes and rendered analysis posts
--   The learner is producing hand-written code and explanatory writing,
-    not only assembling generated snippets
--   Reproducible project conventions are present enough to support
-    continued portfolio-style work in-place
--   The learner is sustaining momentum through real artifacts rather
-    than only drills
+-   Every week must have at least one task with a plausible revenue
+    path: a client deliverable, a portfolio artifact that supports a job
+    application, a skill that directly increases earning capacity, or a
+    prototype that could become a product or service
+-   Exploratory work (including prototypes like classroom-manager) is
+    not banned, but it must be budgeted explicitly and must not displace
+    revenue-oriented work by default
+-   The learning plan's 24-month arc is correct, but it will not produce
+    income for 12--18 months without deliberate acceleration or parallel
+    income sources
 
-### Still Unverified or Shaky
+**Revenue paths in order of proximity:**
 
--   Timed, no-AI completion of the full R audit under explicit audit
-    conditions
--   Python and SQL speed under independent recall
--   Statistical interpretation in writing, especially regression output
-    and core inferential concepts
--   NYCPS domain knowledge recall from memory rather than recognition
+1.  Freelance data analysis or consulting work using current skills
+    (R/Quarto, NYCPS domain fluency, school data) — actionable now
+2.  Portfolio-driven job applications — actionable in 3--6 months with
+    the CCR project as the anchor
+3.  classroom-manager as a product — uncertain timeline; requires
+    technical validation, a customer, and a pricing model before it
+    deserves significant time
 
-### Immediate Planning Consequence
+**Discipline rule:** If a deep-work session is being pulled toward
+something with no near-term revenue path, name it, budget it (maximum 2
+hours/week), and return to plan.
 
-Do not stay in a vague "audit forever" mode. Treat the audit as nearly
-complete on workflow and basic R reporting, then use the next 2--3 weeks
-to produce explicit Strong / Shaky / Gap ratings and convert the gaps
-into a narrow Phase 1 curriculum.
+## Self-Knowledge Evidence --- Updated 2026-03-27
+
+-   Structured tasks with explicit deadlines work. The R audit was
+    difficult to start but effective once begun. This is the model for
+    all future gate tasks.
+-   Interesting ideas can override the plan entirely. classroom-manager
+    consumed most of one week's deep-work time. This is a real
+    execution risk.
+-   Working with a tutor provides the structure that converts ideas into
+    starts. Without it, starting is the failure mode.
+-   Deep work is available and real. The quality of focus once engaged
+    is high. The problem is direction, not capacity.
+
+## Current Evidence Snapshot --- Updated 2026-03-27
+
+### Completed This Week
+
+-   R audit completed under timed, no-AI conditions (2 hours, with
+    reference documentation only). Results recorded and published at
+    posts/2026_03_20__r_audit/index.qmd.
+-   classroom-manager multi-agent prototype initiated: a role-based
+    agent system treating teaching as team-shaped work, testing whether
+    agent handoffs can reduce teacher glue work across planning,
+    curriculum, assessment, and communication. Unpublished and
+    exploratory. Revenue path not yet established.
+
+### Confirmed Strengths --- As of 2026-03-27
+
+-   R + Quarto workflow: operational, reproducible, supports rendered
+    analysis posts
+-   CSV loading and tidyverse inspection: Strong (confirmed under audit)
+-   Quarto render to HTML with inline R: Strong (confirmed under audit)
+-   Starting and sustaining structured tasks once begun: strong, given a
+    deadline
+-   NYCPS domain knowledge: sufficient for analysis work; needs written
+    recall practice for interview readiness
+
+### Confirmed Gaps --- As of 2026-03-27
+
+-   dplyr pipeline fluency: Shaky — takes too long, too many
+    micro-decisions, inconsistent syntax recall
+-   ggplot2: Shaky — can produce basic output; labels, scales, facets
+    require reference
+-   Linear regression in R: Gap — lm() not reached in audit; written
+    interpretation of summary() output not practiced
+-   Statistics writing from memory: Gap — p-value, confidence interval,
+    effect size, regression coefficient interpretation not tested
+-   SQL under independent recall: not yet audited
+-   Python under independent recall: not yet audited
+-   NYCPS domain knowledge from memory (not recognition): not yet tested
+
+### Remaining Phase 0 Tasks
+
+-   [ ] SQL audit (1 hour, no AI)
+-   [ ] Statistics audit (written, 45 minutes, no AI)
+-   [ ] Domain audit (written, 30 minutes, no AI)
+-   [ ] Linear regression in R: complete lm() task and write
+    interpretation of summary() output (can be appended to existing
+    audit post)
+
+### Immediate Planning Consequence --- Updated
+
+Phase 0 is nearly complete for R and Quarto. The remaining gap is linear
+regression. SQL, statistics, and domain audits are the next three
+concrete tasks. Each is short. Phase 0 can close within 1--2 weeks if
+revenue-oriented work runs in parallel rather than these audits being
+treated as prerequisites for everything else.
+
+Do not let Phase 0 become a holding pattern. The CCR project and
+portfolio work can begin in parallel with audit completion.
 
 # Phase 0 --- Audit Weeks 1--3
 
@@ -93,20 +164,19 @@ that\'s your Phase 1 curriculum.
 - Run a linear regression, call summary(), and explain each component of the output in writing
 - Render a Quarto document with inline R output to HTML
 
-#### Begin R Audit --- 2026-03-24 11:00-13:00
+#### Results --- Completed 2026-03-24 14:00-16:00
 
-First ensure you have eaten. Then paste the audit into a the r_audit quarto post and begin as a table where you will record STRONG / SHAKY / GAP. You can use documentation through > ?thing, but no internet and no llm.
-
-#### Results
-Actual task time 14:00-16:00. Difficult to start but fun once I got going. Still debate over which approach to take and over complicate for the required outcome.
+Difficult to start but productive once begun. Debate over approach added time and complexity beyond what the task required.
 
 | Task                                                                                         | Rating |
 |:---------------------------------------------------------------------------------------------|:------:|
 | Load a CSV and inspect its structure using tidyverse                                         | Strong |
 | Write a dplyr pipeline: filter, select, mutate, group~by~, summarize                         | Shaky  |
 | Produce a ggplot2 bar chart with correct labels                                              | Shaky  |
-| Run a linear regression, call summary(), and explain each component of the output in writing | Shaky  |
+| Run a linear regression, call summary(), and explain each component of the output in writing | Gap (not reached) |
 | Render a Quarto document with inline R output to HTML                                        | Strong |
+
+**Remaining:** Linear regression task must be completed and appended to the audit post before Phase 0 is closed.
 
 ### SQL Audit (1 hour, no AI)
 
@@ -141,17 +211,18 @@ each area. The gaps are your Phase 1 priorities. Be ruthless. Shaky
 means you needed to think too hard or hedged your answer. Gap means you
 couldn\'t do it.
 
-## Phase 0 Exit Criteria --- Updated
+## Phase 0 Exit Criteria --- Updated 2026-03-27
 
-You do not need perfect confidence in every area to leave pure audit
-mode. Phase 0 is complete when all of the following are true:
+Phase 0 is complete when all of the following are true:
 
 -   You have written Strong / Shaky / Gap ratings for R, Python, SQL,
     statistics, and domain knowledge
 -   You have at least one real artifact demonstrating your current R /
-    Quarto workflow
--   You can name the next one or two weakest areas without hedging
+    Quarto workflow ✓ (r_audit post)
+-   You can name the next one or two weakest areas without hedging ✓
+    (linear regression, statistics writing)
 -   Your weekly plan stops trying to advance every area equally
+-   The linear regression R task is completed and written up
 
 # Phase 1 --- Foundation Months 1--5
 
@@ -167,6 +238,11 @@ new Kaggle competitions, gh-pages customization. These are real, useful
 things. They are Phase 2 and 3. Every hour spent on them in Phase 1 is a
 debt against your foundation.
 
+**Also explicitly deferred:** classroom-manager prototype development beyond
+a bounded 2-hour/week exploration budget. It is a real idea. It is not a
+revenue source yet. It does not belong in the primary work track until
+it has a customer, a pricing model, or a direct path to income.
+
 ### Stack Decision: What You Are Committing To
 
 For Phase 1, your working stack is exactly this, nothing else:
@@ -180,21 +256,21 @@ For Phase 1, your working stack is exactly this, nothing else:
   **Version control**      Git + GitHub (command line, not GUI)                  Can commit, branch, push, resolve conflict
   ------------------------ ----------------------------------------------------- --------------------------------------------
 
-## Phase 1 Immediate Priority Order --- Updated 2026-03-23
+## Phase 1 Immediate Priority Order --- Updated 2026-03-27
 
 For the next several weeks, prioritize in this order:
 
-1.  Convert current R/Quarto momentum into repeatable, no-AI statistical
-    workflow fluency
-2.  Tighten statistical writing and regression interpretation
-3.  Restore Python and SQL recall through short, timed, finishable
-    exercises
-4.  Build NYCPS domain fluency through written recall, not passive
-    reading
-
-This means the current R workflow is no longer the main uncertainty. The
-main uncertainty is independent recall across stats, SQL, Python, and
-domain knowledge.
+1.  Complete Phase 0 remaining audits: linear regression in R, SQL,
+    statistics, domain — each is short; all should be done within
+    one week
+2.  Begin CCR project in parallel — do not wait for perfect audit
+    completion; the CCR project is the primary portfolio and revenue-path
+    artifact
+3.  Convert current R/Quarto momentum into repeatable, no-AI statistical
+    workflow fluency — practice dplyr and ggplot2 through the CCR
+    analysis work itself, not through drills
+4.  Restore Python and SQL recall through the CCR pipeline — build the
+    Python CCR data pipeline as the Python fluency exercise
 
 ## Phase 1 Technical Benchmarks
 
