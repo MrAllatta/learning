@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-03-21">
 
-<title>faq – Data Analysis Learning Portfolio</title>
+<title>NYC High School Directory – Data Analysis Learning Portfolio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +21,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-960fc19d9da332a83abe416fce972e1d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-960fc19d9da332a83abe416fce972e1d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -70,7 +106,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-sidebar floating quarto-light">
@@ -99,7 +135,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Data Analysis Learning Portfolio</a> 
+      <a href="../../">Data Analysis Learning Portfolio</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -111,19 +147,19 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./about.html" class="sidebar-item-text sidebar-link">
+  <a href="../../about.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">About</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./learning-plan.html" class="sidebar-item-text sidebar-link">
+  <a href="../../learning-plan.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Learning Plan</span></a>
   </div>
 </li>
@@ -137,220 +173,65 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#groupby" id="toc-groupby" class="nav-link active" data-scroll-target="#groupby">Groupby</a>
-  <ul class="collapse">
-  <li><a href="#drop-all-boy-school-schools" id="toc-drop-all-boy-school-schools" class="nav-link" data-scroll-target="#drop-all-boy-school-schools">drop all boy school schools</a></li>
-  <li><a href="#loc" id="toc-loc" class="nav-link" data-scroll-target="#loc">.loc[]</a></li>
-  </ul></li>
+  <li><a href="#hs_directory" id="toc-hs_directory" class="nav-link active" data-scroll-target="#hs_directory">hs_directory</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">NYC High School Directory</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="groupby" class="level1">
-<h1>Groupby</h1>
-<p>Group by creates an object. When I apply an aggregator like median I get a data frame where the index labels are the unique values from the groupby column. Check and fill out my understanding.</p>
-<p>Nice. Here’s a concise check and some fill-ins for GroupBy in pandas.</p>
-<p>Core ideas - GroupBy creates a lazy GroupBy object. It doesn’t compute anything until you apply an aggregation or similar operation. - When you apply an aggregator (e.g., median, mean, sum) across numeric columns, you get a result whose rows correspond to the groups (the unique values of the groupby keys). - The index of the result is the grouping key(s). If you group by a single column, the index is that column’s unique values. If you group by multiple columns, you get a MultiIndex.</p>
-<p>What you probably want to know about the “index labels” - For a single group key: - df.groupby(‘group’).median() yields a DataFrame whose index is the unique values of df[‘group’] (e.g., A, B, C). - The columns are the numeric columns you aggregated (e.g., ‘x’, ‘y’). - If you want the grouping key to be a regular column in the result: - Use as_index=False: df.groupby(‘group’, as_index=False).median() - Or call .reset_index() on the result: df.groupby(‘group’).median().reset_index()</p>
-<p>Multiple grouping keys - df.groupby([‘dept’, ‘year’]).median() will produce a DataFrame indexed by a MultiIndex with two levels (dept, year). - To bring the keys back as columns: df.groupby([‘dept’, ‘year’], as_index=False).median() or .reset_index() after the result.</p>
-<p>Examples - Basic single-group example: - df = DataFrame({‘team’: [‘A’,‘A’,‘B’,‘B’,‘C’], ‘score’: [10,20,30,40,50], ‘hours’: [1,2,3,4,5]}) - df.groupby(‘team’).median() - Result: index A, B, C; columns ‘score’ and ‘hours’ with medians per team.</p>
-<ul>
-<li>Keep the group key as a column:
-<ul>
-<li>df.groupby(‘team’, as_index=False).median()</li>
-<li>Result: a DataFrame with columns [‘team’, ‘score’, ‘hours’] and one row per team.</li>
-</ul></li>
-</ul>
-<p>Common variations - To apply different functions to different columns: - df.groupby(‘group’).agg({‘score’: ‘median’, ‘hours’: ‘mean’}) - To get a single summary for one column: - df.groupby(‘group’)[‘score’].median() # returns a Series with group keys as the index</p>
-<p>Common gotchas - Only numeric columns participate in median. Non-numeric columns are ignored in the aggregation (unless you specify otherwise). - Missing values are skipped by default (median ignores NaN). You can control this with skipna (if you need to).</p>
-<p>Quick exercise for you - Given a DataFrame with columns [‘region’, ‘quarter’, ‘sales’, ‘cost’]: - How would you compute the median of ‘sales’ per ‘region’ and return the region as a column in the result? - How would you compute the same medians but preserve a MultiIndex if you grouped by both ‘region’ and ‘quarter’?</p>
-<p>If you want, paste a small sample of your data and I’ll walk through the exact code for your case. Groupby is said to contain the split, transform, apply pattern. Elaborate on this pattern with the examples given above.</p>
-<p>Great question. The groupby workflow is often described as the split-apply-combine (SAC) pattern. A related, handy specialization is split-apply-transform. Here’s how it maps to what you’ve been looking at and to the examples we covered.</p>
-<p>What the SAC pattern means - Split: You partition the data into groups based on one or more keys. For example, df.groupby(‘group’) splits rows by the values in the group column. - Apply: You run a function on each group. This function is typically an aggregation (mean, median, sum) or a more general operation. - Combine: You stitch the per-group results back into a single object (a DataFrame or Series). The group labels usually become the index of the result (or they can be turned into columns).</p>
-<p>How this shows up in your examples - Single grouping key with median - Split: data are split by the unique values in the group column. - Apply: the median is computed for each numeric column within each group. - Combine: a new DataFrame is produced whose rows correspond to the groups (A, B, C) and whose columns are the numeric aggregations (e.g., score, hours). The result’s index is the group values. - Code: df.groupby(‘group’).median() - Key note: the index labels are the unique values of the grouping key. To make the group keys appear as regular columns, use as_index=False or .reset_index().</p>
-<ul>
-<li>Multi-key grouping
-<ul>
-<li>Split: data are split by each combination of the keys (e.g., (dept, year)).</li>
-<li>Apply: median is computed per numeric column for each (dept, year) group.</li>
-<li>Combine: a DataFrame with a MultiIndex (dept, year) is produced.</li>
-<li>Code: df.groupby([‘dept’, ‘year’]).median()</li>
-<li>Key note: MultiIndex reflects the tuple of grouping keys.</li>
-</ul></li>
-<li>Keeping group keys as columns
-<ul>
-<li>Split/Apply/Combine but want keys in columns:</li>
-<li>Code: df.groupby(‘group’, as_index=False).median()</li>
-<li>Result: columns include ‘group’, along with the medians of numeric columns.</li>
-</ul></li>
-<li>Using different functions for different columns
-<ul>
-<li>Split: same as above.</li>
-<li>Apply: you apply different aggregations to different columns.</li>
-<li>Combine: you get a DataFrame with one row per group and the requested aggregations per column.</li>
-<li>Code: df.groupby(‘group’).agg({‘score’: ‘median’, ‘hours’: ‘mean’})</li>
-</ul></li>
-<li>The transform specialization (a SAC variant)
-<ul>
-<li>Transform is a special kind of apply that returns data with the same shape as the original (i.e., aligned with the original index). It’s useful when you want to broadcast a per-group statistic back to each row.</li>
-<li>Example use cases:
-<ul>
-<li>Centering within groups: add a per-row value that is the group’s median subtracted from that row’s score.
-<ul>
-<li>Code: df[‘score_centered’] = df[‘score’] - df.groupby(‘team’)[‘score’].transform(‘median’)</li>
-</ul></li>
-<li>Normalizing within groups: (value - group_mean) / group_std
-<ul>
-<li>Code: df[‘score_norm’] = (df[‘score’] - df.groupby(‘team’)[‘score’].transform(‘mean’)) / df.groupby(‘team’)[‘score’].transform(‘std’)</li>
-</ul></li>
-</ul></li>
-<li>Difference from SAC: transform returns values that align with the original rows, not a reduced, group-by result. It’s still split-apply in spirit, but the “combine” step is essentially a broadcast back to the original shape.</li>
-</ul></li>
-</ul>
-<p>Putting it together with your data - Example 1 (single key, median) - Split: by group value - Apply: median on numeric columns - Combine: one row per group, index is the group value - Code: df.groupby(‘group’).median()</p>
-<ul>
-<li>Example 2 (two keys, median)
-<ul>
-<li>Split: by (dept, year)</li>
-<li>Apply: median on numeric columns</li>
-<li>Combine: a DataFrame with a MultiIndex (dept, year)</li>
-<li>Code: df.groupby([‘dept’, ‘year’]).median()</li>
-</ul></li>
-<li>Example 3 (bring keys back as columns)
-<ul>
-<li>Code: df.groupby([‘dept’, ‘year’], as_index=False).median()</li>
-</ul></li>
-<li>Example 4 (transform example)
-<ul>
-<li>Center scores within team:</li>
-<li>Code: df[‘score_centered’] = df[‘score’] - df.groupby(‘team’)[‘score’].transform(‘median’)</li>
-<li>Result: a new column aligned with the original rows, per-group median values broadcast to each row in that group.</li>
-</ul></li>
-</ul>
-<p>Quick recap - SAC: Split data -&gt; Apply a function to each group -&gt; Combine results into a new object (index by group keys). - Transform is a special apply that returns the same shape as the input, useful for per-group normalization or broadcasting. - Your examples fit neatly into SAC: single-key median and multi-key median are splits with median as the apply, then a combined result. If you want the group keys as columns, use as_index=False or reset_index. If you want per-row, per-group values, use transform.</p>
-<p>If you want, share a small sample of your data and I’ll walk through exact code for both the SAC and transform patterns on your case. # Selecting and filtering How can I select rows and columns in a single expression without defining an intermediary identifier?</p>
-<section id="drop-all-boy-school-schools" class="level2">
-<h2 class="anchored" data-anchor-id="drop-all-boy-school-schools">drop all boy school schools</h2>
-<p>mask = combined_df[[ “female_pct”]] &gt; 0 combined_df[mask][“ay”, “school_name”, “female_pct”]</p>
-<p>You can filter rows and select columns in one expression using either .loc or .query. The issue in your code is that you built a mask from a DataFrame slice; you want a boolean Series.</p>
-<ul>
-<li><p>Using .loc (recommended): combined_df.loc[combined_df[‘female_pct’] &gt; 0, [‘ay’, ‘school_name’, ‘female_pct’]]</p>
-<p>This keeps rows where female_pct &gt; 0 and returns only the three columns.</p></li>
-<li><p>Using .query: combined_df.query(‘female_pct &gt; 0’)[[‘ay’, ‘school_name’, ‘female_pct’]]</p></li>
-</ul>
-<p>Notes: - If you only want to drop rows where female_pct is NaN or not positive, the &gt; 0 condition already excludes NaNs. - If you intended to drop rows for male-dominated schools, you’d adjust the threshold to something like female_pct &gt;= 0.5 or another domain-appropriate rule.</p>
-</section>
-<section id="loc" class="level2">
-<h2 class="anchored" data-anchor-id="loc">.loc[]</h2>
-<p>Explain .loc[] is primarily label based. Explain index and label and related pandas concepts.</p>
-<p>Here’s a concise guide to .loc and the concepts of index and labels in pandas, with a focus on how they’re used for label-based selection.</p>
-<ul>
-<li>What .loc is
-<ul>
-<li>.loc is a label-based selector for a DataFrame.</li>
-<li>It takes two parts: rows selector and columns selector: df.loc[ rows_selector, columns_selector ].</li>
-<li>Both selectors are based on the actual labels (not positions).</li>
-</ul></li>
-<li>Core concepts you’ll use
-<ul>
-<li>Index (row labels)
-<ul>
-<li>The left axis labels of the DataFrame. Accessible as df.index.</li>
-<li>Examples of index types: RangeIndex (0,1,2,…), Int64Index, or a DatetimeIndex, or MultiIndex for hierarchical indexing.</li>
-<li>The index is used to align and select rows by their labels.</li>
-</ul></li>
-<li>Columns (column labels)
-<ul>
-<li>The right axis labels. Accessible as df.columns.</li>
-<li>Columns are identified by their names (strings in most dataframes).</li>
-</ul></li>
-<li>Labels vs.&nbsp;positions
-<ul>
-<li>Labels are the actual identifier values (e.g., the year, a DBN string, column name).</li>
-<li>Positions are the 0-based integer positions (first row is position 0, first column is position 0).</li>
-<li>.loc uses labels; .iloc uses integer positions.</li>
-</ul></li>
-<li>Slices with .loc
-<ul>
-<li>When you slice with labels, the end label is inclusive (different from Python’s standard end-exclusive slicing).</li>
-<li>Example: df.loc[‘2019’:‘2021’, [‘ay’,‘female_pct’]] selects rows with index labels from 2019 through 2021 (inclusive) and the two specified columns.</li>
-</ul></li>
-<li>Boolean masks with .loc
-<ul>
-<li>You can pass a boolean Series or array as the row selector: df.loc[mask, cols].</li>
-<li>The mask must align with the index length.</li>
-</ul></li>
-<li>Multiple labels
-<ul>
-<li>You can pass a list of labels for rows or columns: df.loc[[lbl1, lbl2], [col1, col2]].</li>
-</ul></li>
-<li>Callable with .loc
-<ul>
-<li>You can pass a function: df.loc[lambda d: d[‘female_pct’] &gt; 0.2, [‘ay’,‘school_name’,‘female_pct’]].</li>
-<li>The function receives the DataFrame and should return a boolean Series or a tuple of (rows, cols) selectors.</li>
-</ul></li>
-<li>MultiIndex
-<ul>
-<li>If you have a hierarchical index (MultiIndex), you can index with tuples: df.loc[(‘A’,‘x’), (‘col1’,‘col2’)].</li>
-</ul></li>
-<li>Edge cases
-<ul>
-<li>If the index has duplicates, df.loc[label] returns all matching rows (a DataFrame subset).</li>
-<li>If a label doesn’t exist, you’ll get a KeyError (unless you use .get with a default, or use .reindex).</li>
-</ul></li>
-</ul></li>
-<li>Quick practical patterns
-<ul>
-<li>Select specific rows by label and specific columns: df.loc[ [‘2019’,‘2020’], [‘ay’,‘female_pct’] ]</li>
-<li>Filter rows by a condition and keep certain columns: df.loc[df[‘female_pct’] &gt; 0.2, [‘ay’,‘school_name’,‘female_pct’]]</li>
-<li>Range by label (inclusive end) when index is meaningful (e.g., years): df.loc[‘2017’:‘2020’, [‘ay’,‘female_pct’]]</li>
-<li>If you know you have a MultiIndex: df.loc[(‘2019’,‘East’), (‘ay’,‘female_pct’)]</li>
-</ul></li>
-<li>Common pitfall to avoid
-<ul>
-<li>Do not pass a boolean mask generated from a column to the row selector in .loc unless that mask has the same length as the index. For example, this is correct: df.loc[df[‘female_pct’] &gt; 0.2, [‘ay’,‘school_name’,‘female_pct’]]</li>
-<li>But building a mask from a DataFrame slice and using it as the row selector (df.loc[mask, …] where mask is a DataFrame) will raise errors. Use a boolean Series, not a DataFrame, for the row mask.</li>
-</ul></li>
-<li>How this relates to your data in brief
-<ul>
-<li>If your index is year-like (e.g., 2017, 2018, …), you can do: df.loc[‘2017’:‘2020’, [‘ay’,‘school_name’,‘female_pct’]]</li>
-<li>If you want to select by a row condition (e.g., female_pct &gt; 0.3) and only certain columns: df.loc[df[‘female_pct’] &gt; 0.3, [‘ay’,‘school_name’,‘female_pct’]]</li>
-</ul></li>
-</ul>
-<p>Question to guide the next step - Given a DataFrame where the row index is the year and the columns include ay, school_name, and female_pct, how would you select all rows from 2018 to 2020 and only the three columns listed? Would you prefer a label-based slice or a boolean mask approach, and why?</p>
-<p>Why is the nomenclature ‘label’? I think you are saying that .loc[] selects by data value rather than index? What is the significance of the term ‘label’?</p>
-<p>Short answer - If your row index is the year and you want 2018–2020 with the three columns, use a label-based slice: - df.loc[‘2018’:‘2020’, [‘ay’, ‘school_name’, ‘female_pct’]] - If your index is numeric, df.loc[2018:2020, [‘ay’, ‘school_name’, ‘female_pct’]] also works (and is inclusive on the end).</p>
-<ul>
-<li>If you want to filter by a condition (e.g., female_pct &gt; 0) and keep those columns:
-<ul>
-<li>df.loc[df[‘female_pct’] &gt; 0, [‘ay’, ‘school_name’, ‘female_pct’]]</li>
-</ul></li>
-</ul>
-<p>Notes on your mask - Build the mask as a boolean Series, not a DataFrame: - mask = df[‘female_pct’] &gt; 0 - df.loc[mask, [‘ay’,‘school_name’,‘female_pct’]]</p>
-<p>What “.loc[]” means and what “label” means - What .loc[] is: - .loc is a label-based selector. It selects by the actual labels on the index (rows) and the column names (columns). - It takes two parts: rows_selector and columns_selector: df.loc[rows_selector, columns_selector]. - Both selectors are based on labels, not on integer positions.</p>
-<ul>
-<li>What “label” refers to:
-<ul>
-<li>A label is the identifier used on an axis to refer to a row or a column. For rows, these are the index values (e.g., 2018, 2019, ‘East High School’). For columns, these are the column names (e.g., ‘ay’, ‘school_name’, ‘female_pct’).</li>
-<li>Labels are how you reference data in .loc. They are not the actual data values inside cells.</li>
-</ul></li>
-<li>Why this distinction matters:
-<ul>
-<li>.loc uses the actual index/column labels to pick data, which makes it readable and aligned with your data’s identifiers.</li>
-<li>.iloc would use integer positions (0-based), which is different from the label values.</li>
-<li>Using a boolean mask with .loc requires the mask to align with the index (a Series of True/False with the same length as the index). A mask created from a DataFrame slice (which is itself a DataFrame) won’t work.</li>
-</ul></li>
-</ul>
-<p>Quick recap patterns - Label-based row range + selected columns: - df.loc[‘2018’:‘2020’, [‘ay’, ‘school_name’, ‘female_pct’]] - Boolean-filtered rows + selected columns: - df.loc[df[‘female_pct’] &gt; 0, [‘ay’,‘school_name’,‘female_pct’]]</p>
-<p>Question to guide the next step - If your index is year-like, which approach do you prefer for this specific task: a label-based slice or a boolean mask? And could you share a small sample of your DataFrame’s index and column names so I can tailor the exact syntax?</p>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 21, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
 
 
-</section>
+</header>
+
+
+<section id="hs_directory" class="level1">
+<h1>hs_directory</h1>
+<p>Most current NYCDOE data is found on infohub.nyced.org https://infohub.nyced.org/reports/admissions-and-enrollment/directory-data</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at /home/teacher/projects/edu-analytics/learning</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">'r/dataloader.R'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.2.0     ✔ readr     2.2.0
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.2     ✔ tibble    3.3.1
+✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+✔ purrr     1.2.1     </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ purrr::%||%()   masks base::%||%()
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->

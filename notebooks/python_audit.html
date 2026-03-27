@@ -122,7 +122,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notebooks/python_audit.html">Python Audit</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      Data Analysis Learning Portfolio
+      </li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -163,18 +165,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../learning-plan.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Learning Plan</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../r/r_audit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R Audit</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../notebooks/python_audit.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Python Audit</span></a>
   </div>
 </li>
     </ul>
@@ -221,32 +211,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>NYCPS created the College and Career Readiness metric to replace the Career Readiness Index. The effort tracks the NYSED CCCR College, Career, and (?Community) Readiness value, which will be used for grauation certification. Students are awarded points out of 100 for milestones that align with college and career readiness, such as AP exam scores and apprenticeships.</p>
 <p>Load and inspect the school quality dataset. Dataset is not available through the nycschools package, and is large for the SODA Api. Exported manually from https://data.cityofnewyork.us/Education/School-Quality-Reports-Data/dnpx-dfnc/</p>
-<div id="df077954" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nycschools <span class="im">import</span> schools</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="03ae71cb" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>school_demographics_df <span class="op">=</span> schools.load_school_demographics()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>school_demographics_df.columns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="701426e9" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>load_dotenv(Path.cwd() <span class="op">/</span> <span class="st">"../.env"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
-<pre><code>Index(['dbn', 'beds', 'district', 'geo_district', 'boro', 'school_name',
-       'short_name', 'ay', 'year', 'school_type', 'school_level',
-       'total_enrollment', 'grade_3k', 'grade_pk', 'grade_k', 'grade_1',
-       'grade_2', 'grade_3', 'grade_4', 'grade_5', 'grade_6', 'grade_7',
-       'grade_8', 'grade_9', 'grade_10', 'grade_11', 'grade_12',
-       'non_binary_n', 'non_binary_pct', 'female_n', 'female_pct', 'male_n',
-       'male_pct', 'asian_n', 'asian_pct', 'black_n', 'black_pct',
-       'hispanic_n', 'hispanic_pct', 'multi_racial_n', 'multi_racial_pct',
-       'native_american_n', 'native_american_pct', 'white_n', 'white_pct',
-       'missing_race_ethnicity_data_n', 'missing_race_ethnicity_data_pct',
-       'swd_n', 'swd_pct', 'ell_n', 'ell_pct', 'poverty_n', 'poverty_pct',
-       'eni', 'clean_name', 'zip'],
-      dtype='str')</code></pre>
+<pre><code>True</code></pre>
 </div>
 </div>
-<div id="b7aee820" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>school_quality_df <span class="op">=</span> pandas.read_csv(<span class="st">"../data/school_quality.csv"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>school_quality_df.columns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="df077954" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nycschools <span class="im">import</span> schools</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nycschools <span class="im">import</span> dataloader</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="5d26cd60" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>hs_directory <span class="op">=</span> schools.load_hs_directory()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dataloader.write_file(hs_directory, path<span class="op">=</span><span class="st">'../data/hs_directory.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="03ae71cb" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>school_demographics <span class="op">=</span> schools.save_demographics()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dataloader.write_file(school_demographics, path<span class="op">=</span><span class="st">'../data/school_demographics.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[2005 2006 2007 2008 2009 2010 2011] {'non_binary_n', 'non_binary_pct'}
+[2013 2014 2015 2016 2017] {'non_binary_n', 'non_binary_pct'}
+[2016] {'non_binary_n', 'non_binary_pct'}
+[2017 2018 2019 2020 2021] {'non_binary_n', 'non_binary_pct'}
+[2019 2020 2021 2022 2023] set()</code></pre>
+</div>
+</div>
+<div id="b7aee820" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>school_quality_df <span class="op">=</span> pandas.read</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>school_quality_df.columns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>Index(['School Year', 'Report Year',
        'District, Borough and School Number (DBN)', 'School Name',
@@ -257,8 +253,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="da556359" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data for which unique is sensical shall be described as categorical data.</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>school_quality_df[<span class="st">"School Type"</span>].unique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data for which unique is sensical shall be described as categorical data.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>school_quality_df[<span class="st">"School Type"</span>].unique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;ArrowStringArray&gt;
 [          'Elementary',                  'K-8',          'High School',
@@ -269,7 +265,7 @@ Length: 10, dtype: str</code></pre>
 </div>
 </div>
 <div id="0aa088b2" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>school_demographics_df[<span class="st">"ay"</span>].unique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>school_demographics_df[<span class="st">"ay"</span>].unique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>array([2020, 2021, 2022, 2023, 2024, 2017, 2018, 2019, 2016, 2013, 2014,
        2015, 2005, 2006, 2007, 2008, 2009, 2010, 2011])</code></pre>
@@ -277,30 +273,30 @@ Length: 10, dtype: str</code></pre>
 </div>
 <p>School quality is a dataset of [1493770 rows x 12 columns] of school quality metrics, by school and year. Metrics are unique by school type. Data collection and validation challenges stemming from the real world experiences of students and educators. The CCR replaces the CRI.</p>
 <div id="5642f064" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all of the variable display name pairs to lookup in the Educator's Guide. https://infohub.nyced.org/docs/default-source/default-document-library/finalized-2024-25-educator-guide-hs-1.pdf</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> school_quality_df[[<span class="st">"Metric Variable Name"</span>,<span class="st">"Metric Display Name"</span>]].drop_duplicates()</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>ccr_cri_metrics <span class="op">=</span> pandas.concat([metrics[metrics[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"cri"</span>)],metrics[metrics[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"ccr"</span>)]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get all of the variable display name pairs to lookup in the Educator's Guide. https://infohub.nyced.org/docs/default-source/default-document-library/finalized-2024-25-educator-guide-hs-1.pdf</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> school_quality_df[[<span class="st">"Metric Variable Name"</span>,<span class="st">"Metric Display Name"</span>]].drop_duplicates()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>ccr_cri_metrics <span class="op">=</span> pandas.concat([metrics[metrics[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"cri"</span>)],metrics[metrics[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"ccr"</span>)]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="17e2189e" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ccr_cri_df <span class="op">=</span> school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>].isin(ccr_cri_metrics[<span class="st">"Metric Variable Name"</span>])]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ccr_cri_df <span class="op">=</span> school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>].isin(ccr_cri_metrics[<span class="st">"Metric Variable Name"</span>])]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="acabab86" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># merge school quality metrics with demographics</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>combined_df <span class="op">=</span> pandas.merge(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    left<span class="op">=</span>ccr_cri_df,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    right<span class="op">=</span>school_demographics_df,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span>[<span class="st">"District, Borough and School Number (DBN)"</span>, <span class="st">"School Year"</span>],</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span>[<span class="st">"dbn"</span>, <span class="st">"ay"</span>]</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># merge school quality metrics with demographics</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>combined_df <span class="op">=</span> pandas.merge(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    left<span class="op">=</span>ccr_cri_df,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    right<span class="op">=</span>school_demographics_df,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span>[<span class="st">"District, Borough and School Number (DBN)"</span>, <span class="st">"School Year"</span>],</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span>[<span class="st">"dbn"</span>, <span class="st">"ay"</span>]</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="69eb30c4" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_filter(df, mask):</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Apply mask to df"""</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df[mask]</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> my_filter(combined_df, combined_df[<span class="st">"female_pct"</span>] <span class="op">&gt;=</span> <span class="fl">0.05</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> schools_with_girls[[<span class="st">"ay"</span>, <span class="st">"female_pct"</span>]]</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> combined_df.loc[combined_df[<span class="st">"female_pct"</span>] <span class="op">&gt;=</span> <span class="fl">0.05</span>, [<span class="st">"ay"</span>, <span class="st">"female_pct"</span>]]</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>schools_with_girls.groupby(<span class="st">"ay"</span>).median()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_filter(df, mask):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Apply mask to df"""</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df[mask]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> my_filter(combined_df, combined_df[<span class="st">"female_pct"</span>] <span class="op">&gt;=</span> <span class="fl">0.05</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> schools_with_girls[[<span class="st">"ay"</span>, <span class="st">"female_pct"</span>]]</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>schools_with_girls <span class="op">=</span> combined_df.loc[combined_df[<span class="st">"female_pct"</span>] <span class="op">&gt;=</span> <span class="fl">0.05</span>, [<span class="st">"ay"</span>, <span class="st">"female_pct"</span>]]</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>schools_with_girls.groupby(<span class="st">"ay"</span>).median()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -352,7 +348,7 @@ Length: 10, dtype: str</code></pre>
 </div>
 </div>
 <div id="c29af8ae" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.index</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.index</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>Index([    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,
        ...
@@ -361,7 +357,7 @@ Length: 10, dtype: str</code></pre>
 </div>
 </div>
 <div id="98e0edfe" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls[schools_with_girls[<span class="st">"female_pct"</span>] <span class="op">&lt;</span> <span class="fl">0.33</span>].groupby(<span class="st">"ay"</span>).median()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls[schools_with_girls[<span class="st">"female_pct"</span>] <span class="op">&lt;</span> <span class="fl">0.33</span>].groupby(<span class="st">"ay"</span>).median()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -413,7 +409,7 @@ Length: 10, dtype: str</code></pre>
 </div>
 </div>
 <div id="d9b130d3" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.sort_values(<span class="st">"female_pct"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.sort_values(<span class="st">"female_pct"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -490,7 +486,7 @@ Length: 10, dtype: str</code></pre>
 </div>
 </div>
 <div id="4f4f162b" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.describe</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>schools_with_girls.describe</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;bound method NDFrame.describe of          ay  female_pct
 0      2019    0.375676
@@ -510,21 +506,21 @@ Length: 10, dtype: str</code></pre>
 </div>
 <p>Young women do not enroll in tech. This is not a news flash. Can we see an improvement in the data?</p>
 <div id="091bcc79" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> school_by_type(school_type):</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    criterion <span class="op">=</span> school_quality_df[<span class="st">"School Type"</span>]<span class="op">==</span>school_type</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> school_quality_df[criterion]</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>middle_df <span class="op">=</span> school_by_type(<span class="st">"Middle"</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>hs_df <span class="op">=</span> school_by_type(<span class="st">"High School"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> school_by_type(school_type):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    criterion <span class="op">=</span> school_quality_df[<span class="st">"School Type"</span>]<span class="op">==</span>school_type</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> school_quality_df[criterion]</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>middle_df <span class="op">=</span> school_by_type(<span class="st">"Middle"</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>hs_df <span class="op">=</span> school_by_type(<span class="st">"High School"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Filter rows by a column, group by a column, compute a mean</p>
 <div id="96970357" class="cell" data-execution_count="16">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ccr_df <span class="op">=</span> school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"ccr"</span>)]</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ccr_by_year <span class="op">=</span> ccr_df.groupby(by<span class="op">=</span><span class="st">"Report Year"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ccr_df <span class="op">=</span> school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"ccr"</span>)]</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>ccr_by_year <span class="op">=</span> ccr_df.groupby(by<span class="op">=</span><span class="st">"Report Year"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>For what years have ccr metrics been reported?</p>
 <div id="1bbd4454" class="cell" data-execution_count="17">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ccr_by_year.count()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>ccr_by_year.count()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -599,10 +595,10 @@ Length: 10, dtype: str</code></pre>
 <p>College and Career Preparatory Course Index pct_cpci_oa_uc This metric shows the percentage of students in the school’s four-year cohort who successfully completed approved rigorous courses and assessments after four years of high school.</p>
 <p>For what years was the pct_cpci_oa_uv reported.</p>
 <div id="680817ad" class="cell" data-execution_count="18">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>preparatory_course_index_df <span class="op">=</span> school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>]<span class="op">==</span><span class="st">"pct_cpci_oa_uv"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>preparatory_course_index_df <span class="op">=</span> school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>]<span class="op">==</span><span class="st">"pct_cpci_oa_uv"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="3a811d9c" class="cell" data-execution_count="19">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>preparatory_course_index_df.head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>preparatory_course_index_df.head</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;bound method NDFrame.head of Empty DataFrame
 Columns: [School Year, Report Year, District, Borough and School Number (DBN), School Name, Report Type, School Type, Metric Variable Name, Metric Display Name, Number of Students, Metric Value, Comparison Group Average, Metric Score]
@@ -610,7 +606,7 @@ Index: []&gt;</code></pre>
 </div>
 </div>
 <div id="f159ca0e" class="cell" data-execution_count="20">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"pct_cpci_oa_uc"</span>)].groupby(by<span class="op">=</span><span class="st">"Report Year"</span>)[<span class="st">"Metric Value"</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>school_quality_df[school_quality_df[<span class="st">"Metric Variable Name"</span>].<span class="bu">str</span>.contains(<span class="st">"pct_cpci_oa_uc"</span>)].groupby(by<span class="op">=</span><span class="st">"Report Year"</span>)[<span class="st">"Metric Value"</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>Report Year
 2016    0.070554

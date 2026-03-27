@@ -243,8 +243,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stderr">
 <pre><code>here() starts at /home/teacher/projects/edu-analytics/learning</code></pre>
 </div>
-</div>
-<div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"data/school_quality.csv"</span>)</span>
@@ -283,21 +281,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 # ℹ 5 more variables: metric_display &lt;chr&gt;, students_n &lt;dbl&gt;,
 #   metric_value &lt;dbl&gt;, comparison_group_average &lt;dbl&gt;, metric_score &lt;dbl&gt;</code></pre>
 </div>
-</div>
-<div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>hs_directory <span class="ot">&lt;-</span> <span class="fu">local</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    url <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'https://infohub.nyced.org/docs/default-source/default-document-library/ose/fall-2025---hs-directory-datab85f64a0-05b9-439a-8e29-052ce60a5d86.xlsx'</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">download.file</span>(<span class="at">url=</span>url,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">destfile=</span><span class="fu">here</span>(<span class="st">'data/hs_directory_2025.xlsx'</span>),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">method=</span><span class="st">'wget'</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    destfile<span class="ot">=</span>file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">'data/hs_directory_2025.xlsx'</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    hs_directory <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path=</span>destfile, <span class="at">sheet=</span><span class="st">'Data'</span>) <span class="sc">%&gt;%</span> <span class="fu">write_csv</span>(<span class="fu">here</span>(<span class="st">'data/hs_directory_2025.csv'</span>))</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(hs_directory)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># download the infohub excel file, read it in, and cache a csv while silently passing back the tibble.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>hs_directory <span class="ot">&lt;-</span> <span class="fu">local</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    url <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'https://infohub.nyced.org/docs/default-source/default-document-library/ose/fall-2025---hs-directory-datab85f64a0-05b9-439a-8e29-052ce60a5d86.xlsx'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">download.file</span>(<span class="at">url=</span>url,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">destfile=</span><span class="fu">here</span>(<span class="st">'data/hs_directory_2025.xlsx'</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">method=</span><span class="st">'wget'</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    destfile<span class="ot">=</span>file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">'data/hs_directory_2025.xlsx'</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    hs_directory <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="at">path=</span>destfile, <span class="at">sheet=</span><span class="st">'Data'</span>) <span class="sc">%&gt;%</span> <span class="fu">write_csv</span>(<span class="fu">here</span>(<span class="st">'data/hs_directory_2025.csv'</span>))</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(hs_directory)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 317
@@ -396,7 +393,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/MrAllatta\.github\.io\/learning\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>hs_directory_parsing_notes – Data Analysis Learning Portfolio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-960fc19d9da332a83abe416fce972e1d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      Data Analysis Learning Portfolio
+      </li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Analysis Learning Portfolio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./learning-plan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning Plan</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#manual-family-mapping-by-inspection" id="toc-manual-family-mapping-by-inspection" class="nav-link active" data-scroll-target="#manual-family-mapping-by-inspection">1. Manual family mapping by inspection</a></li>
+  <li><a href="#pattern-inventory-table" id="toc-pattern-inventory-table" class="nav-link" data-scroll-target="#pattern-inventory-table">2. Pattern inventory table</a></li>
+  <li><a href="#regex-driven-pivoting-with-.value" id="toc-regex-driven-pivoting-with-.value" class="nav-link" data-scroll-target="#regex-driven-pivoting-with-.value">3. Regex-driven pivoting with <code>.value</code></a></li>
+  <li><a href="#family-by-family-pivots-then-join" id="toc-family-by-family-pivots-then-join" class="nav-link" data-scroll-target="#family-by-family-pivots-then-join">4. Family-by-family pivots, then join</a></li>
+  <li><a href="#spec-table-generated-reshape-plan" id="toc-spec-table-generated-reshape-plan" class="nav-link" data-scroll-target="#spec-table-generated-reshape-plan">5. Spec table + generated reshape plan</a></li>
+  <li><a href="#nested-list-column-strategy-for-multi-valued-families" id="toc-nested-list-column-strategy-for-multi-valued-families" class="nav-link" data-scroll-target="#nested-list-column-strategy-for-multi-valued-families">6. Nested / list-column strategy for multi-valued families</a></li>
+  <li><a href="#relational-normalization-not-just-pivoting" id="toc-relational-normalization-not-just-pivoting" class="nav-link" data-scroll-target="#relational-normalization-not-just-pivoting">7. Relational normalization, not just pivoting</a></li>
+  <li><a href="#use-a-name-parser-function" id="toc-use-a-name-parser-function" class="nav-link" data-scroll-target="#use-a-name-parser-function">8. Use a name parser function</a></li>
+  <li><a href="#validation-first-workflow" id="toc-validation-first-workflow" class="nav-link" data-scroll-target="#validation-first-workflow">9. Validation-first workflow</a></li>
+  <li><a href="#schema-dictionary-first-as-a-quarto-artifact" id="toc-schema-dictionary-first-as-a-quarto-artifact" class="nav-link" data-scroll-target="#schema-dictionary-first-as-a-quarto-artifact">10. “Schema dictionary first” as a Quarto artifact</a></li>
+  <li><a href="#my-recommendation-by-stage" id="toc-my-recommendation-by-stage" class="nav-link" data-scroll-target="#my-recommendation-by-stage">My recommendation by stage</a>
+  <ul class="collapse">
+  <li><a href="#near-field-next-step" id="toc-near-field-next-step" class="nav-link" data-scroll-target="#near-field-next-step">Near-field next step</a></li>
+  <li><a href="#strong-intermediate-solution" id="toc-strong-intermediate-solution" class="nav-link" data-scroll-target="#strong-intermediate-solution">Strong intermediate solution</a></li>
+  <li><a href="#most-seasoned-professional-solution" id="toc-most-seasoned-professional-solution" class="nav-link" data-scroll-target="#most-seasoned-professional-solution">Most seasoned professional solution</a></li>
+  </ul></li>
+  <li><a href="#specific-notes-on-your-current-code" id="toc-specific-notes-on-your-current-code" class="nav-link" data-scroll-target="#specific-notes-on-your-current-code">Specific notes on your current code</a></li>
+  <li><a href="#if-you-want-a-concrete-learning-path" id="toc-if-you-want-a-concrete-learning-path" class="nav-link" data-scroll-target="#if-you-want-a-concrete-learning-path">If you want a concrete learning path</a>
+  <ul class="collapse">
+  <li><a href="#pass-1" id="toc-pass-1" class="nav-link" data-scroll-target="#pass-1">Pass 1</a></li>
+  <li><a href="#pass-2" id="toc-pass-2" class="nav-link" data-scroll-target="#pass-2">Pass 2</a></li>
+  <li><a href="#pass-3" id="toc-pass-3" class="nav-link" data-scroll-target="#pass-3">Pass 3</a></li>
+  <li><a href="#what-the-full-column-list-confirms" id="toc-what-the-full-column-list-confirms" class="nav-link" data-scroll-target="#what-the-full-column-list-confirms">What the full column list confirms</a>
+  <ul class="collapse">
+  <li><a href="#school-level-columns" id="toc-school-level-columns" class="nav-link" data-scroll-target="#school-level-columns">1. School-level columns</a></li>
+  <li><a href="#program-level-repeated-blocks" id="toc-program-level-repeated-blocks" class="nav-link" data-scroll-target="#program-level-repeated-blocks">2. Program-level repeated blocks</a></li>
+  <li><a href="#program-level-but-nonstandard-repeated-blocks" id="toc-program-level-but-nonstandard-repeated-blocks" class="nav-link" data-scroll-target="#program-level-but-nonstandard-repeated-blocks">3. Program-level but nonstandard repeated blocks</a></li>
+  </ul></li>
+  <li><a href="#important-structural-observation" id="toc-important-structural-observation" class="nav-link" data-scroll-target="#important-structural-observation">Important structural observation</a>
+  <ul class="collapse">
+  <li><a href="#a.-general-school-program-blocks" id="toc-a.-general-school-program-blocks" class="nav-link" data-scroll-target="#a.-general-school-program-blocks">A. General school program blocks</a></li>
+  <li><a href="#b.-priority-subrecords-within-program" id="toc-b.-priority-subrecords-within-program" class="nav-link" data-scroll-target="#b.-priority-subrecords-within-program">B. Priority subrecords within program</a></li>
+  <li><a href="#c.-requirement-subrecords-within-program" id="toc-c.-requirement-subrecords-within-program" class="nav-link" data-scroll-target="#c.-requirement-subrecords-within-program">C. Requirement subrecords within program</a></li>
+  <li><a href="#d.-specialized-admissions-block" id="toc-d.-specialized-admissions-block" class="nav-link" data-scroll-target="#d.-specialized-admissions-block">D. Specialized admissions block</a></li>
+  </ul></li>
+  <li><a href="#confirmed-recommendation-normalized-target-model" id="toc-confirmed-recommendation-normalized-target-model" class="nav-link" data-scroll-target="#confirmed-recommendation-normalized-target-model">Confirmed recommendation: normalized target model</a></li>
+  <li><a href="#schools" id="toc-schools" class="nav-link" data-scroll-target="#schools">1. <code>schools</code></a></li>
+  <li><a href="#school_academic_opportunities" id="toc-school_academic_opportunities" class="nav-link" data-scroll-target="#school_academic_opportunities">2. <code>school_academic_opportunities</code></a></li>
+  <li><a href="#programs" id="toc-programs" class="nav-link" data-scroll-target="#programs">3. <code>programs</code></a></li>
+  <li><a href="#program_priorities" id="toc-program_priorities" class="nav-link" data-scroll-target="#program_priorities">4. <code>program_priorities</code></a></li>
+  <li><a href="#program_requirements" id="toc-program_requirements" class="nav-link" data-scroll-target="#program_requirements">5. <code>program_requirements</code></a></li>
+  <li><a href="#specialized_programs-or-specialized_admissions" id="toc-specialized_programs-or-specialized_admissions" class="nav-link" data-scroll-target="#specialized_programs-or-specialized_admissions">6. <code>specialized_programs</code> or <code>specialized_admissions</code></a></li>
+  </ul></li>
+  <li><a href="#why-this-is-the-right-professional-solution-here" id="toc-why-this-is-the-right-professional-solution-here" class="nav-link" data-scroll-target="#why-this-is-the-right-professional-solution-here">Why this is the right professional solution here</a></li>
+  <li><a href="#concrete-family-classification-from-your-list" id="toc-concrete-family-classification-from-your-list" class="nav-link" data-scroll-target="#concrete-family-classification-from-your-list">Concrete family classification from your list</a>
+  <ul class="collapse">
+  <li><a href="#school-grain" id="toc-school-grain" class="nav-link" data-scroll-target="#school-grain">School grain</a></li>
+  <li><a href="#program-grain-suffix-index-pattern" id="toc-program-grain-suffix-index-pattern" class="nav-link" data-scroll-target="#program-grain-suffix-index-pattern">Program grain, suffix index pattern</a></li>
+  <li><a href="#program-child-grain-embedded-rank-program-index" id="toc-program-child-grain-embedded-rank-program-index" class="nav-link" data-scroll-target="#program-child-grain-embedded-rank-program-index">Program child grain, embedded rank + program index</a></li>
+  <li><a href="#specialized-grain" id="toc-specialized-grain" class="nav-link" data-scroll-target="#specialized-grain">Specialized grain</a></li>
+  <li><a href="#repeated-school-child-grain" id="toc-repeated-school-child-grain" class="nav-link" data-scroll-target="#repeated-school-child-grain">Repeated school child grain</a></li>
+  </ul></li>
+  <li><a href="#subtle-points-gotchas" id="toc-subtle-points-gotchas" class="nav-link" data-scroll-target="#subtle-points-gotchas">Subtle points / gotchas</a>
+  <ul class="collapse">
+  <li><a href="#seats101-to-seats1011" id="toc-seats101-to-seats1011" class="nav-link" data-scroll-target="#seats101-to-seats1011">1. <code>seats101</code> to <code>seats1011</code></a></li>
+  <li><a href="#missing-maximum-priority-count" id="toc-missing-maximum-priority-count" class="nav-link" data-scroll-target="#missing-maximum-priority-count">2. Missing maximum priority count</a></li>
+  <li><a href="#missing-maximum-requirement-count" id="toc-missing-maximum-requirement-count" class="nav-link" data-scroll-target="#missing-maximum-requirement-count">3. Missing maximum requirement count</a></li>
+  <li><a href="#academicopportunities1-to-6" id="toc-academicopportunities1-to-6" class="nav-link" data-scroll-target="#academicopportunities1-to-6">4. <code>academicopportunities1</code> to <code>6</code></a></li>
+  <li><a href="#specialized-admissions-may-not-map-one-to-one-to-programn" id="toc-specialized-admissions-may-not-map-one-to-one-to-programn" class="nav-link" data-scroll-target="#specialized-admissions-may-not-map-one-to-one-to-programn">5. Specialized admissions may not map one-to-one to <code>program{n}</code></a></li>
+  </ul></li>
+  <li><a href="#if-i-were-reviewing-this-as-a-data-engineering-design" id="toc-if-i-were-reviewing-this-as-a-data-engineering-design" class="nav-link" data-scroll-target="#if-i-were-reviewing-this-as-a-data-engineering-design">If I were reviewing this as a data engineering design</a>
+  <ul class="collapse">
+  <li><a href="#phase-1-schema-dictionary" id="toc-phase-1-schema-dictionary" class="nav-link" data-scroll-target="#phase-1-schema-dictionary">Phase 1: schema dictionary</a></li>
+  <li><a href="#phase-2-normalized-tables" id="toc-phase-2-normalized-tables" class="nav-link" data-scroll-target="#phase-2-normalized-tables">Phase 2: normalized tables</a></li>
+  <li><a href="#phase-3-validation" id="toc-phase-3-validation" class="nav-link" data-scroll-target="#phase-3-validation">Phase 3: validation</a></li>
+  <li><a href="#phase-4-analysis-marts" id="toc-phase-4-analysis-marts" class="nav-link" data-scroll-target="#phase-4-analysis-marts">Phase 4: analysis marts</a></li>
+  </ul></li>
+  <li><a href="#incremental-learning-recommendation-now-confirmed-by-the-column-list" id="toc-incremental-learning-recommendation-now-confirmed-by-the-column-list" class="nav-link" data-scroll-target="#incremental-learning-recommendation-now-confirmed-by-the-column-list">Incremental learning recommendation, now confirmed by the column list</a>
+  <ul class="collapse">
+  <li><a href="#step-1" id="toc-step-1" class="nav-link" data-scroll-target="#step-1">Step 1</a></li>
+  <li><a href="#step-2" id="toc-step-2" class="nav-link" data-scroll-target="#step-2">Step 2</a></li>
+  <li><a href="#step-3" id="toc-step-3" class="nav-link" data-scroll-target="#step-3">Step 3</a></li>
+  <li><a href="#step-4" id="toc-step-4" class="nav-link" data-scroll-target="#step-4">Step 4</a></li>
+  <li><a href="#step-5" id="toc-step-5" class="nav-link" data-scroll-target="#step-5">Step 5</a></li>
+  </ul></li>
+  <li><a href="#bottom-line" id="toc-bottom-line" class="nav-link" data-scroll-target="#bottom-line">Bottom line</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<p>User: I need a survey of strategies for handling wide tibble with blocks or families of data, which I will compress into a long table for program level questions. I’ve started manually building the mapping to the families by inspecting a helper table of column names. I want to learn additional techniques, but as always am looking for incremental learning. Nonetheless be sure to include the most sophisticated and seasoned professional statistitions solution along with the near field suggestions.</p>
+<p>Positron Assistant: For this kind of data, the core problem is usually:</p>
+<ul>
+<li>some columns are school-level identifiers</li>
+<li>some columns come in repeated program-level blocks</li>
+<li>the block index is encoded in the column name</li>
+<li>not every family is named consistently</li>
+<li>you want a reliable school-to-program long table, not just a one-off pivot</li>
+</ul>
+<p>A useful way to think about strategies is by maturity level.</p>
+<section id="manual-family-mapping-by-inspection" class="level2">
+<h2 class="anchored" data-anchor-id="manual-family-mapping-by-inspection">1. Manual family mapping by inspection</h2>
+<p>This is what you’ve started doing. It is a good first step.</p>
+<p>Typical workflow:</p>
+<ul>
+<li>list all column names</li>
+<li>sort by length or pattern</li>
+<li>identify repeated families</li>
+<li>write regex rules for each family</li>
+<li>pivot those families into long form</li>
+</ul>
+<p>This is slow but valuable because it teaches the schema.</p>
+<p>Your current <code>classify_families()</code> is the right instinct. A few issues in it:</p>
+<ul>
+<li><code>str()</code> should be <code>str_detect()</code></li>
+<li>some patterns are not anchored consistently</li>
+<li>you probably want to extract a program index, not only assign a family</li>
+<li>a family table is more useful if it includes both <code>family</code> and <code>index</code></li>
+</ul>
+</section>
+<section id="pattern-inventory-table" class="level2">
+<h2 class="anchored" data-anchor-id="pattern-inventory-table">2. Pattern inventory table</h2>
+<p>A stronger next step is to create a metadata table of all columns and parse their structure before pivoting anything.</p>
+<p>This is often the first professional move because it separates:</p>
+<ul>
+<li>schema understanding</li>
+<li>transformation logic</li>
+</ul>
+<p>You can build a table like:</p>
+<ul>
+<li><code>col</code></li>
+<li><code>family</code></li>
+<li><code>program_index</code></li>
+<li><code>is_program_level</code></li>
+<li><code>base_name</code></li>
+<li><code>notes</code></li>
+</ul>
+<p>Example:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>build_column_dictionary <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">col =</span> <span class="fu">names</span>(data)) <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^program</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"program"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^seats9ge</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"seats9ge"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^grade9geapplicantsperseat</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"grade9geapplicantsperseat"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^grade9swdapplicatsperseat</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"grade9swdapplicatsperseat"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^grade9swdseatsperseat</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"grade9swdseatsperseat"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^grade9swdpriority</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"grade9swdpriority"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^grade9gepriority</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"grade9gepriority"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^requirement_</span><span class="sc">\\</span><span class="st">d+_</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"requirement"</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"other"</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">program_index =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="fu">str_extract</span>(col, <span class="st">"</span><span class="sc">\\</span><span class="st">d+$"</span>),</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^requirement_</span><span class="sc">\\</span><span class="st">d+_</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="fu">str_match</span>(col, <span class="st">"^requirement_(</span><span class="sc">\\</span><span class="st">d+)_(</span><span class="sc">\\</span><span class="st">d+)$"</span>)[, <span class="dv">2</span>],</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">sub_index =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^requirement_</span><span class="sc">\\</span><span class="st">d+_</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="fu">str_match</span>(col, <span class="st">"^requirement_(</span><span class="sc">\\</span><span class="st">d+)_(</span><span class="sc">\\</span><span class="st">d+)$"</span>)[, <span class="dv">3</span>],</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">is_program_level =</span> family <span class="sc">!=</span> <span class="st">"other"</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This gives you a reusable schema object.</p>
+</section>
+<section id="regex-driven-pivoting-with-.value" class="level2">
+<h2 class="anchored" data-anchor-id="regex-driven-pivoting-with-.value">3. Regex-driven pivoting with <code>.value</code></h2>
+<p>Once families are understood, the most effective tidyverse approach is usually <code>pivot_longer()</code> with <code>names_pattern</code> and <code>.value</code>.</p>
+<p>This is the standard “wide repeated blocks to long” solution when names are regular enough.</p>
+<p>If names looked like:</p>
+<ul>
+<li><code>program1</code>, <code>program2</code></li>
+<li><code>seats9ge1</code>, <code>seats9ge2</code></li>
+<li><code>grade9gepriority1</code>, <code>grade9gepriority2</code></li>
+</ul>
+<p>then you can reshape many families at once.</p>
+<p>Example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>program_long <span class="ot">&lt;-</span> hs_directory <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"^(program|seats9ge|grade9gepriority|grade9swdpriority|grade9geapplicantsperseat|grade9swdapplicatsperseat|grade9swdseatsperseat)</span><span class="sc">\\</span><span class="st">d+$"</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">".value"</span>, <span class="st">"program_index"</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">"^(.*?)(</span><span class="sc">\\</span><span class="st">d+)$"</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">program_index =</span> <span class="fu">as.integer</span>(program_index))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Why this is strong:</p>
+<ul>
+<li>one pivot handles multiple families</li>
+<li>the suffix becomes <code>program_index</code></li>
+<li>family names become output columns automatically</li>
+</ul>
+<p>This is usually the best next step if your schema is mostly regular.</p>
+</section>
+<section id="family-by-family-pivots-then-join" class="level2">
+<h2 class="anchored" data-anchor-id="family-by-family-pivots-then-join">4. Family-by-family pivots, then join</h2>
+<p>If the naming conventions are messy, a more robust approach is to pivot each family separately and join them by school keys plus <code>program_index</code>.</p>
+<p>This is less elegant, but often safer.</p>
+<p>Why professionals do this:</p>
+<ul>
+<li>each family can have its own parsing rule</li>
+<li>easier to debug</li>
+<li>easier to validate row counts</li>
+<li>easier to handle malformed exceptions</li>
+</ul>
+<p>Pattern:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>id_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"dbn"</span>, <span class="st">"school_name"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>program_tbl <span class="ot">&lt;-</span> hs_directory <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(id_cols), <span class="fu">matches</span>(<span class="st">"^program</span><span class="sc">\\</span><span class="st">d+$"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"^program</span><span class="sc">\\</span><span class="st">d+$"</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"program_index"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">"^program(</span><span class="sc">\\</span><span class="st">d+)$"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"program"</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>seats_tbl <span class="ot">&lt;-</span> hs_directory <span class="sc">|&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">all_of</span>(id_cols), <span class="fu">matches</span>(<span class="st">"^seats9ge</span><span class="sc">\\</span><span class="st">d+$"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"^seats9ge</span><span class="sc">\\</span><span class="st">d+$"</span>),</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"program_index"</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">"^seats9ge(</span><span class="sc">\\</span><span class="st">d+)$"</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"seats9ge"</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>program_long <span class="ot">&lt;-</span> program_tbl <span class="sc">|&gt;</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(seats_tbl, <span class="fu">join_by</span>(dbn, school_name, program_index))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is often the right middle ground for real administrative data.</p>
+</section>
+<section id="spec-table-generated-reshape-plan" class="level2">
+<h2 class="anchored" data-anchor-id="spec-table-generated-reshape-plan">5. Spec table + generated reshape plan</h2>
+<p>A more seasoned approach is to make the schema explicit as data: a “pivot spec” table.</p>
+<p>Instead of hardcoding regex inside transformation code, you create a tibble describing each family:</p>
+<ul>
+<li>family name</li>
+<li>regex</li>
+<li>value column name</li>
+<li>whether it is indexed by program only</li>
+<li>whether it has a second sub-index</li>
+<li>optional cleaning function</li>
+</ul>
+<p>Example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>family_spec <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>family,                      <span class="sc">~</span>pattern,                                      <span class="sc">~</span>value_name,                    <span class="sc">~</span>kind,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"program"</span>,                    <span class="st">"^program(</span><span class="sc">\\</span><span class="st">d+)$"</span>,                             <span class="st">"program"</span>,                      <span class="st">"program"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seats9ge"</span>,                   <span class="st">"^seats9ge(</span><span class="sc">\\</span><span class="st">d+)$"</span>,                            <span class="st">"seats9ge"</span>,                     <span class="st">"program"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"grade9geapplicantsperseat"</span>,  <span class="st">"^grade9geapplicantsperseat(</span><span class="sc">\\</span><span class="st">d+)$"</span>,           <span class="st">"grade9geapplicantsperseat"</span>,    <span class="st">"program"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"grade9swdapplicatsperseat"</span>,  <span class="st">"^grade9swdapplicatsperseat(</span><span class="sc">\\</span><span class="st">d+)$"</span>,           <span class="st">"grade9swdapplicatsperseat"</span>,    <span class="st">"program"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"grade9swdpriority"</span>,          <span class="st">"^grade9swdpriority(</span><span class="sc">\\</span><span class="st">d+)$"</span>,                   <span class="st">"grade9swdpriority"</span>,            <span class="st">"program"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"grade9gepriority"</span>,           <span class="st">"^grade9gepriority(</span><span class="sc">\\</span><span class="st">d+)$"</span>,                    <span class="st">"grade9gepriority"</span>,             <span class="st">"program"</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"requirement"</span>,                <span class="st">"^requirement_(</span><span class="sc">\\</span><span class="st">d+)_(</span><span class="sc">\\</span><span class="st">d+)$"</span>,                 <span class="st">"requirement"</span>,                  <span class="st">"program_sub"</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then write functions that consume this spec.</p>
+<p>Benefits:</p>
+<ul>
+<li>transformation is declarative</li>
+<li>easier to audit</li>
+<li>easier to extend</li>
+<li>better for messy public-sector datasets that evolve over time</li>
+</ul>
+<p>This is much closer to how an experienced data engineer or statistical programmer would stabilize the pipeline.</p>
+</section>
+<section id="nested-list-column-strategy-for-multi-valued-families" class="level2">
+<h2 class="anchored" data-anchor-id="nested-list-column-strategy-for-multi-valued-families">6. Nested / list-column strategy for multi-valued families</h2>
+<p>Some families, like <code>requirement_1_1</code>, <code>requirement_1_2</code>, etc., are not really scalar program attributes. They are repeated values within program.</p>
+<p>In that case, forcing them into one flat program row too early can make the model awkward.</p>
+<p>Better pattern:</p>
+<ul>
+<li>first create one row per school-program</li>
+<li>keep repeated-within-program families in nested child tables or list-columns</li>
+<li>unnest only when needed</li>
+</ul>
+<p>Example mental model:</p>
+<ul>
+<li><code>school_tbl</code>: one row per school</li>
+<li><code>program_tbl</code>: one row per school-program</li>
+<li><code>requirement_tbl</code>: one row per school-program-requirement</li>
+</ul>
+<p>This is often the most correct relational design.</p>
+<p>For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>requirement_long <span class="ot">&lt;-</span> hs_directory <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dbn, <span class="fu">matches</span>(<span class="st">"^requirement_</span><span class="sc">\\</span><span class="st">d+_</span><span class="sc">\\</span><span class="st">d+$"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">matches</span>(<span class="st">"^requirement_</span><span class="sc">\\</span><span class="st">d+_</span><span class="sc">\\</span><span class="st">d+$"</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"program_index"</span>, <span class="st">"requirement_index"</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_pattern =</span> <span class="st">"^requirement_(</span><span class="sc">\\</span><span class="st">d+)_(</span><span class="sc">\\</span><span class="st">d+)$"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"requirement"</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(requirement), requirement <span class="sc">!=</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is better than trying to paste all requirements into a single field unless your downstream questions truly need that.</p>
+</section>
+<section id="relational-normalization-not-just-pivoting" class="level2">
+<h2 class="anchored" data-anchor-id="relational-normalization-not-just-pivoting">7. Relational normalization, not just pivoting</h2>
+<p>The most seasoned professional solution is usually not “make one big long table.”</p>
+<p>It is:</p>
+<ul>
+<li>identify the unit of observation for each analytical question</li>
+<li>normalize the source into several linked tables</li>
+<li>validate keys and cardinality</li>
+<li>only denormalize for specific outputs</li>
+</ul>
+<p>For your case, likely target tables are:</p>
+<ol type="1">
+<li><code>schools</code>
+<ul>
+<li>school-level attributes</li>
+<li>one row per <code>dbn</code></li>
+</ul></li>
+<li><code>programs</code>
+<ul>
+<li>one row per <code>dbn + program_index</code></li>
+<li>program name, seats, applicants per seat, priorities</li>
+</ul></li>
+<li><code>program_requirements</code>
+<ul>
+<li>one row per <code>dbn + program_index + requirement_index</code></li>
+</ul></li>
+<li>maybe <code>program_priorities</code> too, if priorities are also repeated categories rather than a single scalar</li>
+</ol>
+<p>Why this is the senior solution:</p>
+<ul>
+<li>matches the data-generating structure</li>
+<li>easier to test</li>
+<li>less information loss</li>
+<li>avoids giant fragile pivots</li>
+<li>works better when some families have different multiplicities</li>
+</ul>
+<p>Statisticians working with institutional data often arrive here because “one tidy table” is not always the best storage form. Tidy analysis tables are often downstream products, not the canonical cleaned data model.</p>
+</section>
+<section id="use-a-name-parser-function" class="level2">
+<h2 class="anchored" data-anchor-id="use-a-name-parser-function">8. Use a name parser function</h2>
+<p>Another strong technique is to stop thinking in terms of family-specific regex scattered everywhere and instead write a parser for column names.</p>
+<p>Example output for each column:</p>
+<ul>
+<li><code>program12</code> -&gt; family = <code>program</code>, index = 12</li>
+<li><code>seats9ge4</code> -&gt; family = <code>seats9ge</code>, index = 4</li>
+<li><code>requirement_3_2</code> -&gt; family = <code>requirement</code>, index = 3, sub_index = 2</li>
+</ul>
+<p>Example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>parse_hs_column <span class="ot">&lt;-</span> <span class="cf">function</span>(col) {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(col, <span class="st">"^program</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"program"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(col, <span class="st">"^seats9ge</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"seats9ge"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(col, <span class="st">"^grade9geapplicantsperseat</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"grade9geapplicantsperseat"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_detect</span>(col, <span class="st">"^requirement_</span><span class="sc">\\</span><span class="st">d+_</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"requirement"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"other"</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>More sophisticated version returns a tibble row, not just a label.</p>
+<p>This becomes the foundation for:</p>
+<ul>
+<li>schema reports</li>
+<li>validation</li>
+<li>family counts</li>
+<li>selecting pivotable columns</li>
+<li>generating documentation</li>
+</ul>
+</section>
+<section id="validation-first-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="validation-first-workflow">9. Validation-first workflow</h2>
+<p>A very professional addition is to validate structure before and after reshaping.</p>
+<p>Examples of checks:</p>
+<ul>
+<li>maximum observed program index by school</li>
+<li>whether <code>program3</code> is populated when <code>program2</code> is missing</li>
+<li>whether all family members share the same set of indices</li>
+<li>whether program rows with missing <code>program</code> name should be dropped</li>
+<li>whether requirements exist for nonexistent programs</li>
+</ul>
+<p>Useful checks:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>hs_directory <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    dbn,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_program_cols =</span> <span class="fu">rowSums</span>(<span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">select</span>(<span class="fu">cur_data</span>(), <span class="fu">matches</span>(<span class="st">"^program</span><span class="sc">\\</span><span class="st">d+$"</span>))))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And after pivoting:</p>
+<ul>
+<li>unique key check on <code>dbn + program_index</code></li>
+<li>row count by school</li>
+<li>missingness profile by family</li>
+</ul>
+<p>The professional habit is: do not trust the wide structure just because the names look regular.</p>
+</section>
+<section id="schema-dictionary-first-as-a-quarto-artifact" class="level2">
+<h2 class="anchored" data-anchor-id="schema-dictionary-first-as-a-quarto-artifact">10. “Schema dictionary first” as a Quarto artifact</h2>
+<p>Since you are already working in Quarto, a very useful incremental practice is to produce a column family audit table as part of the notebook.</p>
+<p>That artifact can include:</p>
+<ul>
+<li>family counts</li>
+<li>unmatched columns</li>
+<li>parsed indices</li>
+<li>example names from each family</li>
+</ul>
+<p>This is low effort and high value.</p>
+<p>Example summary:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>column_dict <span class="ot">&lt;-</span> <span class="fu">build_column_dictionary</span>(hs_directory)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>family_summary <span class="ot">&lt;-</span> column_dict <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(family, is_program_level, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>family_examples <span class="ot">&lt;-</span> column_dict <span class="sc">|&gt;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(family <span class="sc">!=</span> <span class="st">"other"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">example_cols =</span> <span class="fu">paste</span>(<span class="fu">head</span>(col, <span class="dv">5</span>), <span class="at">collapse =</span> <span class="st">", "</span>),</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> family</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That gives you a documented schema exploration layer before transformation.</p>
+<hr>
+</section>
+<section id="my-recommendation-by-stage" class="level1">
+<h1>My recommendation by stage</h1>
+<section id="near-field-next-step" class="level2">
+<h2 class="anchored" data-anchor-id="near-field-next-step">Near-field next step</h2>
+<p>Do this next:</p>
+<ol type="1">
+<li>build a proper column dictionary</li>
+<li>parse <code>family</code>, <code>program_index</code>, and <code>sub_index</code></li>
+<li>pivot only the clean one-index families first</li>
+<li>keep <code>requirement_*_*</code> as a separate long table</li>
+</ol>
+<p>That is incremental and teaches the right concepts.</p>
+</section>
+<section id="strong-intermediate-solution" class="level2">
+<h2 class="anchored" data-anchor-id="strong-intermediate-solution">Strong intermediate solution</h2>
+<p>Use:</p>
+<ul>
+<li>one dictionary table</li>
+<li>one <code>pivot_longer(..., names_to = c(".value", "program_index"))</code> for regular families</li>
+<li>separate pivots for irregular families</li>
+<li>joins on school id + program index</li>
+</ul>
+<p>This is likely the best balance of learning and practicality.</p>
+</section>
+<section id="most-seasoned-professional-solution" class="level2">
+<h2 class="anchored" data-anchor-id="most-seasoned-professional-solution">Most seasoned professional solution</h2>
+<p>Treat this as normalization, not just reshaping.</p>
+<p>Build a small schema system:</p>
+<ul>
+<li>a column dictionary</li>
+<li>a family spec table</li>
+<li>parsing functions</li>
+<li>validation checks</li>
+<li>output relational tables:
+<ul>
+<li><code>schools</code></li>
+<li><code>programs</code></li>
+<li><code>program_requirements</code></li>
+</ul></li>
+</ul>
+<p>That is the solution I would trust for repeated use, auditing, and future extension.</p>
+<hr>
+</section>
+</section>
+<section id="specific-notes-on-your-current-code" class="level1">
+<h1>Specific notes on your current code</h1>
+<p>I would adjust your function in this direction:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>classify_families <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">col =</span> <span class="fu">names</span>(data)) <span class="sc">|&gt;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="fu">case_when</span>(</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^grade9geapplicantsperseat</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"grade9geapplicantsperseat"</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^seats9ge</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"seats9ge"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^requirement_</span><span class="sc">\\</span><span class="st">d+_</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"requirement"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^program</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"program"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^grade9swdapplicatsperseat</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"grade9swdapplicatsperseat"</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^grade9swdseatsperseat</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"grade9swdseatsperseat"</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^grade9swdpriority</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"grade9swdpriority"</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^grade9gepriority</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="st">"grade9gepriority"</span>,</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"other"</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">program_index =</span> <span class="fu">case_when</span>(</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^requirement_</span><span class="sc">\\</span><span class="st">d+_</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="fu">str_match</span>(col, <span class="st">"^requirement_(</span><span class="sc">\\</span><span class="st">d+)_(</span><span class="sc">\\</span><span class="st">d+)$"</span>)[, <span class="dv">2</span>],</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="fu">str_extract</span>(col, <span class="st">"</span><span class="sc">\\</span><span class="st">d+$"</span>),</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>      ),</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">sub_index =</span> <span class="fu">case_when</span>(</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_detect</span>(col, <span class="st">"^requirement_</span><span class="sc">\\</span><span class="st">d+_</span><span class="sc">\\</span><span class="st">d+$"</span>) <span class="sc">~</span> <span class="fu">str_match</span>(col, <span class="st">"^requirement_(</span><span class="sc">\\</span><span class="st">d+)_(</span><span class="sc">\\</span><span class="st">d+)$"</span>)[, <span class="dv">3</span>],</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA_character_</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Two reasons:</p>
+<ul>
+<li>it gives you a reusable metadata object, not just counts</li>
+<li>it sets up the next step naturally: pivoting</li>
+</ul>
+<hr>
+</section>
+<section id="if-you-want-a-concrete-learning-path" class="level1">
+<h1>If you want a concrete learning path</h1>
+<p>I’d do this in three passes:</p>
+<section id="pass-1" class="level2">
+<h2 class="anchored" data-anchor-id="pass-1">Pass 1</h2>
+<p>Only create and inspect the dictionary table.</p>
+<p>Questions to answer:</p>
+<ul>
+<li>which families exist?</li>
+<li>which are unmatched?</li>
+<li>what indices exist?</li>
+<li>are there gaps?</li>
+</ul>
+</section>
+<section id="pass-2" class="level2">
+<h2 class="anchored" data-anchor-id="pass-2">Pass 2</h2>
+<p>Build <code>programs</code> from the simple one-index families only.</p>
+<p>Questions to answer:</p>
+<ul>
+<li>what is the key?</li>
+<li>how many programs per school?</li>
+<li>which rows are empty shell programs?</li>
+</ul>
+</section>
+<section id="pass-3" class="level2">
+<h2 class="anchored" data-anchor-id="pass-3">Pass 3</h2>
+<p>Add <code>requirements</code> as a child table.</p>
+<p>Questions to answer:</p>
+<ul>
+<li>is requirement count variable by program?</li>
+<li>do requirement rows exist for missing programs?</li>
+</ul>
+<p>If you want, I can sketch a concrete <code>schools</code> / <code>programs</code> / <code>program_requirements</code> pipeline for your <code>hs_directory</code> schema using tidyverse only.</p>
+<p>User: Thank you. After your response we can move to using most seasoned data engineering strategy. Please consume the full column list and confirm recommendations. . school_accessibility_description grade9swdapplicantsperseat10 grade9swdapplicantsperseat11 grade9swdapplicantsperseat1 grade9swdapplicantsperseat2 grade9swdapplicantsperseat3 grade9swdapplicantsperseat4 grade9swdapplicantsperseat5 grade9swdapplicantsperseat6 grade9swdapplicantsperseat7 grade9swdapplicantsperseat8 grade9swdapplicantsperseat9 grade9geapplicantsperseat10 grade9geapplicantsperseat11 extracurricular_activities grade9geapplicantsperseat1 grade9geapplicantsperseat2 grade9geapplicantsperseat3 grade9geapplicantsperseat4 grade9geapplicantsperseat5 grade9geapplicantsperseat6 grade9geapplicantsperseat7 grade9geapplicantsperseat8 grade9geapplicantsperseat9 advancedplacement_courses diversity_in_admissions primary_address_line_1 academicopportunities1 academicopportunities2 academicopportunities3 academicopportunities4 academicopportunities5 academicopportunities6 applicants1specialized applicants2specialized applicants3specialized applicants4specialized applicants5specialized applicants6specialized appperseat1specialized appperseat2specialized appperseat3specialized appperseat4specialized appperseat5specialized appperseat6specialized pct_stu_enough_variety auditioninformation10 auditioninformation11 grade9swdapplicants10 grade9swdfilledflag10 grade9swdapplicants11 grade9swdfilledflag11 auditioninformation1 auditioninformation2 auditioninformation3 auditioninformation4 auditioninformation5 auditioninformation6 auditioninformation7 auditioninformation8 auditioninformation9 grade9swdapplicants1 grade9swdfilledflag1 grade9swdapplicants2 grade9swdfilledflag2 grade9swdapplicants3 grade9swdfilledflag3 grade9swdapplicants4 grade9swdfilledflag4 grade9swdapplicants5 grade9swdfilledflag5 grade9swdapplicants6 grade9swdfilledflag6 grade9swdapplicants7 grade9swdfilledflag7 grade9swdapplicants8 grade9swdfilledflag8 grade9swdapplicants9 grade9swdfilledflag9 grade9geapplicants10 grade9gefilledflag10 grade9geapplicants11 grade9gefilledflag11 college_career_rate diplomaendorsements grade9geapplicants1 grade9gefilledflag1 grade9geapplicants2 grade9gefilledflag2 grade9geapplicants3 grade9gefilledflag3 grade9geapplicants4 grade9gefilledflag4 grade9geapplicants5 grade9gefilledflag5 grade9geapplicants6 grade9gefilledflag6 grade9geapplicants7 grade9gefilledflag7 grade9geapplicants8 grade9gefilledflag8 grade9geapplicants9 grade9gefilledflag9 recruitment_website overview_paragraph common_audition10 common_audition11 psal_sports_girls school_10th_seats seats1specialized seats2specialized seats3specialized seats4specialized seats5specialized seats6specialized priority1_prog10 priority2_prog10 priority1_prog11 priority2_prog11 common_audition1 common_audition2 common_audition3 common_audition4 common_audition5 common_audition6 common_audition7 common_audition8 common_audition9 freshmanschedule language_classes psal_sports_boys psal_sports_coed requirement_1_10 requirement_2_10 requirement_1_11 priority1_prog1 priority2_prog1 priority3_prog1 priority1_prog2 priority2_prog2 priority3_prog2 priority1_prog3 priority2_prog3 priority3_prog3 priority1_prog4 priority2_prog4 priority3_prog4 priority1_prog5 priority2_prog5 priority3_prog5 priority1_prog6 priority2_prog6 priority3_prog6 priority1_prog7 priority2_prog7 priority1_prog8 priority2_prog8 priority1_prog9 priority2_prog9 graduation_rate requirement_1_1 requirement_2_1 requirement_3_1 requirement_4_1 requirement_1_2 requirement_2_2 requirement_1_3 requirement_2_3 requirement_1_4 requirement_2_4 requirement_1_5 requirement_2_5 requirement_1_6 requirement_2_6 requirement_1_7 requirement_2_7 requirement_1_8 requirement_2_8 requirement_1_9 requirement_2_9 attendance_rate total_students building_code eligibility10 eligibility11 school_sports international neighborhood shared_space phone_number eligibility1 eligibility2 eligibility3 eligibility4 eligibility5 eligibility6 eligibility7 eligibility8 eligibility9 ell_programs pct_stu_safe school_email earlycollege school_name addtl_info1 campus_name finalgrades seats9swd10 seats9swd11 specialized sqr_website diadetails fax_number interest10 interest11 seats9swd1 seats9swd2 seats9swd3 seats9swd4 seats9swd5 seats9swd6 seats9swd7 seats9swd8 seats9swd9 seats9ge10 seats9ge11 start_time state_code gradespan interest1 interest2 interest3 interest4 interest5 interest6 interest7 interest8 interest9 prgdesc10 prgdesc11 program10 program11 seats9ge1 seats9ge2 seats9ge3 seats9ge4 seats9ge5 seats9ge6 seats9ge7 seats9ge8 seats9ge9 seats1010 seats1011 end_time location method10 method11 prgdesc1 prgdesc2 prgdesc3 prgdesc4 prgdesc5 prgdesc6 prgdesc7 prgdesc8 prgdesc9 program1 program2 program3 program4 program5 program6 program7 program8 program9 seats101 seats102 seats103 seats104 seats105 seats106 seats107 seats108 seats109 transfer website method1 method2 method3 method4 method5 method6 method7 method8 method9 subway code10 code11 code1 code2 code3 code4 code5 code6 code7 code8 code9 girls ptech boro boys city pbat dbn url bus zip</p>
+<p>Positron Assistant: Yes. With the full column list, I’d confirm the recommendation and sharpen it.</p>
+<p>This dataset is not just “wide.” It is a mixed-grain table containing at least three structural levels:</p>
+<ol type="1">
+<li><code>school</code> level</li>
+<li><code>program</code> level</li>
+<li><code>program sub-record</code> level for repeated fields like requirements and priorities</li>
+</ol>
+<p>That means the most seasoned strategy is indeed a small normalized model, not a single giant long table.</p>
+</section>
+<section id="what-the-full-column-list-confirms" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-full-column-list-confirms">What the full column list confirms</h2>
+<p>The columns break pretty cleanly into these groups.</p>
+<section id="school-level-columns" class="level3">
+<h3 class="anchored" data-anchor-id="school-level-columns">1. School-level columns</h3>
+<p>These appear to be one-per-school attributes:</p>
+<ul>
+<li>identifiers: <code>dbn</code>, <code>school_name</code>, <code>boro</code>, <code>city</code>, <code>zip</code>, <code>building_code</code></li>
+<li>contact/location: <code>website</code>, <code>url</code>, <code>phone_number</code>, <code>fax_number</code>, <code>school_email</code>, <code>location</code>, <code>primary_address_line_1</code></li>
+<li>operations: <code>start_time</code>, <code>end_time</code>, <code>gradespan</code>, <code>shared_space</code>, <code>transfer</code>, <code>international</code>, <code>specialized</code>, <code>earlycollege</code>, <code>ptech</code>, <code>pbat</code>, <code>girls</code>, <code>boys</code></li>
+<li>descriptive text: <code>overview_paragraph</code>, <code>extracurricular_activities</code>, <code>advancedplacement_courses</code>, <code>language_classes</code>, <code>academicopportunities1</code> to <code>academicopportunities6</code>, <code>freshmanschedule</code>, <code>school_accessibility_description</code>, <code>diversity_in_admissions</code></li>
+<li>metrics: <code>graduation_rate</code>, <code>attendance_rate</code>, <code>college_career_rate</code>, <code>pct_stu_safe</code>, <code>pct_stu_enough_variety</code>, <code>total_students</code></li>
+<li>programs/support/offers: <code>school_sports</code>, <code>psal_sports_boys</code>, <code>psal_sports_girls</code>, <code>psal_sports_coed</code>, <code>ell_programs</code>, <code>finalgrades</code>, <code>diplomaendorsements</code></li>
+<li>other site-like fields: <code>recruitment_website</code>, <code>sqr_website</code></li>
+<li>transit: <code>subway</code>, <code>bus</code></li>
+<li>neighborhood-ish: <code>neighborhood</code>, <code>campus_name</code></li>
+</ul>
+<p>These should stay in a <code>schools</code> table.</p>
+</section>
+<section id="program-level-repeated-blocks" class="level3">
+<h3 class="anchored" data-anchor-id="program-level-repeated-blocks">2. Program-level repeated blocks</h3>
+<p>These clearly repeat over program index, mostly <code>1</code> through <code>11</code>:</p>
+<ul>
+<li><code>program1</code> … <code>program11</code></li>
+<li><code>code1</code> … <code>code11</code></li>
+<li><code>interest1</code> … <code>interest11</code></li>
+<li><code>method1</code> … <code>method11</code></li>
+<li><code>eligibility1</code> … <code>eligibility11</code></li>
+<li><code>prgdesc1</code> … <code>prgdesc11</code></li>
+<li><code>auditioninformation1</code> … <code>auditioninformation11</code></li>
+<li><code>common_audition1</code> … <code>common_audition11</code></li>
+<li><code>seats9ge1</code> … <code>seats9ge11</code></li>
+<li><code>seats9swd1</code> … <code>seats9swd11</code></li>
+<li><code>seats101</code> … <code>seats1011</code></li>
+<li><code>grade9geapplicants1</code> … <code>grade9geapplicants11</code></li>
+<li><code>grade9swdapplicants1</code> … <code>grade9swdapplicants11</code></li>
+<li><code>grade9geapplicantsperseat1</code> … <code>11</code></li>
+<li><code>grade9swdapplicantsperseat1</code> … <code>11</code></li>
+<li><code>grade9gefilledflag1</code> … <code>11</code></li>
+<li><code>grade9swdfilledflag1</code> … <code>11</code></li>
+</ul>
+<p>These belong in a <code>programs</code> table keyed by <code>dbn + program_index</code>.</p>
+</section>
+<section id="program-level-but-nonstandard-repeated-blocks" class="level3">
+<h3 class="anchored" data-anchor-id="program-level-but-nonstandard-repeated-blocks">3. Program-level but nonstandard repeated blocks</h3>
+<p>These are still program-level, but naming is less regular:</p>
+<ul>
+<li><code>priority1_prog1</code>, <code>priority2_prog1</code>, <code>priority3_prog1</code>, etc.</li>
+<li><code>requirement_1_1</code>, <code>requirement_2_1</code>, <code>requirement_3_1</code>, <code>requirement_4_1</code>, etc.</li>
+<li>specialized-specific fields:
+<ul>
+<li><code>applicants1specialized</code> … <code>applicants6specialized</code></li>
+<li><code>appperseat1specialized</code> … <code>appperseat6specialized</code></li>
+<li><code>seats1specialized</code> … <code>seats6specialized</code></li>
+</ul></li>
+</ul>
+<p>These confirm that one long table would either:</p>
+<ul>
+<li>become sparse and awkward, or</li>
+<li>force lossy flattening</li>
+</ul>
+<p>So I would not recommend a single canonical long table.</p>
+</section>
+</section>
+<section id="important-structural-observation" class="level2">
+<h2 class="anchored" data-anchor-id="important-structural-observation">Important structural observation</h2>
+<p>There are actually multiple program-like systems in the same sheet:</p>
+<section id="a.-general-school-program-blocks" class="level3">
+<h3 class="anchored" data-anchor-id="a.-general-school-program-blocks">A. General school program blocks</h3>
+<p>Indexed by <code>1</code> to <code>11</code>, using names like:</p>
+<ul>
+<li><code>program{n}</code></li>
+<li><code>code{n}</code></li>
+<li><code>interest{n}</code></li>
+</ul>
+</section>
+<section id="b.-priority-subrecords-within-program" class="level3">
+<h3 class="anchored" data-anchor-id="b.-priority-subrecords-within-program">B. Priority subrecords within program</h3>
+<p>Indexed by both:</p>
+<ul>
+<li>priority rank</li>
+<li>program index</li>
+</ul>
+<p>Example:</p>
+<ul>
+<li><code>priority1_prog10</code></li>
+<li><code>priority2_prog10</code></li>
+<li><code>priority3_prog4</code></li>
+</ul>
+<p>This is a separate child table: <code>program_priorities</code></p>
+<p>with key: - <code>dbn</code> - <code>program_index</code> - <code>priority_rank</code></p>
+</section>
+<section id="c.-requirement-subrecords-within-program" class="level3">
+<h3 class="anchored" data-anchor-id="c.-requirement-subrecords-within-program">C. Requirement subrecords within program</h3>
+<p>Indexed by both:</p>
+<ul>
+<li>requirement rank</li>
+<li>program index</li>
+</ul>
+<p>Example: - <code>requirement_1_10</code> - <code>requirement_2_10</code> - <code>requirement_4_1</code></p>
+<p>This is another child table: <code>program_requirements</code></p>
+<p>with key: - <code>dbn</code> - <code>program_index</code> - <code>requirement_index</code></p>
+</section>
+<section id="d.-specialized-admissions-block" class="level3">
+<h3 class="anchored" data-anchor-id="d.-specialized-admissions-block">D. Specialized admissions block</h3>
+<p>These look like a different subsystem, likely not aligned to the ordinary <code>program1</code> to <code>program11</code> block:</p>
+<ul>
+<li><code>applicants1specialized</code></li>
+<li><code>appperseat1specialized</code></li>
+<li><code>seats1specialized</code></li>
+</ul>
+<p>I would treat these cautiously. They may need their own table: <code>specialized_tracks</code> or <code>specialized_programs</code></p>
+<p>rather than being forced into the ordinary program index.</p>
+</section>
+</section>
+<section id="confirmed-recommendation-normalized-target-model" class="level2">
+<h2 class="anchored" data-anchor-id="confirmed-recommendation-normalized-target-model">Confirmed recommendation: normalized target model</h2>
+<p>I would now recommend these output tables.</p>
+</section>
+<section id="schools" class="level2">
+<h2 class="anchored" data-anchor-id="schools">1. <code>schools</code></h2>
+<p>One row per <code>dbn</code>.</p>
+<p>Contains only non-indexed columns.</p>
+<p>Candidate key: - <code>dbn</code></p>
+</section>
+<section id="school_academic_opportunities" class="level2">
+<h2 class="anchored" data-anchor-id="school_academic_opportunities">2. <code>school_academic_opportunities</code></h2>
+<p>Because <code>academicopportunities1</code> to <code>academicopportunities6</code> are repeated but not obviously program-indexed.</p>
+<p>Key: - <code>dbn</code> - <code>opportunity_index</code></p>
+<p>This is optional, but cleaner than six columns.</p>
+</section>
+<section id="programs" class="level2">
+<h2 class="anchored" data-anchor-id="programs">3. <code>programs</code></h2>
+<p>One row per school-program block.</p>
+<p>Key: - <code>dbn</code> - <code>program_index</code></p>
+<p>Fields likely include:</p>
+<ul>
+<li><code>program</code></li>
+<li><code>code</code></li>
+<li><code>interest</code></li>
+<li><code>method</code></li>
+<li><code>eligibility</code></li>
+<li><code>prgdesc</code></li>
+<li><code>auditioninformation</code></li>
+<li><code>common_audition</code></li>
+<li><code>seats9ge</code></li>
+<li><code>seats9swd</code></li>
+<li><code>seats10</code></li>
+<li><code>grade9geapplicants</code></li>
+<li><code>grade9swdapplicants</code></li>
+<li><code>grade9geapplicantsperseat</code></li>
+<li><code>grade9swdapplicantsperseat</code></li>
+<li><code>grade9gefilledflag</code></li>
+<li><code>grade9swdfilledflag</code></li>
+</ul>
+<p>This is your main analysis-ready program table.</p>
+</section>
+<section id="program_priorities" class="level2">
+<h2 class="anchored" data-anchor-id="program_priorities">4. <code>program_priorities</code></h2>
+<p>One row per priority attached to a program.</p>
+<p>Key: - <code>dbn</code> - <code>program_index</code> - <code>priority_rank</code></p>
+<p>Value: - <code>priority_text</code></p>
+</section>
+<section id="program_requirements" class="level2">
+<h2 class="anchored" data-anchor-id="program_requirements">5. <code>program_requirements</code></h2>
+<p>One row per requirement attached to a program.</p>
+<p>Key: - <code>dbn</code> - <code>program_index</code> - <code>requirement_index</code></p>
+<p>Value: - <code>requirement_text</code></p>
+</section>
+<section id="specialized_programs-or-specialized_admissions" class="level2">
+<h2 class="anchored" data-anchor-id="specialized_programs-or-specialized_admissions">6. <code>specialized_programs</code> or <code>specialized_admissions</code></h2>
+<p>One row per specialized track index.</p>
+<p>Key: - <code>dbn</code> - <code>specialized_index</code></p>
+<p>Fields: - <code>specialized_applicants</code> - <code>specialized_applicants_per_seat</code> - <code>specialized_seats</code></p>
+<p>I would keep this separate until you verify how it maps to the named school programs.</p>
+<hr>
+</section>
+</section>
+<section id="why-this-is-the-right-professional-solution-here" class="level1">
+<h1>Why this is the right professional solution here</h1>
+<p>Because the column list shows mixed multiplicities:</p>
+<ul>
+<li>some fields repeat once per school</li>
+<li>some once per program</li>
+<li>some multiple times within program</li>
+<li>some appear to belong to a separate specialized subsystem</li>
+</ul>
+<p>That is exactly the situation where normalization beats a single pivot.</p>
+<p>A professional data engineering pipeline would usually:</p>
+<ol type="1">
+<li>build a column dictionary</li>
+<li>parse every column into structural metadata</li>
+<li>partition columns by grain</li>
+<li>reshape each grain separately</li>
+<li>validate keys and cardinality</li>
+<li>save the normalized tables as the cleaned layer</li>
+</ol>
+<hr>
+</section>
+<section id="concrete-family-classification-from-your-list" class="level1">
+<h1>Concrete family classification from your list</h1>
+<p>Here is the family structure I would use conceptually.</p>
+<section id="school-grain" class="level2">
+<h2 class="anchored" data-anchor-id="school-grain">School grain</h2>
+<p>Columns with no trailing program index and no embedded sub-index.</p>
+<p>Examples: - <code>dbn</code> - <code>school_name</code> - <code>city</code> - <code>zip</code> - <code>attendance_rate</code> - <code>overview_paragraph</code></p>
+</section>
+<section id="program-grain-suffix-index-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="program-grain-suffix-index-pattern">Program grain, suffix index pattern</h2>
+<p>Pattern: - <code>^(family)([0-9]+)$</code></p>
+<p>Examples: - <code>program10</code> - <code>code3</code> - <code>seats9ge7</code> - <code>grade9gefilledflag11</code></p>
+</section>
+<section id="program-child-grain-embedded-rank-program-index" class="level2">
+<h2 class="anchored" data-anchor-id="program-child-grain-embedded-rank-program-index">Program child grain, embedded rank + program index</h2>
+<p>Pattern: - <code>^priority([0-9]+)_prog([0-9]+)$</code> - <code>^requirement_([0-9]+)_([0-9]+)$</code></p>
+<p>These need two indices.</p>
+</section>
+<section id="specialized-grain" class="level2">
+<h2 class="anchored" data-anchor-id="specialized-grain">Specialized grain</h2>
+<p>Pattern: - <code>^(applicants|appperseat|seats)([0-9]+)specialized$</code></p>
+<p>This is its own indexed family.</p>
+</section>
+<section id="repeated-school-child-grain" class="level2">
+<h2 class="anchored" data-anchor-id="repeated-school-child-grain">Repeated school child grain</h2>
+<p>Pattern: - <code>^academicopportunities([0-9]+)$</code></p>
+<p>These are repeated school-level descriptors, not program descriptors.</p>
+<p>That means your parser should extract:</p>
+<ul>
+<li><code>grain</code></li>
+<li><code>family</code></li>
+<li><code>index_1</code></li>
+<li><code>index_2</code></li>
+</ul>
+<p>not just <code>family</code>.</p>
+<hr>
+</section>
+</section>
+<section id="subtle-points-gotchas" class="level1">
+<h1>Subtle points / gotchas</h1>
+<section id="seats101-to-seats1011" class="level2">
+<h2 class="anchored" data-anchor-id="seats101-to-seats1011">1. <code>seats101</code> to <code>seats1011</code></h2>
+<p>This family is easy to misread.</p>
+<p>These likely mean: - <code>seats10</code> for program 1 - <code>seats10</code> for program 11</p>
+<p>not: - seat count 101, 102, etc.</p>
+<p>So this family should probably be parsed as:</p>
+<ul>
+<li>family = <code>seats10</code></li>
+<li>program_index = <code>1</code> to <code>11</code></li>
+</ul>
+<p>That means regex must prefer the known family prefix, not just “split trailing digits.”</p>
+</section>
+<section id="missing-maximum-priority-count" class="level2">
+<h2 class="anchored" data-anchor-id="missing-maximum-priority-count">2. Missing maximum priority count</h2>
+<p>Some programs have up to <code>priority3</code>, others only <code>priority2</code>.</p>
+<p>So <code>program_priorities</code> must allow varying row counts by program.</p>
+</section>
+<section id="missing-maximum-requirement-count" class="level2">
+<h2 class="anchored" data-anchor-id="missing-maximum-requirement-count">3. Missing maximum requirement count</h2>
+<p>Some programs have up to <code>requirement_4_1</code>, others only two.</p>
+<p>Same point: this is a child table, not a fixed-width attribute block.</p>
+</section>
+<section id="academicopportunities1-to-6" class="level2">
+<h2 class="anchored" data-anchor-id="academicopportunities1-to-6">4. <code>academicopportunities1</code> to <code>6</code></h2>
+<p>These may be better collapsed into a single list/string for reporting, but for canonical cleaned data I’d normalize them.</p>
+</section>
+<section id="specialized-admissions-may-not-map-one-to-one-to-programn" class="level2">
+<h2 class="anchored" data-anchor-id="specialized-admissions-may-not-map-one-to-one-to-programn">5. Specialized admissions may not map one-to-one to <code>program{n}</code></h2>
+<p>Do not assume alignment until inspected.</p>
+<p>That is one of the highest-risk mistakes in this kind of file.</p>
+<hr>
+</section>
+</section>
+<section id="if-i-were-reviewing-this-as-a-data-engineering-design" class="level1">
+<h1>If I were reviewing this as a data engineering design</h1>
+<p>I would endorse this sequence:</p>
+<section id="phase-1-schema-dictionary" class="level2">
+<h2 class="anchored" data-anchor-id="phase-1-schema-dictionary">Phase 1: schema dictionary</h2>
+<p>Build a dictionary with columns:</p>
+<ul>
+<li><code>col</code></li>
+<li><code>grain</code></li>
+<li><code>family</code></li>
+<li><code>index_1</code></li>
+<li><code>index_2</code></li>
+<li><code>parse_status</code></li>
+</ul>
+<p>Where examples would be:</p>
+<ul>
+<li><code>program10</code> -&gt; <code>grain = "program"</code>, <code>family = "program"</code>, <code>index_1 = 10</code></li>
+<li><code>priority2_prog4</code> -&gt; <code>grain = "program_priority"</code>, <code>family = "priority"</code>, <code>index_1 = 4</code>, <code>index_2 = 2</code></li>
+<li><code>requirement_3_1</code> -&gt; <code>grain = "program_requirement"</code>, <code>family = "requirement"</code>, <code>index_1 = 1</code>, <code>index_2 = 3</code></li>
+<li><code>academicopportunities5</code> -&gt; <code>grain = "school_opportunity"</code>, <code>family = "academicopportunities"</code>, <code>index_1 = 5</code></li>
+</ul>
+</section>
+<section id="phase-2-normalized-tables" class="level2">
+<h2 class="anchored" data-anchor-id="phase-2-normalized-tables">Phase 2: normalized tables</h2>
+<p>Produce:</p>
+<ul>
+<li><code>schools</code></li>
+<li><code>school_academic_opportunities</code></li>
+<li><code>programs</code></li>
+<li><code>program_priorities</code></li>
+<li><code>program_requirements</code></li>
+<li><code>specialized_programs</code></li>
+</ul>
+</section>
+<section id="phase-3-validation" class="level2">
+<h2 class="anchored" data-anchor-id="phase-3-validation">Phase 3: validation</h2>
+<p>Check:</p>
+<ul>
+<li><code>dbn</code> unique in <code>schools</code></li>
+<li><code>dbn + program_index</code> unique in <code>programs</code></li>
+<li>all priority rows match an existing program</li>
+<li>all requirement rows match an existing program</li>
+<li>no orphan specialized rows if you later map them</li>
+</ul>
+</section>
+<section id="phase-4-analysis-marts" class="level2">
+<h2 class="anchored" data-anchor-id="phase-4-analysis-marts">Phase 4: analysis marts</h2>
+<p>Only then create convenience tables like:</p>
+<ul>
+<li><code>programs_with_school_context</code></li>
+<li><code>programs_with_priority_summary</code></li>
+<li><code>programs_with_requirement_summary</code></li>
+</ul>
+<p>These are denormalized products for analysis, not the canonical cleaned data.</p>
+<hr>
+</section>
+</section>
+<section id="incremental-learning-recommendation-now-confirmed-by-the-column-list" class="level1">
+<h1>Incremental learning recommendation, now confirmed by the column list</h1>
+<p>Given your preference for incremental learning, I would move in this order:</p>
+<section id="step-1" class="level2">
+<h2 class="anchored" data-anchor-id="step-1">Step 1</h2>
+<p>Write the parser and dictionary.</p>
+<p>This is the most important step.</p>
+</section>
+<section id="step-2" class="level2">
+<h2 class="anchored" data-anchor-id="step-2">Step 2</h2>
+<p>Build only <code>programs</code>.</p>
+<p>Ignore priorities, requirements, specialized for one pass.</p>
+</section>
+<section id="step-3" class="level2">
+<h2 class="anchored" data-anchor-id="step-3">Step 3</h2>
+<p>Build <code>program_priorities</code> and <code>program_requirements</code>.</p>
+</section>
+<section id="step-4" class="level2">
+<h2 class="anchored" data-anchor-id="step-4">Step 4</h2>
+<p>Handle <code>academicopportunities</code>.</p>
+</section>
+<section id="step-5" class="level2">
+<h2 class="anchored" data-anchor-id="step-5">Step 5</h2>
+<p>Inspect specialized fields separately and decide whether to integrate or keep separate.</p>
+<p>That preserves learning while still following the senior architecture.</p>
+<hr>
+</section>
+</section>
+<section id="bottom-line" class="level1">
+<h1>Bottom line</h1>
+<p>After consuming the full column list, I would strengthen rather than weaken the earlier recommendation:</p>
+<ul>
+<li>Do not use one canonical long table as your cleaned base.</li>
+<li>Use a normalized multi-table design.</li>
+<li>Use one parsed column dictionary to drive all reshaping.</li>
+<li>Keep priorities, requirements, and specialized admissions as separate child tables.</li>
+</ul>
+<p>This is the seasoned data engineering answer, and in this case it is also the safer statistical answer because it preserves the observational units.</p>
+<p>If you want, next I can help you design the exact dictionary schema and parsing rules for this file, before any pivots.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/MrAllatta\.github\.io\/learning\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
