@@ -1,0 +1,83 @@
+# This Week
+
+## Week Of
+- Start: 2026-03-30
+- End: 2026-04-05
+
+## Planning Inputs
+- Learning plan version/date: learning-plan.qmd / 2026-03-27 update
+- Schedule version/date: schedule.qmd / 2026-03-23
+- Current phase: Phase 0 closing; Phase 1 beginning in parallel
+- Primary goal this week: close Phase 0 with three short audits (SQL, statistics, domain) and one carried-forward R task (linear regression); begin the CCR project with a scoped first session
+- Secondary goal this week: establish revenue discipline as a habit — every week must have at least one task with a plausible revenue path
+- Known constraints: Wednesday-Thursday 09:00-11:00 blocked by clients; family care mornings and late afternoons; no heavy work after 21:00; classroom-manager capped at 2 hours maximum this week
+- Energy / workload notes: best work windows are 09:00-11:00 and 13:00-15:00; use 15:00-16:30 for review, notes, and planning
+
+## Revenue Discipline Check
+This week's revenue-path task: begin the CCR project data pipeline — this is the primary portfolio artifact and the most direct path to a job application or consulting engagement. Even a first scoped session moves it forward. The R audit close-out is prerequisite work, not the main event.
+
+## Weekly Outcome
+A good week closes Phase 0 (all four remaining audit tasks completed with written ratings), produces the first CCR project session with a defined data artifact or scoped outline, and leaves classroom-manager contained to its 2-hour budget. By Sunday the Phase 0 gate criteria should be fully met.
+
+## Priority Deliverables
+- [ ] Deliverable 1: Complete linear regression in R — call lm(), call summary(), write a plain-language explanation of each component without AI assistance. Append to the audit post.
+- [ ] Deliverable 2: SQL audit completed and rated (1 hour, no AI, no Stack Overflow)
+- [ ] Deliverable 3: Statistics audit completed in writing (45 minutes, no AI)
+- [ ] Deliverable 4: First CCR project session — download or confirm access to the citywide results data; scope Output 1 (CCR metric reconstruction pipeline) with a written task list
+
+## Weekly Task Plan
+
+### Must Do
+- [ ] Linear regression in R: complete the gap task from the audit. Call lm() on school data, call summary(), write the interpretation of every component (coefficients, R-squared, F-statistic, p-values) without AI. Time-box to 90 minutes.
+- [ ] SQL audit: one session, no AI, no internet beyond documentation. Three tasks: JOIN+WHERE+GROUP BY query, subquery, written explanation of indexes. Record ratings.
+- [ ] Statistics audit: written responses to four questions from memory. Self-check against sources after writing. Record ratings.
+- [ ] CCR project scoping: one session to confirm data access and write a concrete scope for Output 1. Exit condition: a written list of 5-8 specific steps to build the CCR reconstruction pipeline.
+
+### Should Do
+- [ ] Domain audit: written responses to five NYCPS knowledge questions from memory (30 minutes). This closes Phase 0 entirely.
+- [ ] Dplyr practice through CCR work: use the CCR data session as the dplyr exercise, not a separate drill. Filter, group, summarize on real CCR data.
+
+### Could Do (2-hour maximum, classroom-manager only)
+- [ ] One bounded classroom-manager session: write down what the prototype is, what problem it solves, who the customer is, and what it would cost. If you cannot answer these, the session ends. This is not deep-work time; it is clarification time.
+
+### Explicitly Deferred This Week
+- Python audit (comes after Phase 0 SQL/stats/domain are closed, or runs in parallel with CCR pipeline work next week)
+- hs_directory parsing continuation
+- R4DS reading
+- All Positron, Emacs, or tooling work
+- Any classroom-manager development beyond the 2-hour scoping session
+
+## Scheduled Work Blocks
+| Day       | Time Block   | Planned Focus | Deliverable / Exit Condition |
+|-----------|--------------|---------------|------------------------------|
+| Monday    | 09:00-11:00  | Linear regression in R | lm() called, summary() interpreted in writing, appended to audit post |
+| Monday    | 13:00-15:00  | SQL audit | Three SQL tasks completed with ratings recorded |
+| Tuesday   | 09:00-11:00  | Statistics audit | Four written answers completed and self-checked |
+| Tuesday   | 13:00-15:00  | CCR project scoping | Data confirmed, Output 1 scope written |
+| Wednesday | 13:00-15:00  | Domain audit + Phase 0 close | Five domain questions answered; Phase 0 gate criteria reviewed and declared complete or incomplete |
+| Thursday  | 13:00-15:00  | CCR Output 1: first pipeline session | At least one CCR metric loaded, filtered, and verified against published values |
+| Friday    | 09:00-11:00  | CCR or carry-forward audit work | Either CCR pipeline advanced or any incomplete must-do task finished |
+| Friday    | 13:00-15:00  | Weekly review and classroom-manager scoping (if budgeted) | End-of-week review completed; classroom-manager customer/problem written down if session happens |
+| Saturday  | 07:00-09:00  | Catch-up or rest | Complete any single incomplete must-do item; otherwise rest |
+
+## Active Learning Focus
+- Concept or method to master: linear regression output interpretation; SQL aggregation with JOINs
+- Tool or workflow to rehearse: lm() + summary() in R; SQL from memory
+- Real-world artifact to advance: CCR reconstruction pipeline (Output 1)
+- What will be done without AI assistance: all four remaining Phase 0 audit tasks; linear regression write-up
+
+## Risk Management
+- Main risk: another idea takes hold and the CCR project does not start. Mitigation: schedule the CCR scoping session Tuesday afternoon; it must happen before any classroom-manager time is spent.
+- Second risk: audit tasks feel like chores and get deferred again. Mitigation: treat Monday as deadline day for linear regression and SQL — both done before lunch or afternoon, no exceptions.
+- Fallback if time is cut: complete linear regression write-up and SQL audit only. These are the two highest-leverage remaining Phase 0 tasks.
+- Fallback if energy is low: use mid-energy blocks to read the CCR Educator Guide Appendix A and take notes; do not start code in a low-energy state.
+- Classroom-manager hard cap: if the 2-hour budget is spent, stop. Do not renegotiate during the week.
+
+## End-of-Week Review
+- What was completed:
+- What slipped:
+- What blocked progress:
+- What should update in learning-plan.md:
+- What should carry into next week:
+- Evidence produced:
+- Revenue discipline check: did at least one session advance a revenue-path task?
