@@ -141,13 +141,15 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#week-of" id="toc-week-of" class="nav-link" data-scroll-target="#week-of">Week Of</a></li>
   <li><a href="#planning-inputs" id="toc-planning-inputs" class="nav-link" data-scroll-target="#planning-inputs">Planning Inputs</a></li>
+  <li><a href="#revenue-discipline-check" id="toc-revenue-discipline-check" class="nav-link" data-scroll-target="#revenue-discipline-check">Revenue Discipline Check</a></li>
   <li><a href="#weekly-outcome" id="toc-weekly-outcome" class="nav-link" data-scroll-target="#weekly-outcome">Weekly Outcome</a></li>
   <li><a href="#priority-deliverables" id="toc-priority-deliverables" class="nav-link" data-scroll-target="#priority-deliverables">Priority Deliverables</a></li>
   <li><a href="#weekly-task-plan" id="toc-weekly-task-plan" class="nav-link" data-scroll-target="#weekly-task-plan">Weekly Task Plan</a>
   <ul class="collapse">
   <li><a href="#must-do" id="toc-must-do" class="nav-link" data-scroll-target="#must-do">Must Do</a></li>
   <li><a href="#should-do" id="toc-should-do" class="nav-link" data-scroll-target="#should-do">Should Do</a></li>
-  <li><a href="#could-do" id="toc-could-do" class="nav-link" data-scroll-target="#could-do">Could Do</a></li>
+  <li><a href="#could-do-2-hour-maximum-classroom-manager-only" id="toc-could-do-2-hour-maximum-classroom-manager-only" class="nav-link" data-scroll-target="#could-do-2-hour-maximum-classroom-manager-only">Could Do (2-hour maximum, classroom-manager only)</a></li>
+  <li><a href="#explicitly-deferred-this-week" id="toc-explicitly-deferred-this-week" class="nav-link" data-scroll-target="#explicitly-deferred-this-week">Explicitly Deferred This Week</a></li>
   </ul></li>
   <li><a href="#scheduled-work-blocks" id="toc-scheduled-work-blocks" class="nav-link" data-scroll-target="#scheduled-work-blocks">Scheduled Work Blocks</a></li>
   <li><a href="#active-learning-focus" id="toc-active-learning-focus" class="nav-link" data-scroll-target="#active-learning-focus">Active Learning Focus</a></li>
@@ -168,32 +170,37 @@ ul.task-list li input[type="checkbox"] {
 <section id="week-of" class="level2">
 <h2 class="anchored" data-anchor-id="week-of">Week Of</h2>
 <ul>
-<li>Start: 2026-03-23</li>
-<li>End: 2026-03-29</li>
+<li>Start: 2026-03-30</li>
+<li>End: 2026-04-05</li>
 </ul>
 </section>
 <section id="planning-inputs" class="level2">
 <h2 class="anchored" data-anchor-id="planning-inputs">Planning Inputs</h2>
 <ul>
-<li>Learning plan version/date: learning-plan.qmd / 2026-03-23 update</li>
-<li>Schedule version/date: schedule.md / 2026-03-23</li>
-<li>Current phase: Phase 0 closing into Phase 1</li>
-<li>Primary goal this week: consolidate audit evidence into explicit strengths/gaps and convert the current R/Quarto workflow into repeatable, non-AI-assisted practice</li>
-<li>Secondary goal this week: keep building R fluency through one finishable analysis artifact while beginning a narrow SQL/stats/domain review loop</li>
-<li>Known constraints: Wednesday-Thursday 09:00-11:00 blocked by clients; family care mornings and late afternoons; no heavy work after 21:00</li>
-<li>Energy / workload notes: best work windows are 09:00-11:00 and 13:00-15:00; use 15:00-16:30 for review, notes, and planning rather than new hard material</li>
+<li>Learning plan version/date: learning-plan.qmd / 2026-03-27 update</li>
+<li>Schedule version/date: schedule.qmd / 2026-03-23</li>
+<li>Current phase: Phase 0 closing; Phase 1 beginning in parallel</li>
+<li>Primary goal this week: close Phase 0 with three short audits (SQL, statistics, domain) and one carried-forward R task (linear regression); begin the CCR project with a scoped first session</li>
+<li>Secondary goal this week: establish revenue discipline as a habit — every week must have at least one task with a plausible revenue path</li>
+<li>Known constraints: Wednesday-Thursday 09:00-11:00 blocked by clients; family care mornings and late afternoons; no heavy work after 21:00; classroom-manager capped at 2 hours maximum this week</li>
+<li>Energy / workload notes: best work windows are 09:00-11:00 and 13:00-15:00; use 15:00-16:30 for review, notes, and planning</li>
 </ul>
+</section>
+<section id="revenue-discipline-check" class="level2">
+<h2 class="anchored" data-anchor-id="revenue-discipline-check">Revenue Discipline Check</h2>
+<p>This week’s revenue-path task: begin the CCR project data pipeline — this is the primary portfolio artifact and the most direct path to a job application or consulting engagement. Even a first scoped session moves it forward. The R audit close-out is prerequisite work, not the main event.</p>
 </section>
 <section id="weekly-outcome" class="level2">
 <h2 class="anchored" data-anchor-id="weekly-outcome">Weekly Outcome</h2>
-<p>A good week produces a clean written audit snapshot, one finished R/Quarto analysis artifact advanced from hand-written code, and one small set of non-AI statistical/domain explanations drafted from memory. By Sunday, the week should leave a narrower Phase 1 target: keep R/Quarto active, identify the next weakest area, and avoid expanding the tool stack.</p>
+<p>A good week closes Phase 0 (all four remaining audit tasks completed with written ratings), produces the first CCR project session with a defined data artifact or scoped outline, and leaves classroom-manager contained to its 2-hour budget. By Sunday the Phase 0 gate criteria should be fully met.</p>
 </section>
 <section id="priority-deliverables" class="level2">
 <h2 class="anchored" data-anchor-id="priority-deliverables">Priority Deliverables</h2>
 <ul class="task-list">
-<li><label><input type="checkbox">Deliverable 1: complete a written Phase 0 audit scorecard (Strong / Shaky / Gap) for R, Python, SQL, statistics, and domain knowledge</label></li>
-<li><label><input type="checkbox">Deliverable 2: revise and publish one R analysis post with cleaner notes on what was done by hand and what remains confusing</label></li>
-<li><label><input type="checkbox">Deliverable 3: draft one short methodology note covering regression output interpretation or a core stats concept without AI assistance</label></li>
+<li><label><input type="checkbox">Deliverable 1: Complete linear regression in R — call lm(), call summary(), write a plain-language explanation of each component without AI assistance. Append to the audit post.</label></li>
+<li><label><input type="checkbox">Deliverable 2: SQL audit completed and rated (1 hour, no AI, no Stack Overflow)</label></li>
+<li><label><input type="checkbox">Deliverable 3: Statistics audit completed in writing (45 minutes, no AI)</label></li>
+<li><label><input type="checkbox">Deliverable 4: First CCR project session — download or confirm access to the citywide results data; scope Output 1 (CCR metric reconstruction pipeline) with a written task list</label></li>
 </ul>
 </section>
 <section id="weekly-task-plan" class="level2">
@@ -201,23 +208,33 @@ ul.task-list li input[type="checkbox"] {
 <section id="must-do" class="level3">
 <h3 class="anchored" data-anchor-id="must-do">Must Do</h3>
 <ul class="task-list">
-<li><label><input type="checkbox">Finish the audit scorecard using current evidence from the project and honest self-ratings</label></li>
-<li><label><input type="checkbox">Complete one focused R session on program-level parsing / tidying patterns from the school directory work</label></li>
-<li><label><input type="checkbox">Write one no-AI stats or domain explanation from memory and then self-check against sources</label></li>
+<li><label><input type="checkbox">Linear regression in R: complete the gap task from the audit. Call lm() on school data, call summary(), write the interpretation of every component (coefficients, R-squared, F-statistic, p-values) without AI. Time-box to 90 minutes.</label></li>
+<li><label><input type="checkbox">SQL audit: one session, no AI, no internet beyond documentation. Three tasks: JOIN+WHERE+GROUP BY query, subquery, written explanation of indexes. Record ratings.</label></li>
+<li><label><input type="checkbox">Statistics audit: written responses to four questions from memory. Self-check against sources after writing. Record ratings.</label></li>
+<li><label><input type="checkbox">CCR project scoping: one session to confirm data access and write a concrete scope for Output 1. Exit condition: a written list of 5-8 specific steps to build the CCR reconstruction pipeline.</label></li>
 </ul>
 </section>
 <section id="should-do" class="level3">
 <h3 class="anchored" data-anchor-id="should-do">Should Do</h3>
 <ul class="task-list">
-<li><label><input type="checkbox">Do one SQL practice session covering JOIN + GROUP BY + subquery or CTE</label></li>
-<li><label><input type="checkbox">Tighten the R notes post so it records what you now understand about data.table vs tidyverse rather than acting like a transcript</label></li>
+<li><label><input type="checkbox">Domain audit: written responses to five NYCPS knowledge questions from memory (30 minutes). This closes Phase 0 entirely.</label></li>
+<li><label><input type="checkbox">Dplyr practice through CCR work: use the CCR data session as the dplyr exercise, not a separate drill. Filter, group, summarize on real CCR data.</label></li>
 </ul>
 </section>
-<section id="could-do" class="level3">
-<h3 class="anchored" data-anchor-id="could-do">Could Do</h3>
+<section id="could-do-2-hour-maximum-classroom-manager-only" class="level3">
+<h3 class="anchored" data-anchor-id="could-do-2-hour-maximum-classroom-manager-only">Could Do (2-hour maximum, classroom-manager only)</h3>
 <ul class="task-list">
-<li><label><input type="checkbox">Start a small Python parity exercise that reproduces one simple aggregation from the R audit data</label></li>
-<li><label><input type="checkbox">Add a brief README-style note for the analysis/publishing workflow you now have working</label></li>
+<li><label><input type="checkbox">One bounded classroom-manager session: write down what the prototype is, what problem it solves, who the customer is, and what it would cost. If you cannot answer these, the session ends. This is not deep-work time; it is clarification time.</label></li>
+</ul>
+</section>
+<section id="explicitly-deferred-this-week" class="level3">
+<h3 class="anchored" data-anchor-id="explicitly-deferred-this-week">Explicitly Deferred This Week</h3>
+<ul>
+<li>Python audit (comes after Phase 0 SQL/stats/domain are closed, or runs in parallel with CCR pipeline work next week)</li>
+<li>hs_directory parsing continuation</li>
+<li>R4DS reading</li>
+<li>All Positron, Emacs, or tooling work</li>
+<li>Any classroom-manager development beyond the 2-hour scoping session</li>
 </ul>
 </section>
 </section>
@@ -241,57 +258,57 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>Monday</td>
-<td>13:00-15:00</td>
-<td>Weekly planning + audit evidence review</td>
-<td>this-week.md updated and audit scorecard outline drafted</td>
+<td>09:00-11:00</td>
+<td>Linear regression in R</td>
+<td>lm() called, summary() interpreted in writing, appended to audit post</td>
 </tr>
 <tr class="even">
-<td>Tuesday</td>
-<td>09:00-11:00</td>
-<td>R audit continuation: hs_directory parsing/tidying</td>
-<td>one clarified code path or note on row-per-program design</td>
+<td>Monday</td>
+<td>13:00-15:00</td>
+<td>SQL audit</td>
+<td>Three SQL tasks completed with ratings recorded</td>
 </tr>
 <tr class="odd">
 <td>Tuesday</td>
-<td>13:00-15:00</td>
-<td>Quarto post revision/publishing flow</td>
-<td>one post revised and rendered cleanly</td>
+<td>09:00-11:00</td>
+<td>Statistics audit</td>
+<td>Four written answers completed and self-checked</td>
 </tr>
 <tr class="even">
+<td>Tuesday</td>
+<td>13:00-15:00</td>
+<td>CCR project scoping</td>
+<td>Data confirmed, Output 1 scope written</td>
+</tr>
+<tr class="odd">
 <td>Wednesday</td>
 <td>13:00-15:00</td>
-<td>Statistics writing from memory</td>
-<td>one short written explanation draft completed</td>
+<td>Domain audit + Phase 0 close</td>
+<td>Five domain questions answered; Phase 0 gate criteria reviewed and declared complete or incomplete</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Thursday</td>
 <td>13:00-15:00</td>
-<td>SQL practice</td>
-<td>one saved exercise with JOIN plus aggregation</td>
+<td>CCR Output 1: first pipeline session</td>
+<td>At least one CCR metric loaded, filtered, and verified against published values</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Friday</td>
 <td>09:00-11:00</td>
-<td>R4DS / R for Everyone consolidation</td>
-<td>one section of notes rewritten into your own language</td>
-</tr>
-<tr class="odd">
-<td>Friday</td>
-<td>13:00-15:00</td>
-<td>Audit synthesis</td>
-<td>Strong / Shaky / Gap ratings finalized</td>
+<td>CCR or carry-forward audit work</td>
+<td>Either CCR pipeline advanced or any incomplete must-do task finished</td>
 </tr>
 <tr class="even">
-<td>Saturday</td>
-<td>07:00-09:00</td>
-<td>Light project block</td>
-<td>publish, tidy notes, or finish any incomplete must-do item</td>
+<td>Friday</td>
+<td>13:00-15:00</td>
+<td>Weekly review and classroom-manager scoping (if budgeted)</td>
+<td>End-of-week review completed; classroom-manager customer/problem written down if session happens</td>
 </tr>
 <tr class="odd">
-<td>Sunday</td>
-<td>15:00-16:30</td>
-<td>Weekly review and next-step planning</td>
-<td>end-of-week review filled and next weak point selected</td>
+<td>Saturday</td>
+<td>07:00-09:00</td>
+<td>Catch-up or rest</td>
+<td>Complete any single incomplete must-do item; otherwise rest</td>
 </tr>
 </tbody>
 </table>
@@ -299,19 +316,20 @@ ul.task-list li input[type="checkbox"] {
 <section id="active-learning-focus" class="level2">
 <h2 class="anchored" data-anchor-id="active-learning-focus">Active Learning Focus</h2>
 <ul>
-<li>Concept or method to master: reshaping and parsing repeated-column families into tidy program-level data</li>
-<li>Tool or workflow to rehearse: Quarto render/publish workflow from hand-written R analysis</li>
-<li>Real-world artifact to advance: R audit post and related notes on school/program parsing</li>
-<li>What will be done without AI assistance: audit scorecard, stats/domain explanation draft, and at least one full coding session from blank or near-blank context</li>
+<li>Concept or method to master: linear regression output interpretation; SQL aggregation with JOINs</li>
+<li>Tool or workflow to rehearse: lm() + summary() in R; SQL from memory</li>
+<li>Real-world artifact to advance: CCR reconstruction pipeline (Output 1)</li>
+<li>What will be done without AI assistance: all four remaining Phase 0 audit tasks; linear regression write-up</li>
 </ul>
 </section>
 <section id="risk-management" class="level2">
 <h2 class="anchored" data-anchor-id="risk-management">Risk Management</h2>
 <ul>
-<li>Main risk to execution: spreading attention across too many fronts because the stack is now working and feels open-ended</li>
-<li>Fallback if time is cut: complete only the audit scorecard, one R work block, and one short written explanation</li>
-<li>Fallback if energy is low: use mid-energy blocks for reading documentation, cleaning notes, and annotating existing code rather than starting new implementation</li>
-<li>What to defer explicitly this week: CCR build-out, dashboard work, Emacs/Positron tweaking, Django, geospatial work, and broad package exploration</li>
+<li>Main risk: another idea takes hold and the CCR project does not start. Mitigation: schedule the CCR scoping session Tuesday afternoon; it must happen before any classroom-manager time is spent.</li>
+<li>Second risk: audit tasks feel like chores and get deferred again. Mitigation: treat Monday as deadline day for linear regression and SQL — both done before lunch or afternoon, no exceptions.</li>
+<li>Fallback if time is cut: complete linear regression write-up and SQL audit only. These are the two highest-leverage remaining Phase 0 tasks.</li>
+<li>Fallback if energy is low: use mid-energy blocks to read the CCR Educator Guide Appendix A and take notes; do not start code in a low-energy state.</li>
+<li>Classroom-manager hard cap: if the 2-hour budget is spent, stop. Do not renegotiate during the week.</li>
 </ul>
 </section>
 <section id="end-of-week-review" class="level2">
@@ -323,6 +341,7 @@ ul.task-list li input[type="checkbox"] {
 <li>What should update in learning-plan.md:</li>
 <li>What should carry into next week:</li>
 <li>Evidence produced:</li>
+<li>Revenue discipline check: did at least one session advance a revenue-path task?</li>
 </ul>
 
 
