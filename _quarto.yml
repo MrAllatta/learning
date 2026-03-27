@@ -11,6 +11,8 @@ website:
         text: About
       - href: learning-plan.qmd
         text: Learning Plan
+      - href: this-week.qmd
+        text: This Week  
       
 format:
   html:
