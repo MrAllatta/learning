@@ -46,7 +46,7 @@ school_quality_path <- data_files[1]
 #### Stop trying to load three tables
 
 ```{r}
-school_quality_tib <- read_csv(here('data/school_quality.csv'))
+school_quality_tib <- read_csv(here('data/raw/school_quality.csv'))
 # could specify column types but won't for the audit
 school_quality_tib
 ```
